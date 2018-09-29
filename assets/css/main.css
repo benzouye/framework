@@ -1,0 +1,53 @@
+body {
+	background: repeating-linear-gradient(
+		45deg,
+		#dff0d8 0px,
+		#dff0d8 10px,
+		#d6e9c6 10px,
+		#d6e9c6 20px
+	) fixed;
+}
+
+#main {
+	padding-bottom : 30px;
+}
+
+#header {
+	margin-top: 70px;
+}
+
+#header>.panel-heading>.panel-title {
+	font-size: 30px;
+}
+
+.table-hover>tbody>tr:hover {
+    background-color: #eee;
+}
+
+td {
+	//font-size: 12px;
+}
+
+th {
+	text-align: center;
+	vertical-align: middle !important;
+}
+
+.pagination {
+	margin: 0px;
+}
+
+.custom-combobox {
+	position: relative;
+	display: inline-block;
+}
+.custom-combobox-input {
+	margin: 0;
+	padding: 5px 10px;
+}
+
+@media print {  
+	.no-print, .no-print * {
+		display: none !important;
+	}
+}
