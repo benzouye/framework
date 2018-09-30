@@ -29,7 +29,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<span class="navbar-brand"><span class="glyphicon glyphicon-<?php echo $manager->getOption('siteicon'); ?>"></span> <a href="<?php echo SITEURL; ?>" title="Accueil du site"><?php echo $manager->getOption('sitetitle');; ?></a></span>
+						<span class="navbar-brand"><span class="glyphicon glyphicon-<?php echo $manager->getOption('siteicon'); ?>"></span> <?php echo $manager->getOption('sitetitle'); ?></span>
 					</div>
 					<div class="collapse navbar-collapse" id="mvc-navbar">
 <?php
