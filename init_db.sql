@@ -58,6 +58,7 @@ CREATE TABLE `groupe` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `groupe` (`id_groupe`, `nom_groupe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1, 'Utilisateur', '1', '2017-10-24 17:13:53', NULL, NULL);
 (2,	'Gestionnaire',	1,	'2017-10-24 17:13:53',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `groupe_item`;
@@ -183,10 +184,10 @@ CREATE TABLE `utilisateur` (
   `identifiant` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `admin` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `id_groupe` tinyint(3) unsigned DEFAULT '3',
+  `admin` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `id_groupe` tinyint(3) unsigned DEFAULT 1,
   `token` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `valide` tinyint(3) unsigned DEFAULT '0',
+  `valide` tinyint(3) unsigned DEFAULT 0,
   `user_cre` int(11) DEFAULT '1',
   `date_cre` datetime DEFAULT NULL,
   `user_maj` int(11) DEFAULT NULL,
