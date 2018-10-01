@@ -163,7 +163,7 @@
 			foreach( $relations as $relation ) {
 				if( method_exists( $object, 'get_'.$relation->item ) ) {
 					$items = $object->{'get_'.$relation->item}();
-					$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' ('.count( $items ).')' : '';
+					$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge">'.count( $items ).'</span>' : '';
 					$classLink = 'btn btn-default btn-sm';
 					if( !property_exists( $relation, 'many' ) ) {
 						$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
