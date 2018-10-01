@@ -4,6 +4,8 @@
 		include( VIEWDIR.'login.php' );
 	} else {
 		// Sinon on affiche la page d'accueil
-		echo '<p>Hello World !</p>';
+?>
+		<p>Hello World !</p>
+<?php
 	}
 ?>
