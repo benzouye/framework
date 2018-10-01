@@ -5,8 +5,8 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `col_document`;
-CREATE TABLE `col_document` (
+DROP TABLE IF EXISTS `document`;
+CREATE TABLE `document` (
   `id_document` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `fichier` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `date_cre` datetime NOT NULL,
@@ -20,13 +20,13 @@ CREATE TABLE `col_document` (
   PRIMARY KEY (`id_document`),
   KEY `FK_document_id_type_document` (`id_type_document`),
   KEY `FK_document_id_inscription` (`id_inscription`),
-  CONSTRAINT `FK_document_id_inscription` FOREIGN KEY (`id_inscription`) REFERENCES `col_inscription` (`id_inscription`),
-  CONSTRAINT `FK_document_id_type_document` FOREIGN KEY (`id_type_document`) REFERENCES `col_type_document` (`id_type_document`)
+  CONSTRAINT `FK_document_id_inscription` FOREIGN KEY (`id_inscription`) REFERENCES `inscription` (`id_inscription`),
+  CONSTRAINT `FK_document_id_type_document` FOREIGN KEY (`id_type_document`) REFERENCES `type_document` (`id_type_document`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `col_etat`;
-CREATE TABLE `col_etat` (
+DROP TABLE IF EXISTS `etat`;
+CREATE TABLE `etat` (
   `id_etat` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `date_cre` datetime NOT NULL,
@@ -37,13 +37,13 @@ CREATE TABLE `col_etat` (
   UNIQUE KEY `libelle` (`libelle`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_etat` (`id_etat`, `libelle`, `date_cre`, `user_cre`, `date_maj`, `user_maj`) VALUES
+INSERT INTO `etat` (`id_etat`, `libelle`, `date_cre`, `user_cre`, `date_maj`, `user_maj`) VALUES
 (1,	'En attente',	'2017-11-06 12:49:15',	1,	NULL,	NULL),
 (2,	'En cours',	'2017-11-22 13:37:33',	1,	NULL,	NULL),
 (3,	'Terminé',	'2017-11-22 13:37:41',	1,	NULL,	NULL);
 
-DROP TABLE IF EXISTS `col_groupe`;
-CREATE TABLE `col_groupe` (
+DROP TABLE IF EXISTS `groupe`;
+CREATE TABLE `groupe` (
   `id_groupe` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `nom_groupe` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `user_cre` int(11) DEFAULT '1',
@@ -53,15 +53,15 @@ CREATE TABLE `col_groupe` (
   PRIMARY KEY (`id_groupe`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `groupe_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `groupe_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `col_utilisateur` (`id_utilisateur`)
+  CONSTRAINT `groupe_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `groupe_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_groupe` (`id_groupe`, `nom_groupe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `groupe` (`id_groupe`, `nom_groupe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (2,	'Gestionnaire',	1,	'2017-10-24 17:13:53',	NULL,	NULL);
 
-DROP TABLE IF EXISTS `col_groupe_item`;
-CREATE TABLE `col_groupe_item` (
+DROP TABLE IF EXISTS `groupe_item`;
+CREATE TABLE `groupe_item` (
   `id_groupe` tinyint(3) unsigned NOT NULL,
   `alias` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `create` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -71,17 +71,17 @@ CREATE TABLE `col_groupe_item` (
   PRIMARY KEY (`id_groupe`,`alias`),
   KEY `alias` (`alias`),
   KEY `id_groupe` (`id_groupe`),
-  CONSTRAINT `groupe_item_alias_fk` FOREIGN KEY (`alias`) REFERENCES `col_item` (`alias`),
-  CONSTRAINT `groupe_item_ibfk_1` FOREIGN KEY (`id_groupe`) REFERENCES `col_groupe` (`id_groupe`) ON DELETE CASCADE
+  CONSTRAINT `groupe_item_alias_fk` FOREIGN KEY (`alias`) REFERENCES `item` (`alias`),
+  CONSTRAINT `groupe_item_ibfk_1` FOREIGN KEY (`id_groupe`) REFERENCES `groupe` (`id_groupe`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_groupe_item` (`id_groupe`, `alias`, `create`, `read`, `update`, `delete`) VALUES
+INSERT INTO `groupe_item` (`id_groupe`, `alias`, `create`, `read`, `update`, `delete`) VALUES
 (2,	'document',	1,	1,	1,	1),
 (2,	'home',	0,	1,	0,	0),
 (2,	'logout',	0,	1,	0,	0);
 
-DROP TABLE IF EXISTS `col_item`;
-CREATE TABLE `col_item` (
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE `item` (
   `id_item` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `alias` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `nom` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
@@ -101,11 +101,11 @@ CREATE TABLE `col_item` (
   UNIQUE KEY `id` (`id_item`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `item_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `item_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `col_utilisateur` (`id_utilisateur`)
+  CONSTRAINT `item_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `item_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant`, `active`, `admin`, `menu`, `menu_order`, `glyphicon`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant`, `active`, `admin`, `menu`, `menu_order`, `glyphicon`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (40,	'document',	'Documents',	'Les documents liés aux différents éléments',	0,	1,	1,	0,	0,	0,	'envelope',	1,	'2017-11-06 11:11:49',	1,	'2017-11-13 15:18:25'),
 (32,	'etat',	'Etats',	'Les états d\'inscription possibles',	0,	0,	1,	1,	5,	3,	'ok',	1,	'2017-11-02 16:55:34',	1,	'2017-11-02 17:22:06'),
 (26,	'groupe',	'Groupes',	'Groupes d\'utilisateurs',	0,	1,	1,	1,	9,	5,	'th',	1,	'2017-10-24 07:47:06',	NULL,	NULL),
@@ -118,8 +118,8 @@ INSERT INTO `col_item` (`id_item`, `alias`, `nom`, `description`, `static`, `var
 (39,	'type_document',	'Types de document',	'Les types de documents possibles',	0,	0,	1,	1,	5,	4,	'list-alt',	1,	'2017-11-06 11:04:14',	1,	'2017-11-06 11:04:39'),
 (12,	'utilisateur',	'Utilisateurs',	'Les utilisateurs de l\'application',	0,	1,	1,	1,	9,	6,	'user',	1,	'2017-10-24 07:47:06',	NULL,	NULL);
 
-DROP TABLE IF EXISTS `col_option`;
-CREATE TABLE `col_option` (
+DROP TABLE IF EXISTS `option`;
+CREATE TABLE `option` (
   `id_option` smallint(6) NOT NULL AUTO_INCREMENT,
   `alias` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `valeur` text COLLATE utf8_unicode_ci NOT NULL,
@@ -131,11 +131,11 @@ CREATE TABLE `col_option` (
   PRIMARY KEY (`id_option`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `option_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `option_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `col_utilisateur` (`id_utilisateur`)
+  CONSTRAINT `option_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `option_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_option` (`id_option`, `alias`, `valeur`, `description`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `option` (`id_option`, `alias`, `valeur`, `description`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'keywords',	'',	'Liste des mots clé de la balise meta ',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:22'),
 (3,	'sitedesc',	'',	'Description du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:04'),
 (4,	'siteicon',	'grain',	'L\'alias de la glyphicon à utiliser dans le bandeau titre du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 11:59:25'),
@@ -144,8 +144,8 @@ INSERT INTO `col_option` (`id_option`, `alias`, `valeur`, `description`, `user_c
 (8,	'nbparpage',	'10',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2017-11-03 10:26:59'),
 (10,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47');
 
-DROP TABLE IF EXISTS `col_type_analyse`;
-CREATE TABLE `col_type_analyse` (
+DROP TABLE IF EXISTS `type_analyse`;
+CREATE TABLE `type_analyse` (
   `id_type_analyse` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `classe` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
@@ -156,16 +156,16 @@ CREATE TABLE `col_type_analyse` (
   PRIMARY KEY (`id_type_analyse`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `col_type_analyse_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `col_type_analyse_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `col_utilisateur` (`id_utilisateur`)
+  CONSTRAINT `type_analyse_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `type_analyse_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_type_analyse` (`id_type_analyse`, `libelle`, `classe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `type_analyse` (`id_type_analyse`, `libelle`, `classe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'Tableau droit',	'SimpleTable',	1,	'2018-01-03 11:47:07',	NULL,	NULL),
 (2,	'Tableau croisé',	'PivotTable',	1,	'2018-01-03 11:47:22',	NULL,	NULL);
 
-DROP TABLE IF EXISTS `col_type_document`;
-CREATE TABLE `col_type_document` (
+DROP TABLE IF EXISTS `type_document`;
+CREATE TABLE `type_document` (
   `id_type_document` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `date_cre` datetime NOT NULL,
@@ -177,8 +177,8 @@ CREATE TABLE `col_type_document` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `col_utilisateur`;
-CREATE TABLE `col_utilisateur` (
+DROP TABLE IF EXISTS `utilisateur`;
+CREATE TABLE `utilisateur` (
   `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `identifiant` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
@@ -196,12 +196,12 @@ CREATE TABLE `col_utilisateur` (
   KEY `id_groupe` (`id_groupe`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `utilisateur_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `utilisateur_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `col_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `col_groupe` (`id_groupe`)
+  CONSTRAINT `utilisateur_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `utilisateur_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `groupe` (`id_groupe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `col_utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'admin',	'$2y$10$NzL0l3deoMiZEPWAge5E5Oh4BcGo7Nx/Voox7qJYt9Y90Jw/FpVyO',	'admin@mydomain.com',	1,	2,	'',	1,	1,	'2017-10-24 07:47:06',	1,	'2018-09-29 12:10:50');
 
 -- 2018-09-29 10:11:38
