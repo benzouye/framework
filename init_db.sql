@@ -145,6 +145,31 @@ INSERT INTO `option` (`id_option`, `alias`, `valeur`, `description`, `user_cre`,
 (8,	'nbparpage',	'10',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2017-11-03 10:26:59'),
 (10,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47');
 
+DROP TABLE IF EXISTS `analyse`;
+CREATE TABLE `analyse` (
+  `id_analyse` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `requete` text COLLATE utf8_unicode_ci NOT NULL,
+  `id_type_analyse` int(10) unsigned NOT NULL,
+  `indicator` varchar(35) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Nombre',
+  `percent` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `colonne` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ligne` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `flag_accueil` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `grid` tinyint(3) unsigned NOT NULL DEFAULT '6',
+  `date_cre` datetime NOT NULL,
+  `user_cre` int(11) NOT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  `user_maj` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_analyse`),
+  KEY `user_cre` (`user_cre`),
+  KEY `user_maj` (`user_maj`),
+  KEY `id_type_analyse` (`id_type_analyse`),
+  CONSTRAINT `analyse_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `analyse_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `utilisateur` (`id_utilisateur`),
+  CONSTRAINT `analyse_ibfk_1` FOREIGN KEY (`id_type_analyse`) REFERENCES `type_analyse` (`id_type_analyse`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `type_analyse`;
 CREATE TABLE `type_analyse` (
   `id_type_analyse` int(10) unsigned NOT NULL AUTO_INCREMENT,
