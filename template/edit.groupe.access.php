@@ -2,7 +2,7 @@
 	if( $userCan->admin ) {
 ?>
 							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
-								<table class="table table-striped table-hover">
+								<table class="table table-striped table-hover table-responsive">
 									<thead>
 										<tr>
 											<th width="200">Item</th>
@@ -43,7 +43,7 @@
 ?>
 									</tbody>
 								</table>
-								<button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> Sauvegarder</button>
+								<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-save"></i> Sauvegarder</button>
 								<input type="hidden" name="item" value="groupe"/>
 								<input type="hidden" name="id" value="<?php echo $id; ?>"/>
 								<input type="hidden" name="relation" value="access"/>
