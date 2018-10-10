@@ -9,7 +9,7 @@
 							<div class="form-group">
 								<input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
 							</div>
-							<button type="submit" class="btn btn-primary">Se connecter</button>
+							<button type="submit" class="btn btn-secondary">Se connecter</button>
 						</form>
 						<p>Pas encore inscrit ? <a href="index.php?item=register">Inscrivez-vous</a> ...
 					</div>
