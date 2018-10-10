@@ -108,7 +108,7 @@ CREATE TABLE `item` (
 
 INSERT INTO `item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant`, `active`, `admin`, `menu`, `menu_order`, `glyphicon`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (40,	'document',	'Documents',	'Les documents liés aux différents éléments',	0,	1,	1,	0,	0,	0,	'file-alt',	1,	'2017-11-06 11:11:49',	1,	'2017-11-13 15:18:25'),
-(32,	'etat',	'Etats',	'Les états d\'inscription possibles',	0,	0,	1,	1,	5,	3,	'ok',	1,	'2017-11-02 16:55:34',	1,	'2017-11-02 17:22:06'),
+(32,	'etat',	'Etats',	'Les états d\'inscription possibles',	0,	0,	1,	1,	5,	3,	'check',	1,	'2017-11-02 16:55:34',	1,	'2017-11-02 17:22:06'),
 (26,	'groupe',	'Groupes',	'Groupes d\'utilisateurs',	0,	1,	1,	1,	9,	5,	'th',	1,	'2017-10-24 07:47:06',	NULL,	NULL),
 (4,	'home',	'Accueil',	'Bienvenue sur la page d'accueil',	1,	0,	1,	0,	1,	10,	'home',	1,	'2017-10-24 07:47:06',	1,	'2017-11-13 15:37:49'),
 (5,	'item',	'Eléments',	'Les éléments de construction du site',	0,	0,	1,	1,	9,	3,	'list-alt',	1,	'2017-10-24 07:47:06',	1,	'2017-10-24 13:56:49'),
