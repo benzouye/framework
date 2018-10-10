@@ -37,6 +37,9 @@ $( document ).ready( function(){
 		window.location.reload();
 	});
 	
+	// Activation des tooltips
+	$( 'a,button' ).tooltip();
+	
 	// Affichage des alertes dans le header
 	$('#helpers').insertAfter('#header');
 	$('.alert').show('slow', function() {
