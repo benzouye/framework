@@ -11,6 +11,6 @@
 							</div>
 							<button type="submit" class="btn btn-secondary">Se connecter</button>
 						</form>
-						<p>Pas encore inscrit ? <a href="index.php?item=register">Inscrivez-vous</a> ...
+						<p>Pas encore inscrit ? <a href="index.php?item=register">Inscrivez-vous</a> ...</p>
 					</div>
 				</div>
