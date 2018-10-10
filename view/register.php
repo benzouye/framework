@@ -5,11 +5,11 @@
 			$colonnes = $object->getColumns();
 ?>
 			<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=register">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<span class="panel-title">Informations principales</span>
+				<div class="card panel-primary">
+					<div class="card-header">
+						<span class="card-title">Informations principales</span>
 					</div>
-					<div class="panel-body row">
+					<div class="card-body row">
 <?php
 		// Affichage du formulaire
 		foreach( $colonnes as $colonne ) {
@@ -31,7 +31,7 @@
 				// Valeur par défaut
 				$valeur = property_exists( $colonne , 'default' ) ? $colonne->default : '';
 ?>
-						<div class="form-group form-group-sm col-sm-<?php echo $colGrid->div; ?>">
+						<div class="row form-group form-group-sm col-sm-<?php echo $colGrid->div; ?>">
 							<label class="col-sm-<?php echo $colGrid->label; ?> control-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
 							<div class="input-group col-sm-<?php echo $colGrid->value; ?>">
 								<?php echo $object->displayInput( 0, $colonne->name, $valeur, 'form-control' ); ?>
@@ -44,12 +44,12 @@
 		// Affichage des boutons
 ?>
 					</div>
-					<div class="panel-footer">
+					<div class="card-footer">
 						<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-							<span class="glyphicon glyphicon-send"></span> Envoyer
+							<i class="fas fa-sm fa-step-forward"></i> Envoyer
 						</button>
-						<a href="index.php" class="btn btn-default btn-sm">
-							<span class="glyphicon glyphicon-backward"></span> Retour accueil
+						<a href="index.php" class="btn btn-danger btn-sm">
+							<i class="fas fa-sm fa-times"></i> Annuler
 						</a>
 					</div>
 				</div>
@@ -76,17 +76,17 @@
 					// Header HTML
 					$headers  = 'MIME-Version: 1.0' . "\r\n";
 					$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-					$headers .= 'From: Site Internet ARIP <'.$manager->getOption('sitemail').'>' . "\r\n";
-					$headers .= 'Reply-To: ARIP <'.$manager->getOption('sitemail').'>' . "\r\n";
+					$headers .= 'From: WebApp <'.$manager->getOption('sitemail').'>' . "\r\n";
+					$headers .= 'Reply-To: WebApp <'.$manager->getOption('sitemail').'>' . "\r\n";
 
 					// Sujet
-					$sujet = '[ARIP] Activez votre compte';
+					$sujet = '[WebApp] Activez votre compte';
 
 					// message
 					$message = '
 <html>
 	<head>
-		<title>[ARIP] Activez votre compte</title>
+		<title>[WebApp] Activez votre compte</title>
 	</head>
 	<body>
 		<style>p{ margin-top: 20px; } td{ border: 1px solid; padding: 5px; }</style>
@@ -112,7 +112,7 @@
 			}
 ?>
 			<a href="index.php" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-backward"></span> Retour accueil
+				<i class="fas fa-sm fa-caret-left"></i> Retour accueil
 			</a>
 <?php
 		}
