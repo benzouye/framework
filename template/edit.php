@@ -1,26 +1,26 @@
 <?php
 	if( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
 ?>
-					<div class="panel panel-primary">
-						<div class="panel-heading">
+					<div class="card">
+						<div class="card-header">
 <?php
 		if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button type="submit" title="supprimer" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
+								<button type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-times"></i> Supprimer</button>
 							</form>
 <?php
 		}
 ?>
-							<span class="panel-title">Informations principales</span>
+							<span class="card-title">Informations principales</span>
 						</div>
 						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
 							<input type="hidden" name="action" value="set"/>
 							<input type="hidden" name="id" value="<?php echo $id; ?>"/>
 							<input type="hidden" name="item" value="<?php echo $page->alias; ?>"/>
-							<div class="panel-body row">
+							<div class="card-body row">
 <?php
 		// Affichage du formulaire
 		foreach( $colonnes as $colonne ) {
@@ -50,10 +50,10 @@
 			
 			if( ( $adminInput && $user->admin ) or !$adminInput ) {
 ?>
-								<div class="form-group form-group-sm col-sm-<?php echo $colGrid->div; ?>">
-									<label class="col-sm-<?php echo $colGrid->label; ?> control-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
+								<div class="form-group row col-sm-<?php echo $colGrid->div; ?>">
+									<label class="col-sm-<?php echo $colGrid->label; ?> col-form-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
 									<div class="input-group col-sm-<?php echo $colGrid->value; ?>">
-										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control' ); ?>
+										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control-sm' ); ?>
 
 									</div>
 								</div>
@@ -63,32 +63,32 @@
 		// Affichage des boutons
 ?>
 							</div>
-							<div class="panel-footer">
+							<div class="card-footer">
 <?php
 		if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
 ?>
 								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-									<span class="glyphicon glyphicon-floppy-disk"></span> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
+									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
 								</button>
 <?php
 		}
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
-								<a href="index.php" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-backward"></span> Retour accueil
+								<a href="index.php" class="btn btn-secondary btn-sm">
+									<i class="fas fa-sm fa-caret-left"></i> Retour accueil
 								</a>
 <?php
 		} else {
 ?>
-								<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-backward"></span> Retour liste <?php echo $object->getPlural(); ?>
+								<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
+									<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
 								</a>
 <?php
 		}
 		if( $parentLink ) {
 ?>
-								<a href="index.php?item=<?php echo $parentLink; ?>" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-triangle-left"></span> Retour <?php echo $parentItem; ?>
+								<a href="index.php?item=<?php echo $parentLink; ?>" class="btn btn-secondary btn-sm">
+									<i class="fas fa-sm fa-caret-left"></i> Retour <?php echo $parentItem; ?>
 								</a>
 <?php
 		}
@@ -104,30 +104,27 @@
 		}
 		if( $nbPrints > 0 && !$new && $visiblePrints ) {
 ?>
-								<span class="dropup">
-									<button class="btn btn-default btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										<span class="glyphicon glyphicon-print"></span> Imprimer
-										<span class="caret"></span>
+									<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										<i class="fas fa-sm fa-print"></i> Imprimer
 									</button>
-									<ul class="dropdown-menu" aria-labelledby="menuPrint">
+									<div class="dropdown-menu" aria-labelledby="menuPrint">
 <?php
 			foreach( $prints as $print ) {
 				if( $print->visible ) {
 					if( $print->separator ) {
 ?>
-										<li role="separator" class="divider"></li>
+										<div class="dropdown-divider"></div>
 <?php
 					} else {
 						$printLink = 'index.php?item='.$page->alias.'&action=print&id='.$id.'&type='.$print->alias;
 ?>
-										<li><a class="btnReload" href="<?php echo $printLink; ?>" target="_blank"><?php echo $print->nicename; ?></a></li>
+										<a class="dropdown-item btnReload" href="<?php echo $printLink; ?>" target="_blank"><?php echo $print->nicename; ?></a>
 <?php
 					}
 				}
 			}
 ?>
-									</ul>
-								</span>
+									</div>
 <?php
 		}
 		
@@ -137,7 +134,7 @@
 				if( $act->visible ) {
 					$actionLink = 'index.php?item='.$page->alias.'&action=edit&id='.$id.'&act='.$act->alias;
 ?>
-								<a class="btn btn-default btn-sm" href="<?php echo $actionLink; ?>" ><span class="glyphicon glyphicon-<?php echo $act->icon; ?>"></span> <?php echo $act->nicename; ?></a></li>
+								<a class="btn btn-secondary btn-sm" href="<?php echo $actionLink; ?>" ><i class="fas fa-xs fa-<?php echo $act->icon; ?>"></i> <?php echo $act->nicename; ?></a></li>
 <?php
 				}
 			}
@@ -145,8 +142,8 @@
 		
 		if( $parentLink && !$new && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
 ?>
-								<a href="index.php?item=<?php echo $page->alias; ?>&action=edit&parent=<?php echo $parentId; ?>" class="btn btn-default btn-sm">
-									<span class="glyphicon glyphicon-plus"></span> Nouveau <?php echo $object->getSingle(); ?> pour cette <?php echo $parentItem; ?>
+								<a href="index.php?item=<?php echo $page->alias; ?>&action=edit&parent=<?php echo $parentId; ?>" class="btn btn-secondary btn-sm">
+									<i class="fas fa-sm fa-plus"></i> Nouveau <?php echo $object->getSingle(); ?> pour cette <?php echo $parentItem; ?>
 								</a>
 <?php
 		}
@@ -163,8 +160,8 @@
 			foreach( $relations as $relation ) {
 				if( method_exists( $object, 'get_'.$relation->item ) ) {
 					$items = $object->{'get_'.$relation->item}();
-					$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge">'.count( $items ).'</span>' : '';
-					$classLink = 'btn btn-default btn-sm';
+					$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge badge-light">'.count( $items ).'</span>' : '';
+					$classLink = 'btn btn-secondary btn-sm';
 					if( !property_exists( $relation, 'many' ) ) {
 						$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
 					} else {
@@ -173,11 +170,11 @@
 					}
 ?>
 					<div class="col-sm-<?php echo $relation->grid; ?>">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
+						<div class="card">
+							<div class="card-header">
 								<span class="panel-title"><?php echo $relation->name .$nbItems; ?></span>
 							</div>
-							<div class="panel-body">
+							<div class="card-body">
 <?php
 					if( count( $items ) > 0 ) {
 						if( file_exists( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' ) )
@@ -194,9 +191,9 @@
 <?php
 					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
 ?>
-							<div class="panel-footer">
+							<div class="card-footer">
 								<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
-									<span class="glyphicon glyphicon-plus"></span> Ajouter
+									<i class="fas fa-sm fa-plus"></i> Ajouter
 								</a>
 							</div>
 <?php
@@ -224,11 +221,11 @@
 									<ul id="relation-ul" class="list-group"></ul>
 								</div>
 								<div class="modal-footer">
-									<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">
-										<span class="glyphicon glyphicon-backward"></span> Retour
+									<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+										<i class="fas fa-sm fa-caret-left"></i> Retour
 									</button>
 									<button type="submit" class="btn btn-success btn-sm">
-										<span class="glyphicon glyphicon-floppy-disk"></span> Sauvegarder
+										<i class="fas fa-sm fa-caret-save"></i> Sauvegarder
 									</button>
 								</div>
 							</form>
