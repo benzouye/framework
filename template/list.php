@@ -1,27 +1,27 @@
 <?php
 	if( $userCan->admin or $userCan->read ) {
 ?>
-			<div class="panel panel-default">
-				<div class="container">
+			<div class="card">
+				<div class="card-body">
 <?php
 		if( !$parentItem && ( $userCan->admin or $userCan->create ) ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
 <?php
 		}
 		if( $userCan->admin or $userCan->read ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-search"></span> Rechercher</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-search"></span> Rechercher</a>
 <?php
 		}
 		if( count($search) > 0 && ( $userCan->admin or $userCan->read ) ) {
 			if( count($items)>0 ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-remove"></span> Supprimer les filtres</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-remove"></span> Supprimer les filtres</a>
 <?php
 			} else {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-default btn-sm navbar-btn"><span class="glyphicon glyphicon-backward"></span> Retour à la liste</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-backward"></span> Retour à la liste</a>
 <?php
 			}
 		}
@@ -67,16 +67,16 @@
 ?>
 					<tr class="<?php echo $trClass; ?>">
 						<td class="text-center">
-							<a title="Ouvrir" href="index.php?item=<?php echo $page->alias;?>&action=edit&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-default btn-xs">
-								<span class="glyphicon glyphicon-search"></span>
+							<a title="Ouvrir" href="index.php?item=<?php echo $page->alias;?>&action=edit&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
+								<i class="fas fa-xs fa-search"></i>
 							</a>
 						</td>
 <?php
 				if( ( $userCan->admin or $userCan->read ) and $page->alias == 'analyse' ) {
 ?>
 						<td class="text-center">
-							<a title="Résultat" href="index.php?item=<?php echo $page->alias;?>&action=extract&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-default btn-xs">
-								<span class="glyphicon glyphicon-signal"></span>
+							<a title="Résultat" href="index.php?item=<?php echo $page->alias;?>&action=extract&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
+								<i class="fas fa-xs fa-search"></i>
 							</a>
 						</td>
 <?php
@@ -95,7 +95,7 @@
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $element->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button type="submit" title="Supprimer" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></button>
+								<button type="submit" title="Supprimer" class="btn btn-danger btn-sm"><i class="fas fa-xs fa-times"></i></button>
 							</form>
 						</td>
 <?php
