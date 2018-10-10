@@ -493,7 +493,7 @@ class Model {
 		}
 		
 		if( !$colonne->editable ) {
-			$format .= 'readonly="readonly" ';
+			$class .= ' form-control-plaintext ';
 		}
 		
 		if( $colonne->required ) {
@@ -501,7 +501,7 @@ class Model {
 		}
 		
 		if( $colonne->params['type'] == 'select' && isset($colonne->params['autocomplete']) ) $class = "auto-complete";
-		if( $colonne->params['type'] != 'checkbox' ) $format .= 'class ="'.$class.'" ';
+		if( $colonne->params['type'] != 'checkbox' ) $format .= ' class="'.$class.'" ';
 		
 		switch( $colonne->params['type'] ) {
 			case 'password' :
@@ -526,13 +526,13 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$format .= 'value="1" ';
+				$format .= ' value="1" ';
 				if( $valeur == 1 ) $format .= 'checked="checked" ';
 				$html .= '<input '.$format.'>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
-					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" /><a title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>';
+					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" /><a title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-xs"><i class="fas fa-sm fa-times"></i></a>';
 				} else {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
@@ -655,16 +655,16 @@ class Model {
 		if( $pages > 1 ) {
 ?>
 					<nav aria-label="Navigation pages" class="text-center">
-						<ul class="pagination pagination-sm">
+						<ul class="pagination pagination-sm justify-content-center">
 <?php
 			if($paged > 2 && $paged > $range+1 && $showitems < $pages) {
 ?>
-							<li><a title="Première page" href="<?php echo 'index.php?item='.$this->itemName.'&p=1'; ?>">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Première page" href="<?php echo 'index.php?item='.$this->itemName.'&p=1'; ?>">&laquo;</a></li>
 <?php			
 			}
 			if($paged > 1 && $showitems < $pages) {
 ?>
-							<li><a title="Page précédente" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged-1); ?>">&lsaquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Page précédente" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged-1); ?>">&lsaquo;</a></li>
 <?php			
 			}
 
@@ -672,11 +672,11 @@ class Model {
 				if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
 					if( $paged == $i ) {
 ?>
-							<li class="active"><a><?php echo $i; ?></a></li>
+							<li class="page-item active"><a class="page-link"><?php echo $i; ?></a></li>
 <?php				
 					} else {
 ?>
-							<li><a href="<?php echo 'index.php?item='.$this->itemName.'&p='.$i; ?>" class="inactive"><?php echo $i; ?></a></li>
+							<li class="page-item"><a class="page-link" href="<?php echo 'index.php?item='.$this->itemName.'&p='.$i; ?>" class="inactive"><?php echo $i; ?></a></li>
 <?php				
 					}
 				}
@@ -684,12 +684,12 @@ class Model {
 
 			if ($paged < $pages && $showitems < $pages) {
 ?>
-							<li><a title="Page suivante" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged+1); ?>">&rsaquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Page suivante" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged+1); ?>">&rsaquo;</a></li>
 <?php			
 			}
 			if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) {
 ?>
-							<li><a title="Dernière page" href="<?php echo 'index.php?item='.$this->itemName.'&p='.$pages; ?>">&raquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Dernière page" href="<?php echo 'index.php?item='.$this->itemName.'&p='.$pages; ?>">&raquo;</a></li>
 <?php			
 			}
 ?>
