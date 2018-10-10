@@ -4,8 +4,6 @@
 		include( VIEWDIR.'login.php' );
 	} else {
 		// Sinon on affiche la page d'accueil
-?>
-		<p>Hello World !</p>
-<?php
+		echo $manager->getOption('homeText');
 	}
 ?>
