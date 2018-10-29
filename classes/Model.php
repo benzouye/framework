@@ -509,7 +509,7 @@ class Model {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
 				} else {
-					$html .= '<input title="cocher pour changer le mot de passe" class="update-password" type="checkbox" data-name="'.$name.'" />';
+					$html .= '<div class="custom-control custom-checkbox"><input title="cocher pour changer le mot de passe" class="custom-control-input update-password" type="checkbox" id="'.$name.'" data-name="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
 				}
 				break;
 			case 'textarea' :
@@ -528,7 +528,7 @@ class Model {
 			case 'checkbox' :
 				$format .= ' value="1" ';
 				if( $valeur == 1 ) $format .= 'checked="checked" ';
-				$html .= '<input '.$format.'>';
+				$html .= '<div class="custom-control custom-checkbox"><input '.$format.' class="custom-control-input" type="checkbox" id="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
