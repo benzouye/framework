@@ -50,10 +50,10 @@
 			
 			if( ( $adminInput && $user->admin ) or !$adminInput ) {
 ?>
-								<div class="form-group row col-sm-<?php echo $colGrid->div; ?>">
-									<label class="col-sm-<?php echo $colGrid->label; ?> col-form-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
-									<div class="input-group col-sm-<?php echo $colGrid->value; ?>">
-										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control-sm' ); ?>
+								<div class="form-group row col-<?php echo $colGrid->div; ?>">
+									<label class="col-<?php echo $colGrid->label; ?> col-form-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
+									<div class="input-group col-<?php echo $colGrid->value; ?>">
+										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control' ); ?>
 
 									</div>
 								</div>
