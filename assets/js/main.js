@@ -1,6 +1,3 @@
-// Activation des tooltips
-$( document ).tooltip();
-
 // Paramètres régionaux du sélecteur de date
 $( ".datepicker" ).datepicker({
 	firstDay: 1,
