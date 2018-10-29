@@ -51,10 +51,9 @@
 			if( ( $adminInput && $user->admin ) or !$adminInput ) {
 ?>
 								<div class="form-group row col-<?php echo $colGrid->div; ?>">
-									<label class="col-<?php echo $colGrid->label; ?> col-form-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
-									<div class="input-group col-<?php echo $colGrid->value; ?>">
-										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control' ); ?>
-
+									<div class="col-<?php echo $colGrid->label; ?> col-form-label"><?php echo $colonne->nicename; ?></div>
+									<div class="col-<?php echo $colGrid->value; ?>">
+										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' ); ?>
 									</div>
 								</div>
 <?php
