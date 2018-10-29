@@ -112,7 +112,7 @@ INSERT INTO `item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant
 (26,	'groupe',	'Groupes',	'Groupes d\'utilisateurs',	0,	1,	1,	1,	9,	5,	'th',	1,	'2017-10-24 07:47:06',	NULL,	NULL),
 (4,	'home',	'Accueil',	'Bienvenue sur la page d\'accueil',	1,	0,	1,	0,	1,	10,	'home',	1,	'2017-10-24 07:47:06',	1,	'2017-11-13 15:37:49'),
 (5,	'item',	'Eléments',	'Les éléments de construction du site',	0,	0,	1,	1,	9,	3,	'list-alt',	1,	'2017-10-24 07:47:06',	1,	'2017-10-24 13:56:49'),
-(6,	'logout',	'Déconnexion',	'Déconnexion',	1,	0,	1,	0,	10,	2,	'log-out',	1,	'2017-10-24 07:47:06',	1,	'2017-10-27 16:09:36'),
+(6,	'logout',	'Déconnexion',	'Déconnexion',	1,	0,	1,	0,	10,	2,	'sign-out-alt',	1,	'2017-10-24 07:47:06',	1,	'2017-10-27 16:09:36'),
 (8,	'option',	'Configuration',	'Les options du site',	0,	0,	1,	1,	9,	4,	'cog',	1,	'2017-10-24 07:47:06',	1,	'2017-10-24 13:56:42'),
 (27,	'register',	'Enregistrement',	'Formulaire de création de compte',	1,	0,	1,	1,	10,	0,	'check',	1,	'2017-10-25 14:02:39',	1,	'2017-10-27 11:12:53'),
 (48,	'type_analyse',	'Types de tableau',	'Les types de tableaux possibles pour les analyses',	0,	0,	1,	1,	9,	3,	'list',	1,	'2018-01-03 11:45:55',	NULL,	NULL),
@@ -139,7 +139,6 @@ CREATE TABLE `option` (
 INSERT INTO `option` (`id_option`, `alias`, `valeur`, `description`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'keywords',	'',	'Liste des mots clé de la balise meta ',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:22'),
 (3,	'sitedesc',	'',	'Description du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:04'),
-(4,	'siteicon',	'grain',	'L\'alias de la glyphicon à utiliser dans le bandeau titre du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 11:59:25'),
 (5,	'sitetitle',	'',	'Titre du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 11:59:15'),
 (6,	'hometext',	'<p><strong>Bienvenue</strong></p>',	'Contenu de la page d\'accueil',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 16:16:10'),
 (8,	'nbparpage',	'10',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2017-11-03 10:26:59'),
