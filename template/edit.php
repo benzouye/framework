@@ -52,7 +52,7 @@
 ?>
 								<div class="form-group row col-<?php echo $colGrid->div; ?>">
 									<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-									<div class="col-<?php echo $colGrid->value; ?>">
+									<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
 										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' ); ?>
 									</div>
 								</div>
