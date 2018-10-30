@@ -544,7 +544,7 @@ class Model {
 		}
 		
 		if( property_exists( $colonne, 'unit' ) ) {
-			$html .= '<span class="input-group-addon">'.$colonne->unit.'</span>';
+			$html .= '<div class="input-group-append"><span class="input-group-text">'.$colonne->unit.'</span></div>';
 		}
 		
 		return $html;
@@ -586,10 +586,10 @@ class Model {
 				$html .= '<input '.$format.'>';
 				break;
 			case 'number' :
-				$html .= '<span class="input-group-addon">Entre</span><input '.$format.'><span class="input-group-addon">et</span><input '.$format.'>';
+				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et</span></div><input '.$format.'>';
 				break;
 			case 'date' :
-				$html .= '<span class="input-group-addon">Entre le</span><input '.$format.'><span class="input-group-addon">et le</span><input '.$format.'>';
+				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre le</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et le</span></div><input '.$format.'>';
 				break;
 			default :
 				$html .= '<input '.$format.'>';
