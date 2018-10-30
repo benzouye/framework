@@ -1,18 +1,18 @@
 			<form class="form-horizontal" method="POST" action="index.php?item=<?php echo $page->alias;?>">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<span class="panel-title">Critères de recherche</span>
+				<div class="card">
+					<div class="card-header">
+						<span class="card-title">Critères de recherche</span>
 					</div>
-					<div class="panel-body row">
+					<div class="card-body row">
 <?php
 	foreach( $colonnes as $colonne ) {
 		if( $colonne->params['type'] != 'password' && $colonne->params['type'] != 'image' ) {
 			$colGrid = $grille;
 ?>
-						<div class="form-group form-group-sm col-sm-<?php echo $colGrid->div; ?>">
-							<label class="col-sm-<?php echo $colGrid->label; ?>" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
-							<div class="col-sm-<?php echo $colGrid->value; ?> input-group">
-								<?php echo $object->displaySearchInput( $colonne->name, 'form-control' ); ?>
+						<div class="form-group row col-<?php echo $colGrid->div; ?>">
+							<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+							<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
+								<?php echo $object->displaySearchInput( $colonne->name, 'form-control form-control-sm' ); ?>
 
 							</div>
 						</div>
@@ -21,10 +21,10 @@
 	}
 ?>
 					</div>
-					<div class="panel-footer">
+					<div class="card-footer">
 						<input type="hidden" id="search" name="search">
-						<button type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-search"></span> Rechercher</button>
-						<a href="index.php?item=<?php echo $page->alias;?>" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-backward"></span> Retour liste</a>
+						<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-search"></i> Rechercher</button>
+						<a href="index.php?item=<?php echo $page->alias;?>" class="btn btn-secondary btn-sm"><i class="fas fa-sm fa-caret-left"></i> Retour liste</a>
 					</div>
 				</div>
 			</form>
