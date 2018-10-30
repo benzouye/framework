@@ -41,14 +41,9 @@
 			</nav>
 			<main class="bg-light">
 <?php
+	$description = $page->description;
 	if( !$static ) {
-		if( $new && $action == 'edit' ) {
-			$description = $page->description.' <span class="badge">Création</span>';
-		} else {
-			$description = $page->description.' <span class="badge badge-dark">'.$actions[$action].'</span>';
-		}
-	} else {
-		$description = $page->description;
+		$description .= ' <span class="badge badge-dark">'.( $new && $action == 'edit' ? 'Création' : $actions[$action] ).'</span>';
 	}
 	
 	if( $user ) {
