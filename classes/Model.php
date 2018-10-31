@@ -582,8 +582,8 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$format .= 'value="1" ';
-				$html .= '<input '.$format.'>';
+				$format .= ' value="1" ';
+				$html .= '<div class="custom-control custom-checkbox"><input '.$format.' class="custom-control-input" type="checkbox" id="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
 				break;
 			case 'number' :
 				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et</span></div><input '.$format.'>';
