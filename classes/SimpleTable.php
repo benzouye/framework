@@ -57,7 +57,7 @@ class SimpleTable {
 	* @return string
 	*/
 	public function getHtml( $id = 'pivot-table', $css = '' ) {
-		$this->html .= '<table id="'.$id.'" class="simple-table '.$css.'">';
+		$this->html .= '<div class="table-responsive"><table id="'.$id.'" class="simple-table '.$css.'">';
 		$this->html .= '<thead>';
 		
 		// Ligne entête
@@ -114,7 +114,7 @@ class SimpleTable {
 		$this->html .= '</tr>';
 		
 		$this->html .= '</tbody>';
-		$this->html .= '</table>';
+		$this->html .= '</table></div>';
 		
 		return $this->html;
 	}
