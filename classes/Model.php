@@ -627,7 +627,7 @@ class Model {
 				}
 				break;
 			case 'checkbox' :
-				$html = '<span class="glyphicon glyphicon-'.($valeur == 1 ? 'ok' : 'remove').'-circle"></span>';
+				$html = '<span class="fas fa-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
 				break;
 			case 'url' :
 				$html = '<a href="'.$valeur.'" title="Lien">'.$valeur.'</a>';
