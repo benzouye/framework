@@ -98,7 +98,7 @@ class PivotTable {
 	* @return string
 	*/
 	public function getHtml( $id = 'pivot-table', $css = '' ) {
-		$this->html .= '<table id="'.$id.'" class="pivot-table '.$css.'">';
+		$this->html .= '<div class="table-responsive"><table id="'.$id.'" class="pivot-table '.$css.'">';
 		$this->html .= '<thead>';
 		$this->html .= '<tr>';
 		$this->html .= '<th>'.$this->column.'</th>';
@@ -124,7 +124,7 @@ class PivotTable {
 			$this->html .= '</tr>';
 		}
 		$this->html .= '</tbody>';
-		$this->html .= '</table>';
+		$this->html .= '</table></div>';
 		
 		return $this->html;
 	}
