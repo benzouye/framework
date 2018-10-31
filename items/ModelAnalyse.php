@@ -130,6 +130,19 @@
 				'required' => false
 			),
 			(object) array(
+				'name' => 'ordre',
+				'nicename' => 'Ordre',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'number' ),
+				'visible' => true,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
 				'name' => 'grid',
 				'nicename' => 'Taille de la grille',
 				'default' => 6,
