@@ -34,7 +34,7 @@
 		if( count($items)>0 ) {
 ?>
 			<div class="table-responsive">
-			<table class="table table-striped table-hover table-bordered">
+			<table class="table table-sm table-striped table-hover table-bordered">
 				<thead>
 					<tr>
 						<th width="50">Ouvrir</th>
