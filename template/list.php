@@ -6,22 +6,22 @@
 <?php
 		if( !$parentItem && ( $userCan->admin or $userCan->create ) ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-plus"></span> Ajouter</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-secondary btn-sm"><span class="fas fa-plus"></span> Ajouter</a>
 <?php
 		}
 		if( $userCan->admin or $userCan->read ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-search"></span> Rechercher</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-secondary btn-sm"><span class="fas fa-search"></span> Rechercher</a>
 <?php
 		}
 		if( count($search) > 0 && ( $userCan->admin or $userCan->read ) ) {
 			if( count($items)>0 ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-remove"></span> Supprimer les filtres</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-times"></span> Supprimer les filtres</a>
 <?php
 			} else {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="glyphicon glyphicon-backward"></span> Retour à la liste</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-caret-left"></span> Retour à la liste</a>
 <?php
 			}
 		}
