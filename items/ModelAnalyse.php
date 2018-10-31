@@ -4,7 +4,7 @@
 		'table' => DBPREF.'analyse',
 		'single' => 'analyse',
 		'plural' => 'analyses',
-		'orderby' => 'id_analyse',
+		'orderby' => 'ordre',
 		'columns' => array(
 			(object) array(
 				'name' => 'id_analyse',
