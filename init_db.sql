@@ -155,6 +155,7 @@ CREATE TABLE `analyse` (
   `colonne` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ligne` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
   `flag_accueil` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `grid` tinyint(3) unsigned NOT NULL DEFAULT '6',
   `date_cre` datetime NOT NULL,
   `user_cre` int(11) NOT NULL,
