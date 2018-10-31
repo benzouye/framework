@@ -48,6 +48,7 @@
 			(object) array(
 				'name' => 'id_type_analyse',
 				'nicename' => 'Type de tableau',
+				'align' => 'center',
 				'default' => 1,
 				'grid' => (object) array(
 					'div' => 6,
@@ -119,6 +120,7 @@
 			(object) array(
 				'name' => 'flag_accueil',
 				'nicename' => 'Visible sur page d\'accueil',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -132,6 +134,7 @@
 			(object) array(
 				'name' => 'ordre',
 				'nicename' => 'Ordre',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
