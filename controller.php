@@ -71,6 +71,21 @@
 			$manager->setError( sprintf( M_VIEWERR, $page->alias ) );
 		}
 	} else {
+		// Traitement des actions propre à l'objet
+		if( isset( $_GET['item'], $_GET['oa'], $_GET['oai'] ) ) {
+			if( $userCan->admin or $userCan->update ) {
+				$nomClasse = ucfirst($_GET['item']);
+				$cibleAction = new $nomClasse( $bdd, $manager, ${'model_'.$_GET['item']} );
+				if( method_exists( $cibleAction, $_GET['oa'] ) ) {
+					$cibleAction->{$_GET['oa']}();
+				} else {
+					$manager->setError( sprintf( M_CLASSERR, htmlspecialchars($_GET['oa']) ) );
+				}
+			} else {
+				$manager->setError( M_ACCESSERR );
+			}
+		}
+		
 		// Traitement création/mise à jour/suppression
 		if( isset( $_POST['action'], $_POST['item'], $_POST['id'] ) ) {
 			$nomClasse = ucfirst($_POST['item']);
@@ -132,18 +147,6 @@
 		// Chargement des relations
 		$relations = $object->getRelations();
 		
-		// Chargement des impressions
-		$prints = $object->getPrints();
-		$visiblePrints = false;
-		foreach( $prints as $print ) {
-			if( $print->visible )
-				$visiblePrints = true;
-		}
-		
-		// Chargement des actions
-		$acts = $object->getActions();
-		$visibleActs = false;
-		
 		// Initialisation de l'action demandée
 		if( isset( $_GET['action'] ) ) {
 			if( array_key_exists( $_GET['action'], $actions ) ) {
@@ -201,18 +204,24 @@
 		// Chargement de l'item hors création
 		$item = $object->getItem( $id, $action );
 		
-		// Traitement des actions liées
-		if( isset( $_GET['act'] ) ) {
-			foreach( $acts as $act ) {
-				if( $act->visible )
-					$visibleActs = true;
-				if( $act->alias == $_GET['act'] ) {
-					if( file_exists( TEMPLDIR.'action.'.$page->alias.'.'.$act->alias.'.php' ) ) {
-						require_once( TEMPLDIR.'action.'.$page->alias.'.'.$act->alias.'.php' );
-					} else {
-						$manager->setError( sprintf( M_TMPLERR, 'action.'.$page->alias.'.'.$act->alias ) );
-					}
-					break;
+		// Chargement des impressions et actions
+		$visiblePrints = false;
+		$prints = array();
+		$visibleObjectActions = false;
+		$objectActions = array();
+		if( $variant ) {
+			if( method_exists( $object, 'getPrints' ) ) {
+				$prints = $object->getPrints();
+				foreach( $prints as $print ) {
+					if( $print->visible )
+						$visiblePrints = true;
+				}
+			}
+			if( method_exists( $object, 'getObjectActions' ) ) {
+				$objectActions = $object->getObjectActions();
+				foreach( $objectActions as $objectAction ) {
+					if( $objectAction->visible )
+						$visibleObjectActions = true;
 				}
 			}
 		}
