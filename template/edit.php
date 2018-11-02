@@ -4,14 +4,22 @@
 					<div class="card">
 						<div class="card-header">
 <?php
+		// Bouton suppression
 		if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-times"></i> Supprimer</button>
+								<button id="item-delete" type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-times"></i> Supprimer</button>
 							</form>
 <?php
+		}
+		
+		// Boutons d'action
+		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions ) {
+			foreach( $objectActions as $objectAction ) {
+				echo $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' );
+			}
 		}
 ?>
 							<span class="card-title">Informations principales</span>
@@ -125,18 +133,6 @@
 ?>
 									</div>
 <?php
-		}
-		
-		// Boutons d'action
-		if( count( $acts ) > 0 && !$new && $visibleActs ) {
-			foreach( $acts as $act ) {
-				if( $act->visible ) {
-					$actionLink = 'index.php?item='.$page->alias.'&action=edit&id='.$id.'&act='.$act->alias;
-?>
-								<a class="btn btn-secondary btn-sm" href="<?php echo $actionLink; ?>" ><i class="fas fa-xs fa-<?php echo $act->icon; ?>"></i> <?php echo $act->nicename; ?></a></li>
-<?php
-				}
-			}
 		}
 		
 		if( $parentLink && !$new && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
