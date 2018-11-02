@@ -84,6 +84,9 @@ section {
 	background: #343a40!important;
 	color: #fff;
 }
+.card-title {
+	font-weight: bold;
+}
 
 th {
 	text-align: center;
@@ -102,6 +105,10 @@ th {
     background-color: #343a40;
 }
 
+#item-delete {
+	margin-left: 5px;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
@@ -116,4 +123,10 @@ th {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+@media print {  
+	.no-print, .no-print * {
+		display: none !important;
+	}
 }
