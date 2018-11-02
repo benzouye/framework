@@ -188,7 +188,8 @@ CREATE TABLE `type_analyse` (
 
 INSERT INTO `type_analyse` (`id_type_analyse`, `libelle`, `classe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'Tableau droit',	'SimpleTable',	1,	'2018-01-03 11:47:07',	NULL,	NULL),
-(2,	'Tableau croisé',	'PivotTable',	1,	'2018-01-03 11:47:22',	NULL,	NULL);
+(2,	'Tableau croisé',	'PivotTable',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
+(3,	'Valeur unique',	'SingleValue',	1,	'2018-01-03 11:47:22',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `type_document`;
 CREATE TABLE `type_document` (
