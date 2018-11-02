@@ -119,7 +119,7 @@ class PivotTable {
 			$this->html .= '<tr>';
 			$this->html .= '<'.$tag.'>'.$row.'</'.$tag.'>';
 			foreach( $columns as $column => $value ) {
-				$this->html .= '<'.$tag.' class="text-center">'.$value['count'].'</'.$tag.'><'.$tag.' class="text-center">'.$value[$this->indicator].'</'.$tag.'>';
+				$this->html .= '<'.$tag.' class="text-center">'.$value['count'].'</'.$tag.'><'.$tag.' class="text-right">'.number_format( $value[$this->indicator], 2, ',', ' ').'</'.$tag.'>';
 			}
 			$this->html .= '</tr>';
 		}
