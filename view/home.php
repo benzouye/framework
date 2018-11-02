@@ -4,7 +4,7 @@
 		include( VIEWDIR.'login.php' );
 	} else {
 		// Sinon on affiche la page d'accueil
-		echo echo $manager->getOption('homeText');
+		echo $manager->getOption('homeText');
 		$analyse = new Analyse( $bdd, $manager, $model_analyse );
 		$analyses = $analyse->getItems();
 		
@@ -22,7 +22,6 @@
 				if( $nbElements ) {
 					switch( $type ) {
 						case 'PivotTable' :
-							//&& $element->colonne != '' && $element->ligne != '' ) {
 							$table = new PivotTable( $datas, $element->colonne, $element->ligne, $element->indicator );
 							$html = $table->getHtml( $idTable, $classeTable );
 							break;
@@ -30,13 +29,9 @@
 							$table = new SimpleTable( $datas, $element->indicator, $element->percent );
 							$html = $table->getHtml( $idTable, $classeTable );
 							break;
-						case 'Single' :
-							$html = '<p>'.$element->indicator.' : '.$datas[0]->{$element->indicator}.'</p>';
+						case 'SingleValue' :
+							$html = $element->indicator.' : '.$datas[0]->{$element->indicator};
 							break;
-						case 'Chart' :
-							$html = '';
-						default :
-							$html = '';
 					}
 							
 				} else {
