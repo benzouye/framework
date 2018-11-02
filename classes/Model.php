@@ -7,10 +7,10 @@ class Model {
 	protected $parentItem;
 	protected $parentId = false;
 	protected $single;
-	protected $prints;
-	protected $actions;
 	protected $plural;
 	protected $columns;
+	protected $objectActions;
+	protected $prints;
 	protected $orderby;
 	protected $order;
 	protected $items;
@@ -63,6 +63,20 @@ class Model {
 			$this->manager->setError( sprintf( M_IDERR, $msg ) );
 		}
 		
+		// Actions
+		$this->objectActions = array();
+		if( property_exists( $model, 'objectActions' ) ) {
+			foreach( $model->objectActions as $objectAction ) {
+				$this->objectActions[] = $objectAction;
+			}
+		}
+		
+		// Impressions
+		$this->prints = array();
+		if( property_exists( $model, 'prints' ) ) {
+			$this->objectActions[] = $model->prints;
+		}
+		
 		// Relations
 		$this->relations = array();
 		if( property_exists( $model, 'relations' ) ) {
@@ -73,18 +87,6 @@ class Model {
 		$this->parentItem = false;
 		if( property_exists( $model, 'parentItem' ) ) {
 			$this->parentItem = $model->parentItem;
-		}
-		
-		// Impressions
-		$this->prints = array();
-		if( property_exists( $model, 'prints' ) ) {
-			$this->prints = $model->prints;
-		}
-		
-		// Actions
-		$this->actions = array();
-		if( property_exists( $model, 'actions' ) ) {
-			$this->actions = $model->actions;
 		}
 	}
 	
@@ -102,14 +104,6 @@ class Model {
 	
 	public function getColumns() {
 		return $this->columns;
-	}
-	
-	public function getPrints() {
-		return $this->prints;
-	}
-	
-	public function getActions() {
-		return $this->actions;
 	}
 	
 	public function getColumn( $name ) {
@@ -267,6 +261,39 @@ class Model {
 		finally {
 			return $this->currentItem;
 		}
+	}
+	
+	public function getPrints() {
+		return $this->prints;
+	}
+	
+	public function getObjectActions() {
+		return $this->objectActions;
+	}
+	
+	public function displayObjectAction( $page, $alias, $id, $action ) {
+		$display = '';
+		$cible = $this->getItem( $id );
+		$requestedAction = false;
+		
+		foreach( $this->objectActions as $objectAction ) {
+			if( $objectAction->alias == $alias && $objectAction->visible ) {
+				$requestedAction = $objectAction;
+				break;
+			}
+		}
+		
+		if( $requestedAction ) {
+			if( $action == 'edit' ) {
+				$actionLink = 'index.php?item='.$page.'&action=edit&id='.$id.'&oa='.$requestedAction->alias.'&oai='.$id;
+				$display = '<a class="btn btn-'.$requestedAction->color.' btn-sm float-right" href="'.$actionLink.'" ><i class="fas fa-sm fa-'.$requestedAction->icon.'"></i> '.$requestedAction->nicename.'</a>';
+			}
+			if( $action == 'list' ) {
+				$actionLink = 'index.php?item='.$page.'&oa='.$requestedAction->alias.'&oai='.$id;
+				$display = '<a title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="fas fa-sm fa-'.$requestedAction->icon.'"></i></a>';
+			}
+		}
+		return $display;
 	}
 	
 	public function getRelations() {
