@@ -51,6 +51,13 @@
 <?php
 				}
 			}
+			foreach( $objectActions as $objectAction ) {
+				if( $objectAction->visible ) {
+?>
+						<th><?php echo $objectAction->nicename; ?></th>
+<?php
+				}
+			}
 			if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
 						<th width="50">Suppr.</th>
@@ -88,6 +95,11 @@
 						<td class="<?php echo $tdClass; ?>"><?php echo $object->displayField( $colonne->name, $element->{$colonne->name} ); ?></td>
 <?php
 					}
+				}
+				foreach( $objectActions as $objectAction ) {
+?>
+						<td class="text-center"><?php echo $object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
+<?php
 				}
 				if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
