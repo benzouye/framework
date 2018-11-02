@@ -4,6 +4,9 @@
 		include( VIEWDIR.'login.php' );
 	} else {
 		// Sinon on affiche la page d'accueil
+?>
+				<div class="row">
+<?php
 		echo $manager->getOption('homeText');
 		$analyse = new Analyse( $bdd, $manager, $model_analyse );
 		$analyses = $analyse->getItems();
