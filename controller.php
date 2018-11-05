@@ -186,13 +186,14 @@
 		
 		// Traitement recherche
 		$criteres = '';
+		$paginate = $_SESSION['action'] == 'print' ? false : true;
 		if( count($search) > 0 ) {
-			$items = $object->getItems( $search, true, $p );
+			$items = $object->getItems( $search, $paginate, $p );
 			$criteres = '<span class="search">';
 			$criteres .= $object->getSearchCriteria( $search );
 			$criteres .= '</span>';
 		} else {
-			$items = $object->getItems( null, true, $p );
+			$items = $object->getItems( null, $paginate, $p );
 		}
 		$manager->refreshData();
 		
