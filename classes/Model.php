@@ -74,7 +74,7 @@ class Model {
 		// Impressions
 		$this->prints = array();
 		if( property_exists( $model, 'prints' ) ) {
-			$this->prints[] = $model->prints;
+			$this->prints = $model->prints;
 		}
 		
 		// Relations
