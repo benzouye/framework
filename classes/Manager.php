@@ -305,7 +305,7 @@ class Manager {
 ?>
 				<div style="display: none;" class="alert alert-danger alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-					<span class="glyphicon glyphicon-alert"></span> <?php echo $erreur; ?>
+					<i class="fas fa-exclamation-triangle"></i> <?php echo $erreur; ?>
 				</div>
 <?php			
 			}
@@ -318,7 +318,7 @@ class Manager {
 ?>
 				<div style="display: none;" class="alert alert-info alert-dismissible" role="alert">
 					<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-					<span class="glyphicon glyphicon-ok"></span> <?php echo $message; ?>
+					<i class="fas fa-check"></i> <?php echo $message; ?>
 				</div>
 <?php			
 			}
