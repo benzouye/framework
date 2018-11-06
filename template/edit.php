@@ -14,6 +14,14 @@
 							</form>
 <?php
 		}
+		// Bouton création
+		if( ( $userCan->admin or $userCan->create ) and !$parentItem and !$new ) {
+?>
+							<a href="index.php?item=<?php echo $page->alias; ?>&action=edit" class="btn btn-secondary btn-sm float-right">
+								<i class="fas fa-sm fa-plus"></i> Nouveau
+							</a>
+<?php
+		}
 		
 		// Boutons d'action
 		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions ) {
