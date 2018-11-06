@@ -66,9 +66,7 @@ class Model {
 		// Actions
 		$this->objectActions = array();
 		if( property_exists( $model, 'objectActions' ) ) {
-			foreach( $model->objectActions as $objectAction ) {
-				$this->objectActions[] = $objectAction;
-			}
+			$this->objectActions = $model->objectActions;
 		}
 		
 		// Impressions
@@ -335,8 +333,8 @@ class Model {
 						case 'checkbox' :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' = 1 '
-									: $colonne->nicename.' coché'.$this->searchSep;
+									? 'AND '.$colonne->name.' = '.$valeur
+									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
 							}
 							break;
 						case 'date' :
@@ -591,10 +589,10 @@ class Model {
 			$class .= ' datepicker ';
 		}
 		
-		if( $class && $colonne->params['type'] != 'checkbox' ) $format .= 'class ="'.$class.'" ';
+		if( $class ) $format .= 'class ="'.$class.'" ';
 		
 		foreach( $colonne->params as $key=>$value ) {
-			if( $key != 'item' && $key != 'columnKey' && $key != 'columnLabel' && $key != 'where' )
+			if( $key != 'item' && $key != 'columnKey' && $key != 'columnLabel' && $key != 'where' && $key != 'disabled' )
 			$format .= $key.'="'.$value.'" ';
 		}
 		
@@ -609,8 +607,11 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$format .= ' value="1" ';
-				$html .= '<div class="custom-control custom-checkbox"><input '.$format.' class="custom-control-input" type="checkbox" id="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
+				$html .= '<select '.$format.'>';
+				$html .= '<option selected="selected" value>-- Tout --</option>';
+				$html .= '<option value="0">Non</option>';
+				$html .= '<option value="1">Oui</option>';
+				$html .= '</select>';
 				break;
 			case 'number' :
 				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et</span></div><input '.$format.'>';
