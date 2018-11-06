@@ -26,11 +26,11 @@
 		$writer->save($chemin);
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-backward"></span> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
 			</a>
 			<a href="<?php echo $lien; ?>" download="<?php echo $nom; ?>" class="btn btn-success btn-sm">
-				<span class="glyphicon glyphicon-upload"></span> Télécharger ces données au format XLS
+				<i class="fas fa-sm fa-upload"></i> Télécharger ces données au format XLS
 			</a>
 		</p>
 		<table class="table table-striped table-hover table-bordered">
@@ -71,7 +71,7 @@
 	}
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-default btn-sm">
-				<span class="glyphicon glyphicon-backward"></span> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
 			</a>
 		</p>
