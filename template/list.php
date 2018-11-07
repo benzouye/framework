@@ -97,9 +97,11 @@
 					}
 				}
 				foreach( $objectActions as $objectAction ) {
+					if( $objectAction->visible ) {
 ?>
 						<td class="text-center"><?php echo $object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
 <?php
+					}
 				}
 				if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
