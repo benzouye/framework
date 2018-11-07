@@ -333,7 +333,7 @@ class Model {
 						case 'checkbox' :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' = '.$valeur
+									? ' AND '.$colonne->name.' = '.$valeur
 									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
 							}
 							break;
