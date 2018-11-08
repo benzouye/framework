@@ -32,7 +32,7 @@
 		foreach( $menus as $menu ) {
 			$liClass = $page->alias == $menu->alias ? 'class="active" ' : '';
 ?>
-					<li <?php echo $liClass; ?>><a href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-<?php echo $menu->glyphicon; ?>"></i> <?php echo $menu->nom; ?></a></li>
+					<li <?php echo $liClass; ?>><a href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a></li>
 <?php
 		}
 	}
@@ -68,7 +68,7 @@
 				foreach( $menus as $menu ) {
 					$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
-								<a class="dropdown-item <?php echo $liClass; ?>" href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?php echo $menu->glyphicon; ?>"></i> <?php echo $menu->nom; ?></a>
+								<a class="dropdown-item <?php echo $liClass; ?>" href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a>
 <?php
 				}
 			}
@@ -83,6 +83,6 @@
 ?>
 				<section class="container-fluid">
 					<div id="header">
-						<h1><i class="fas fa-<?php echo $page->glyphicon; ?>"></i> <?php echo $page->nom; ?></h1>
+						<h1><i class="fas fa-<?php echo $page->icon; ?>"></i> <?php echo $page->nom; ?></h1>
 						<p><?php echo $description; ?></p>
 					</div>
