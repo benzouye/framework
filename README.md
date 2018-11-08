@@ -189,7 +189,7 @@ In each item description file, you can add a "prints" element, as an array conta
 
 To define the each print behavior, you will need to :
 
-* create a PHP file named like this print.{item\_name}.{print\_alias}.php
+* create a PHP file in the template directory named like this print.{item\_name}.{print\_alias}.php
 
 # TODO
 
