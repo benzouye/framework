@@ -152,10 +152,10 @@
 	);
 	
 	// Classes CSS des états
-	$classes = array(
-		1 => 'danger',
-		2 => 'info',
-		3 => 'success'
+	$stateBgClasses = array(
+		1 => 'bg-danger',
+		2 => 'bg-primary',
+		3 => 'bg-success'
 	);
 	
 	/*
