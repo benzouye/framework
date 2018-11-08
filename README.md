@@ -147,7 +147,7 @@ Here is the different types currently accepted :
   Select input implies a link with another item (i.e. foreign key). So you have to define this link with 3 attributes :
   1. item (string) : name of the linked item
   2. columnKey (string) : column name for select option value (mainly id_{item\_name})
-  3. columnLabel (string) : column name for select option text
+  3. columnLabel (string) : column name for select option label
 
 ### Parent/Child Relations
 
@@ -190,3 +190,10 @@ In each item description file, you can add a "prints" element, as an array conta
 To define the each print behavior, you will need to :
 
 * create a PHP file in the template directory named like this print.{item\_name}.{print\_alias}.php
+
+### ReadOnly States
+
+In each item description file, you can add a "readOnlyStates" element, as an array containing PHP objects composed like this :
+
+item : string, alias of the item source for state
+ids : array, list of id_item value to be considered as readOnly states
