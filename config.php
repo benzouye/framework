@@ -105,7 +105,7 @@
 	// Nom de la base
 	define( 'DBNAME' , 'basename' );
 	// Préfixe des tables
-	define( 'DBPREF' , '' );
+	define( 'DBPREF' , 'prefix_' );
 	// Encodage PHP/BDD
 	define( 'DBCHAR' , 'UTF8' );
 	// Gestion des erreurs
