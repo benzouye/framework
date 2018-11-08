@@ -5,15 +5,6 @@
 						<div class="card-header">
 <?php
 		// Bouton suppression
-		$readOnly = false;
-		foreach( $object->getReadOnlyStates() as $readOnlyState ) {
-			if( property_exists( $item, $readOnlyState->column ) ) {
-				if( in_array( $item->{$readOnlyState->column}, $readOnlyState->values ) ) {
-					$readOnly = true;
-				}
-			}
-		}
-		
 		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and !$readOnly ) {
 ?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
