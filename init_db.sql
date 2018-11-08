@@ -128,7 +128,7 @@ CREATE TABLE `prefix_item` (
   `admin` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `menu` tinyint(3) unsigned DEFAULT '0',
   `menu_order` tinyint(3) unsigned DEFAULT '0',
-  `glyphicon` varchar(35) COLLATE utf8_unicode_ci DEFAULT 'star',
+  `icon` varchar(35) COLLATE utf8_unicode_ci DEFAULT 'star',
   `user_cre` int(11) DEFAULT '1',
   `date_cre` datetime DEFAULT NULL,
   `user_maj` int(11) DEFAULT NULL,
@@ -141,7 +141,7 @@ CREATE TABLE `prefix_item` (
   CONSTRAINT `item_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `prefix_item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant`, `active`, `admin`, `menu`, `menu_order`, `glyphicon`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+INSERT INTO `prefix_item` (`id_item`, `alias`, `nom`, `description`, `static`, `variant`, `active`, `admin`, `menu`, `menu_order`, `icon`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (50,	'analyse',	'Analyses',	'Les différentes extractions possibles',	0,	1,	1,	0,	1,	200,	'chart-bar',	1,	'2018-10-29 18:20:27',	1,	'2018-10-31 17:24:48'),
 (40,	'document',	'Documents',	'Les documents liés aux différents éléments',	0,	1,	1,	0,	0,	0,	'file-alt',	1,	'2017-11-06 11:11:49',	1,	'2017-11-13 15:18:25'),
 (32,	'etat',	'Etats',	'Les états d\'inscription possibles',	0,	0,	1,	1,	5,	3,	'check',	1,	'2017-11-02 16:55:34',	1,	'2017-11-02 17:22:06'),
