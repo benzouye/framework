@@ -70,7 +70,7 @@
 <?php
 			foreach( $items as $element ) {
 				$tdClass = '';
-				$trClass = property_exists( $element, 'id_etat' ) ? $classes[$element->id_etat] : '';
+				$trClass = property_exists( $element, 'id_etat' ) ? $stateBgClasses[$element->id_etat] : '';
 ?>
 					<tr class="<?php echo $trClass; ?>">
 						<td class="text-center">
