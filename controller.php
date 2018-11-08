@@ -2,6 +2,7 @@
 	// Initialisation variables générales
 	$logout = false;
 	$register = false;
+	$readOnly = false;
 	$template = '';
 	$emails = array();
 	$emailsOrga = array();
@@ -204,6 +205,15 @@
 		
 		// Chargement de l'item hors création
 		$item = $object->getItem( $id, $action );
+		
+		// Gestion readonly state
+		foreach( $object->getReadOnlyStates() as $readOnlyState ) {
+			if( property_exists( $item, $readOnlyState->column ) ) {
+				if( in_array( $item->{$readOnlyState->column}, $readOnlyState->values ) ) {
+					$readOnly = true;
+				}
+			}
+		}
 		
 		// Chargement des impressions et actions
 		$visiblePrints = false;
