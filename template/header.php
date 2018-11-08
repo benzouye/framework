@@ -43,7 +43,13 @@
 <?php
 	$description = $page->description;
 	if( !$static ) {
-		$description .= ' <span class="badge badge-dark">'.( $new && $action == 'edit' ? 'Création' : $actions[$action] ).'</span>';
+		$badgeAction = '';
+		if( $readOnly ) {
+			$badgeAction = 'Consultation';
+		} else {
+			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
+		}
+		$description .= ' <span class="badge badge-dark">'.$badgeAction.'</span>';
 	}
 	
 	if( $user ) {
