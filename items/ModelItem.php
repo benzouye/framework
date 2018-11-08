@@ -144,7 +144,7 @@
 				'required' => false
 			),
 			(object) array(
-				'name' => 'glyphicon',
+				'name' => 'icon',
 				'nicename' => 'Icône',
 				'align' => 'center',
 				'grid' => (object) array(
