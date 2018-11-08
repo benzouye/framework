@@ -164,9 +164,32 @@ To do so, you need to add :
 
 ### Actions
 
+In each item description file, you can add a "objectAction" element, as an array containing PHP objects composed like this :
+
+* alias : string, name to be used in code (ie no accent, uppercase or special character)
+* nicename: string, action display name
+* visible : boolean, determine wether a button is displayed or not on list and edit page
+* icon : string, fontawesome icon alias to display on buttons
+* color : string, bootstrap colorscheme to display (primary, secondary, dark, light, success, warning, danger )
+
+To make these actions effective, you will need to :
+
+* declare this item "variant" (complexe) in item management screen
+* create a PHP class extending the existing Model class containing at least a method named as the action alias performing what you need
 
 ### Prints
 
+In each item description file, you can add a "prints" element, as an array containing PHP objects composed like this :
+
+* alias : string, name to be used in code (ie no accent, uppercase or special character)
+* nicename: string, action display name
+* visible : boolean, determine wether a link is displayed or not on edit page
+* separator : boolean, determine if the link is just a separator in prints list
+* pagination : boolean, determine if the print needs to be paginate
+
+To define the each print behavior, you will need to :
+
+* create a PHP file named like this print.{item\_name}.{print\_alias}.php
 
 # TODO
 
