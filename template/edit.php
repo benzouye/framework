@@ -39,7 +39,7 @@
 			}
 		}
 ?>
-							<span class="card-title">Informations principales</span> <span class="badge badge-light"><?php var_dump($readOnly); ?></span>
+							<span class="card-title">Informations principales</span>
 						</div>
 						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
 							<input type="hidden" name="action" value="set"/>
