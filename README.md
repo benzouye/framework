@@ -196,4 +196,4 @@ To define the each print behavior, you will need to :
 In each item description file, you can add a "readOnlyStates" element, as an array containing PHP objects composed like this :
 
 * column : string, item db column name for state
-* ids : array, list of values to be considered as readOnly states
+* values : array, list of values to be considered as readOnly states
