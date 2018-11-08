@@ -7,8 +7,8 @@
 		'orderby' => 'date_cre DESC',
 		'readOnlyStates' => array(
 			(object) array(
-				'item' => 'etat',
-				'ids' => array( 3 ),
+				'column' => 'id_etat',
+				'values' => array( 3 ),
 			),
 		),
 		'columns' => array(
