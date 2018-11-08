@@ -63,6 +63,12 @@ class Model {
 			$this->manager->setError( sprintf( M_IDERR, $msg ) );
 		}
 		
+		// ReadOnly
+		$this->readOnlyStates = array();
+		if( property_exists( $model, 'readOnlyStates' ) ) {
+			$this->readOnlyStates = $model->readOnlyStates;
+		}
+		
 		// Actions
 		$this->objectActions = array();
 		if( property_exists( $model, 'objectActions' ) ) {
@@ -259,6 +265,10 @@ class Model {
 		finally {
 			return $this->currentItem;
 		}
+	}
+	
+	public function getReadOnlyStates() {
+		return $this->readOnlyStates;
 	}
 	
 	public function getPrints() {
