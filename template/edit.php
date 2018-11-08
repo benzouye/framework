@@ -7,8 +7,8 @@
 		// Bouton suppression
 		$readOnly = false;
 		foreach( $object->getReadOnlyStates() as $readOnlyState ) {
-			if( property_exists( $item, 'id_'.$readOnlyState->item ) ) {
-				if( in_array( $item->{'id_'.$readOnlyState->item}, $readOnlyState->ids ) ) {
+			if( property_exists( $item, $readOnlyState->column ) ) {
+				if( in_array( $item->{$readOnlyState->column}, $readOnlyState->values ) ) {
 					$readOnly = true;
 				}
 			}
