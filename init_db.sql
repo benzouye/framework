@@ -243,4 +243,23 @@ CREATE TABLE `prefix_utilisateur` (
 INSERT INTO `prefix_utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'admin',	'$2y$10$2CrYdHmPrL1wqiWsGCNoguvVTra.ALW5/6vjH3ofodG7JW1QBEXrK',	'admin@mydomain.com',	1,	2,	'',	1,	1,	'2017-10-24 07:47:06',	1,	'2018-11-08 13:37:37');
 
+
+DROP TABLE IF EXISTS `prefix_exemple`;
+CREATE TABLE `prefix_exemple` (
+  `id_exemple` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `id_etat` int(11) unsigned NOT NULL DEFAULT '1',
+  `user_cre` int(11) NOT NULL,
+  `date_cre` datetime NOT NULL,
+  `user_maj` int(11) DEFAULT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_exemple`),
+  KEY `id_etat` (`id_etat`),
+  KEY `user_cre` (`user_cre`),
+  KEY `user_maj` (`user_maj`),
+  CONSTRAINT `prefix_exemple_ibfk_1` FOREIGN KEY (`id_etat`) REFERENCES `prefix_etat` (`id_etat`),
+  CONSTRAINT `prefix_exemple_ibfk_2` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_exemple_ibfk_3` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 -- 2018-11-08 12:37:51
