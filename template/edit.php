@@ -5,7 +5,16 @@
 						<div class="card-header">
 <?php
 		// Bouton suppression
-		if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
+		$readOnly = false;
+		foreach( $object->getReadOnlyStates() as $readOnlyState ) {
+			if( property_exists( $item, 'id_'.$readOnlyState->item ) ) {
+				if( in_array( $item->{'id_'.$readOnlyState->item}, $readOnlyState->ids ) ) {
+					$readOnly = true;
+				}
+			}
+		}
+		
+		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and !$readOnly ) {
 ?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
@@ -24,13 +33,13 @@
 		}
 		
 		// Boutons d'action
-		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions ) {
+		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions and !$readOnly ) {
 			foreach( $objectActions as $objectAction ) {
 				echo $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' );
 			}
 		}
 ?>
-							<span class="card-title">Informations principales</span>
+							<span class="card-title">Informations principales</span> <span class="badge badge-light"><?php var_dump($readOnly); ?></span>
 						</div>
 						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
 							<input type="hidden" name="action" value="set"/>
@@ -69,7 +78,13 @@
 								<div class="form-group row col-<?php echo $colGrid->div; ?>">
 									<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
 									<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
-										<?php echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' ); ?>
+<?php
+				if( $readOnly ) {
+					echo $object->displayField( $colonne->name, $valeur );
+				} else {
+					echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' );
+				}
+?>
 									</div>
 								</div>
 <?php
@@ -80,7 +95,7 @@
 							</div>
 							<div class="card-footer">
 <?php
-		if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
+		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and !$readOnly ) {
 ?>
 								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
 									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
@@ -192,7 +207,7 @@
 ?>
 							</div>
 <?php
-					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
+					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and !$readOnly ) {
 ?>
 							<div class="card-footer">
 								<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
