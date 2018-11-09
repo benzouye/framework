@@ -197,3 +197,10 @@ In each item description file, you can add a "readOnlyStates" element, as an arr
 
 * column : string, item db column name for state
 * values : array, list of values to be considered as readOnly states
+
+### Default filters
+
+In each item description file, you can add a "defaultFilters" element, as an array containing elements like this :
+
+* key : string, db column name for filter
+* value : mixed, value filtered
