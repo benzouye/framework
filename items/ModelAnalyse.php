@@ -66,6 +66,19 @@
 				'required' => true
 			),
 			(object) array(
+				'name' => 'options',
+				'nicename' => 'Paramètres JSON',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'textarea', 'rows' => 5 ),
+				'visible' => false,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
 				'name' => 'indicator',
 				'nicename' => 'Champ Indicateur',
 				'grid' => (object) array(
