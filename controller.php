@@ -64,6 +64,9 @@
 	$title = $manager->getOption('sitetitle');
 	if( $static ) {
 		// Pour une page statique
+		$_SESSION['search'] = array();
+		$_SESSION['item'] = $page->alias;
+		$_SESSION['page'] = 1;
 		$action = 'list';
 		$title = $page->nom;
 		if( file_exists( VIEWDIR.$page->alias.'.php' ) ) {
@@ -148,6 +151,9 @@
 		// Chargement des relations
 		$relations = $object->getRelations();
 		
+		// Chargement des filtres par défaut
+		$defaultFilters = $object->getDefaultFilters();
+		
 		// Initialisation de l'action demandée
 		if( isset( $_GET['action'] ) ) {
 			if( array_key_exists( $_GET['action'], $actions ) ) {
@@ -169,7 +175,7 @@
 		
 		// Réinitialisation session si changement item
 		if( $_SESSION['item'] != $page->alias ) {
-			$_SESSION['search'] = array();
+			$_SESSION['search'] = $defaultFilters;
 			$_SESSION['item'] = $page->alias;
 			$_SESSION['page'] = 1;
 		}
