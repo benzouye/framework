@@ -10,7 +10,12 @@
 			
 		if( isset( $_GET['parent_id'] ) && $_GET['parent_item'] == 'analyse' ) {
 			$item = $object->getItem( intval($_GET['parent_id']) );
-			$items = $object->getDatas();
+			if( isset( $_GET['object'] ) ) {
+				$items['object'] = $item;
+				$items['data'] = $object->getDatas();
+			} else {
+				$items = $object->getDatas();
+			}
 		}
 		
 		if( isset( $_GET['relation'] ) ) {
