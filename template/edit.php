@@ -5,7 +5,7 @@
 						<div class="card-header">
 <?php
 		// Bouton suppression
-		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and !$readOnly ) {
+		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and ( !$readOnly or $userCan->admin ) ) {
 ?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
@@ -24,7 +24,7 @@
 		}
 		
 		// Boutons d'action
-		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions and !$readOnly ) {
+		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions and ( !$readOnly or $userCan->admin ) ) {
 			foreach( $objectActions as $objectAction ) {
 				echo $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' );
 			}
@@ -64,13 +64,13 @@
 				$adminInput = false;
 			}
 			
-			if( ( $adminInput && $user->admin ) or !$adminInput ) {
+			if( $userCan->admin or !$adminInput ) {
 ?>
 								<div class="form-group row col-<?php echo $colGrid->div; ?>">
 									<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
 									<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
 <?php
-				if( $readOnly ) {
+				if( $readOnly && !$userCan->admin ) {
 					echo $object->displayField( $colonne->name, $valeur );
 				} else {
 					echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' );
@@ -86,7 +86,7 @@
 							</div>
 							<div class="card-footer">
 <?php
-		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and !$readOnly ) {
+		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
 									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
@@ -198,7 +198,7 @@
 ?>
 							</div>
 <?php
-					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and !$readOnly ) {
+					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 							<div class="card-footer">
 								<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
