@@ -71,6 +71,16 @@
 			foreach( $items as $element ) {
 				$tdClass = '';
 				$trClass = property_exists( $element, 'id_etat' ) ? $stateBgClasses[$element->id_etat] : '';
+				
+				// Gestion readonly state
+				$readOnly = false;
+				foreach( $object->getReadOnlyStates() as $readOnlyState ) {
+					if( property_exists( $element, $readOnlyState->column ) ) {
+						if( in_array( $element->{$readOnlyState->column}, $readOnlyState->values ) ) {
+							$readOnly = true;
+						}
+					}
+				}
 ?>
 					<tr class="<?php echo $trClass; ?>">
 						<td class="text-center">
@@ -97,7 +107,7 @@
 					}
 				}
 				foreach( $objectActions as $objectAction ) {
-					if( $objectAction->visible ) {
+					if( $objectAction->visible && ( !$readOnly or $userCan->admin ) ) {
 ?>
 						<td class="text-center"><?php echo $object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
 <?php
@@ -106,11 +116,17 @@
 				if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
 						<td class="text-center">
+<?php
+					if( !$readOnly or $userCan->admin ) {
+?>
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $element->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
 								<button type="submit" title="Supprimer" class="btn btn-danger btn-sm"><i class="fas fa-xs fa-times"></i></button>
 							</form>
+<?php
+					}
+?>
 						</td>
 <?php
 				}
