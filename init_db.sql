@@ -11,6 +11,7 @@ CREATE TABLE `prefix_analyse` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `requete` text COLLATE utf8_unicode_ci NOT NULL,
   `id_type_analyse` int(10) unsigned NOT NULL,
+  `options` text COLLATE utf8_unicode_ci NOT NULL,
   `indicator` varchar(35) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Nombre',
   `percent` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `colonne` varchar(35) COLLATE utf8_unicode_ci DEFAULT NULL,
