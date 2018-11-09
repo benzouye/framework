@@ -68,12 +68,13 @@
 			(object) array(
 				'name' => 'options',
 				'nicename' => 'Paramètres JSON',
+				'default' => '{ "type": "bar", "backgroundColor" : [], "options": {}',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
 					'value' => 10,
 				),
-				'params' => array( 'type' => 'textarea', 'rows' => 5 ),
+				'params' => array( 'type' => 'textarea', 'rows' => 2 ),
 				'visible' => false,
 				'editable' => true,
 				'required' => false
