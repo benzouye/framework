@@ -32,19 +32,6 @@
 				'editable' => true,
 				'required' => true
 			),
-			(object) array(
-				'name' => 'classe',
-				'nicename' => 'Classe',
-				'grid' => (object) array(
-					'div' => 12,
-					'label' => 2,
-					'value' => 4,
-				),
-				'params' => array( 'type' => 'text' ),
-				'visible' => true,
-				'editable' => true,
-				'required' => true
-			),
 		)
 	);
 ?>
