@@ -248,6 +248,7 @@ DROP TABLE IF EXISTS `prefix_exemple`;
 CREATE TABLE `prefix_exemple` (
   `id_exemple` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `montant` decimal(10,2) NOT NULL DEFAULT '0',
   `id_etat` int(11) unsigned NOT NULL DEFAULT '1',
   `user_cre` int(11) NOT NULL,
   `date_cre` datetime NOT NULL,
