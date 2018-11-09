@@ -641,6 +641,12 @@ class Model {
 		$colonne = $this->getColumn( $name );
 		
 		switch( $colonne->params['type'] ) {
+			case 'number' :
+				$html = number_format($valeur, 2, ',', ' ');
+				if( property_exists( $colonne, 'unit' ) ) {
+					$html .= ' '.$colonne->unit;
+				}
+				break;
 			case 'color' :
 				$html = '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 				break;
