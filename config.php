@@ -153,7 +153,7 @@
 	
 	// Classes CSS des états
 	$stateBgClasses = array(
-		1 => 'bg-danger',
+		1 => 'bg-warning',
 		2 => 'bg-primary',
 		3 => 'bg-success'
 	);
@@ -199,6 +199,7 @@
 	/*
 	*	Mappings items personnalisés
 	*/
+	require_once( ITEMDIR.'ModelExemple.php' );
 	
 	
 	/*
