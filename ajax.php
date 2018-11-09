@@ -1,28 +1,34 @@
 <?php
 	require_once( 'config.php' );
+	$items = array();
 	
-	$nomClasse = ucfirst($_GET['parent_item']);
-	
-	if( isset( $_GET['relation'] ) ) {
+	if( isset( $_GET['parent_item'] ) ) {
 		$manager = new Manager( $bdd, $debug );
-		$model = ${'model_'.$_GET['parent_item']};	
+		$model = ${'model_'.$_GET['parent_item']};
+		$nomClasse = ucfirst($_GET['parent_item']);
 		$object = new $nomClasse( $bdd, $manager, $model );
-		
-		if( intval( $_GET['parent_id'] ) )
-			$item = $object->getItem( $_GET['parent_id'] );
-		
-		if( isset( $_GET['item_id'] ) ) {
-			$items = $object->{'save_'.$_GET['relation']}( $_GET );
-		} else {
-			$items = $object->{'get_'.$_GET['relation'].'_dispo'}( $_GET );
+			
+		if( isset( $_GET['parent_id'] ) && $_GET['parent_item'] == 'analyse' ) {
+			$item = $object->getItem( intval($_GET['parent_id']) );
+			$items = $object->getDatas();
 		}
-	} elseif( isset( $_GET['schedule'] ) ) {
-		$manager = new Manager( $bdd, $debug );
-		$model = ${'model_'.$_GET['parent_item']};	
-		$object = new $nomClasse( $bdd, $manager, $model );
-		$items = $object->get_scheduler( $_GET );
-	} else {
-		$items = array();
+		
+		if( isset( $_GET['relation'] ) ) {
+			
+			if( intval( $_GET['parent_id'] ) )
+				$item = $object->getItem( intval( $_GET['parent_id'] ) );
+			
+			if( isset( $_GET['item_id'] ) ) {
+				$items = $object->{'save_'.$_GET['relation']}( $_GET );
+			} else {
+				$items = $object->{'get_'.$_GET['relation'].'_dispo'}( $_GET );
+			}
+			
+		}
+		
+		if( isset( $_GET['schedule'] ) ) {
+			$items = $object->get_scheduler( $_GET );
+		}
 	}
 	
 	echo json_encode( $items );
