@@ -9,6 +9,7 @@ class Model {
 	protected $single;
 	protected $plural;
 	protected $columns;
+	protected $defaultFilters;
 	protected $objectActions;
 	protected $prints;
 	protected $orderby;
@@ -67,6 +68,12 @@ class Model {
 		$this->readOnlyStates = array();
 		if( property_exists( $model, 'readOnlyStates' ) ) {
 			$this->readOnlyStates = $model->readOnlyStates;
+		}
+		
+		// Default filters
+		$this->defaultFilters = array();
+		if( property_exists( $model, 'defaultFilters' ) ) {
+			$this->defaultFilters = $model->defaultFilters;
 		}
 		
 		// Actions
@@ -265,6 +272,10 @@ class Model {
 		finally {
 			return $this->currentItem;
 		}
+	}
+	
+	public function getDefaultFilters() {
+		return $this->defaultFilters;
 	}
 	
 	public function getReadOnlyStates() {
