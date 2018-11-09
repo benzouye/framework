@@ -68,7 +68,7 @@
 			(object) array(
 				'name' => 'options',
 				'nicename' => 'Paramètres JSON',
-				'default' => '{ "type": "bar", "backgroundColor" : [], "options": {}',
+				'default' => '{ "type": "bar", "backgroundColor" : [], "options": {} }',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
