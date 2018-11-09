@@ -8,6 +8,7 @@
 				<div class="row">
 <?php
 		echo $manager->getOption('homeText');
+		
 		$analyse = new Analyse( $bdd, $manager, $model_analyse );
 		$analyses = $analyse->getItems();
 		
@@ -18,22 +19,24 @@
 			
 			if( $element->flag_accueil ) {
 				$requete = $analyse->getItem( $element->id_analyse );
-				$type = $analyse->getTypeAnalyse();
 				$datas = $analyse->getDatas();
 				$nbElements = count( $datas );
 				
 				if( $nbElements ) {
-					switch( $type ) {
-						case 'PivotTable' :
-							$table = new PivotTable( $datas, $element->colonne, $element->ligne, $element->indicator );
-							$html = $table->getHtml( $idTable, $classeTable );
-							break;
-						case 'SimpleTable' :
+					switch( $element->id_type_analyse ) {
+						case 1 :
 							$table = new SimpleTable( $datas, $element->indicator, $element->percent );
 							$html = $table->getHtml( $idTable, $classeTable );
 							break;
-						case 'SingleValue' :
+						case 2 :
+							$table = new PivotTable( $datas, $element->colonne, $element->ligne, $element->indicator );
+							$html = $table->getHtml( $idTable, $classeTable );
+							break;
+						case 3 :
 							$html = $element->indicator.' : '.$datas[0]->{$element->indicator};
+							break;
+						case 4 :
+							$html = '<canvas data-analyse="'.$element->id_analyse.'" class="homepage-chart"></canvas>';
 							break;
 					}
 							
