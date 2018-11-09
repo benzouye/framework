@@ -5,6 +5,9 @@
 		'single' => 'exemple',
 		'plural' => 'exemples',
 		'orderby' => 'date_cre DESC',
+		'defaultFilters' => array(
+			'id_etat' => 1
+		),
 		'readOnlyStates' => array(
 			(object) array(
 				'column' => 'id_etat',
@@ -39,6 +42,21 @@
 				'required' => true
 			),
 			(object) array(
+				'name' => 'montant',
+				'nicename' => 'Montant',
+				'align' => 'right',
+				'unit' => '€',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 2,
+				),
+				'params' => array( 'type' => 'number', 'step' => 0.01 ),
+				'visible' => true,
+				'editable' => true,
+				'required' => true
+			),
+			(object) array(
 				'name' => 'id_etat',
 				'nicename' => 'Etat',
 				'align' => 'center',
@@ -46,7 +64,7 @@
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
-					'value' => 4,
+					'value' => 2,
 				),
 				'params' => array(
 					'type' => 'select',
