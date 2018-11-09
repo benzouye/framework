@@ -184,7 +184,6 @@ DROP TABLE IF EXISTS `prefix_type_analyse`;
 CREATE TABLE `prefix_type_analyse` (
   `id_type_analyse` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
-  `classe` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `user_cre` int(11) NOT NULL,
   `date_cre` datetime NOT NULL,
   `user_maj` int(11) DEFAULT NULL,
@@ -196,10 +195,11 @@ CREATE TABLE `prefix_type_analyse` (
   CONSTRAINT `prefix_type_analyse_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO `prefix_type_analyse` (`id_type_analyse`, `libelle`, `classe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'Tableau droit',	'SimpleTable',	1,	'2018-01-03 11:47:07',	NULL,	NULL),
-(2,	'Tableau croisé',	'PivotTable',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
-(3,	'Valeur unique',	'SingleValue',	1,	'2018-11-02 15:24:27',	1,	'2018-11-02 15:45:36');
+INSERT INTO `prefix_type_analyse` (`id_type_analyse`, `libelle`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1,	'Tableau droit',	1,	'2018-01-03 11:47:07',	NULL,	NULL),
+(2,	'Tableau croisé',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
+(3,	'Valeur unique',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
+(4,	'Graphique',	1,	'2018-11-02 15:24:27',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_type_document`;
 CREATE TABLE `prefix_type_document` (
