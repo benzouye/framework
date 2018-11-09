@@ -152,7 +152,8 @@ INSERT INTO `prefix_item` (`id_item`, `alias`, `nom`, `description`, `static`, `
 (6,	'logout',	'Déconnexion',	'Déconnexion',	1,	0,	1,	0,	10,	2,	'sign-out-alt',	1,	'2017-10-24 07:47:06',	1,	'2018-10-29 14:58:51'),
 (8,	'option',	'Configuration',	'Les options du site',	0,	0,	1,	1,	9,	4,	'cog',	1,	'2017-10-24 07:47:06',	1,	'2017-10-24 13:56:42'),
 (27,	'register',	'Enregistrement',	'Formulaire de création de compte',	1,	0,	1,	1,	0,	0,	'check',	1,	'2017-10-25 14:02:39',	1,	'2018-10-29 14:59:08'),
-(12,	'utilisateur',	'Utilisateurs',	'Les utilisateurs de l\'application',	0,	1,	1,	1,	9,	6,	'user',	1,	'2017-10-24 07:47:06',	NULL,	NULL);
+(12,	'utilisateur',	'Utilisateurs',	'Les utilisateurs de l\'application',	0,	1,	1,	1,	9,	6,	'user',	1,	'2017-10-24 07:47:06',	NULL,	NULL),
+(51,	'exemple',	'Exemples',	'Un objet exemple',	0,	0,	1,	0,	1,	20,	'question',	1,	'2018-11-09 18:20:35',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_option`;
 CREATE TABLE `prefix_option` (
