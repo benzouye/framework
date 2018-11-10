@@ -45,7 +45,7 @@
 ?>
 					</div>
 					<div class="card-footer">
-						<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
+						<button type="submit" class="btn btn-success btn-sm navbar-btn">
 							<i class="fas fa-sm fa-step-forward"></i> Envoyer
 						</button>
 						<a href="index.php" class="btn btn-danger btn-sm">

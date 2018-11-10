@@ -65,9 +65,9 @@
 	*	Configuration répertoires
 	*/
 	// URL du site
-	define( 'SITEURL'	, 'https://mydomain.com/' );
+	define( 'SITEURL'	, 'http://localhost:8080/framework/' );
 	// Chemin depuis la racine du serveur web
-	define( 'SITEDIR'	, 'mydir/' );
+	define( 'SITEDIR'	, 'framework/' );
 	// Répertoire des fichier de vue PHP
 	define( 'VIEWDIR'	, 'view/' );
 	// Répertoire des fichiers de classes PHP
@@ -97,13 +97,13 @@
 	// Type
 	define( 'DBTYPE' , 'mysql' );
 	// Utilisateur
-	define( 'DBUSER' , 'user' );
+	define( 'DBUSER' , 'root' );
 	// Mot de passe
-	define( 'DBPASS' , 'pass' );
+	define( 'DBPASS' , '' );
 	// Hôte
-	define( 'DBHOST' , 'host' );
+	define( 'DBHOST' , 'localhost' );
 	// Nom de la base
-	define( 'DBNAME' , 'basename' );
+	define( 'DBNAME' , 'framework' );
 	// Préfixe des tables
 	define( 'DBPREF' , 'prefix_' );
 	// Encodage PHP/BDD

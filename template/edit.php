@@ -92,6 +92,13 @@
 									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
 								</button>
 <?php
+			if( !$new ) {
+?>
+								<button name="form-submit" formation="" type="submit" class="btn btn-secondary btn-sm navbar-btn">
+									<i class="fas fa-sm fa-copy"></i> Dupliquer
+								</button>
+<?php
+			}
 		}
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
