@@ -65,6 +65,15 @@ $( document ).ready( function(){
 		$(this).remove();
 	});
 	
+	// Autocomplete
+	$('input[type="text"].auto-complete').each( function(e) {
+		let parentItem = $(this).data('parent-item');
+		let colonne = $(this).data('colonne');
+		let sourceLink = 'ajax.php?ajaxGet=distinct&parent_item='+parentItem+'&colonne='+colonne;
+		
+		$(this).autocomplete({ source: sourceLink });
+	});
+	
 	// Ajout d'une relation
 	$('.add-relation').click( function(e) {
 		var parentItem = $(this).data('parent-item');
@@ -77,26 +86,27 @@ $( document ).ready( function(){
 			method: "GET",
 			url: "ajax.php",
 			data: {
+				ajaxGet: 'relation',
 				relation: relItem,
 				parent_item: parentItem,
 				parent_id: parentId
 			},
 			dataType: 'json',
-			success: function( items ) {
+			success: function( response ) {
 				$('#relation-ul').append('<input type="hidden" name="action" value="rel-set">');
 				$('#relation-ul').append('<input type="hidden" name="id" value="'+parentId+'">');
 				$('#relation-ul').append('<input type="hidden" name="item" value="'+parentItem+'">');
 				$('#relation-ul').append('<input type="hidden" name="relation" value="'+relItem+'">');
-				if( items.length > 0 ) {
-					$.each( items, function( i, item ) {
+				if( reponse.data.length > 0 ) {
+					$.each( reponse.data, function( i, item ) {
 						$('#relation-ul').append('<li class="list-group-item"><input type="checkbox" name="'+relItem+'[]" value="'+item.id+'" /> '+item.nom+'</li>');
 					});
 				} else {
 					$('#relation-ul').append('<p>Aucun élément disponible ...</p>');
 				}
 			},
-			error: function(data) {
-				console.log(data);
+			error: function( response ) {
+				console.log( response );
 				$('#relation-ul').append('<li class="list-group-item">Une erreur JavaScript est survenue ... merci de prévenir l\'administrateur de l\'application</li>');
 			}
 		});
@@ -112,19 +122,22 @@ $( document ).ready( function(){
 				method: "GET",
 				url: "ajax.php",
 				data: {
+					ajaxGet: "analyse",
 					parent_item: "analyse",
-					parent_id: $(this).data("analyse"),
-					object: true
+					parent_id: $(this).data("analyse")
 				},
 				dataType: 'json',
-				success: function( analyse ) {
+				error: function( response ) {
+					console.log( response );
+				},
+				success: function( response ) {
 					let chartLabels = [];
 					let chartValues = [];
-					let chartOptions = JSON.parse( analyse.object.options );
+					let chartOptions = JSON.parse( response.item.options );
 					
-					for( item in analyse.data ) {
-						chartLabels.push( analyse.data[item].Label );
-						chartValues.push( analyse.data[item].Value );
+					for( item in response.data ) {
+						chartLabels.push( response.data[item].Label );
+						chartValues.push( response.data[item].Value );
 					}
 					
 					let graphOptions = {
@@ -133,7 +146,7 @@ $( document ).ready( function(){
 							labels: chartLabels,
 							datasets:[
 								{
-									label: analyse.object.description,
+									label: response.item.description,
 									data: chartValues,
 									backgroundColor: chartOptions.backgroundColor,
 								}

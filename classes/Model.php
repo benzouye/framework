@@ -128,6 +128,41 @@ class Model {
 		return $retour;
 	}
 	
+	public function getDistinctValues( $colonne, $valeur ) {
+		try {
+			$test = false;
+			$retour = array();
+			foreach( $this->columns as $source ) {
+				if( $source->name == $colonne ) {
+					$test = true;
+					break;
+				}
+			}
+			
+			if( $test ) {
+				$requete = $this->bdd->prepare( '
+					SELECT DISTINCT '.$colonne.' AS value
+					FROM '.$this->table.'
+					WHERE '.$colonne.' LIKE ?
+					ORDER BY '.$colonne
+				);
+				$requete->execute( array( '%'.$valeur.'%' ) );
+				$retour = $requete->fetchAll();
+			}
+		}
+		catch( Exception $e ) {
+			if( $this->manager->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = $this->plural;
+			}
+			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+		}
+		finally {
+			return $retour;
+		}
+	}
+	
 	public function getItems( array $search = null, $paginate = false, $page = 1 ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
@@ -546,7 +581,10 @@ class Model {
 			$format .= 'required ';
 		}
 		
-		if( $colonne->params['type'] == 'select' && isset($colonne->params['autocomplete']) ) $class = "auto-complete";
+		if( $colonne->params['type'] == 'text' && isset($colonne->params['auto-complete']) ) {
+			$class .= " auto-complete ";
+			$format .= ' data-parent-item="'.$this->itemName.'" data-colonne="'.$colonne->name.'" ';
+		}
 		if( $colonne->params['type'] != 'checkbox' ) $format .= ' class="'.$class.'" ';
 		
 		switch( $colonne->params['type'] ) {

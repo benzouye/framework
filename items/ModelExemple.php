@@ -36,7 +36,7 @@
 					'label' => 2,
 					'value' => 4,
 				),
-				'params' => array( 'type' => 'text' ),
+				'params' => array( 'auto-complete' => true, 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
 				'required' => true
