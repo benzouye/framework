@@ -101,39 +101,55 @@
 				$cible = new Model( $bdd, $manager, ${'model_'.$_POST['item']} );
 			}
 			
-			switch( $_POST['action'] ) {
-				case 'set':
-					if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $_POST['id'] == $user->id_utilisateur ) ) {
-						$cible->setItem( $_POST );
-					} else {
-						$manager->setError( M_ACCESSERR );
-					}
-					break;
-				case 'delete':
-					if( $userCan->admin or $userCan->delete ) {
-						$cible->deleteItem( intval( $_POST['id'] ) );
-					} else {
-						$manager->setError( M_ACCESSERR );
-					}
-					break;
-				case 'rel-set':
-					if( $userCan->admin or $userCan->create or $userCan->update ) {
-						$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
-						if( isset( $_POST['relation'] ) ) $cible->{'set_'.$_POST['relation']}( $_POST );
-						else $manager->setError( sprintf( M_RELSETERR, $_POST['item'], $_POST['relation'] ) );
-					} else {
-						$manager->setError( M_ACCESSERR );
-					}
-					break;
-				case 'rel-del':
-					if( $userCan->admin or $userCan->delete ) {
-						$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
-						if( isset( $_POST['relation'], $_POST['rel_id'] ) ) $cible->{'del_'.$_POST['relation']}( $_POST );
-						else $manager->setError( sprintf( M_RELDELERR, $_POST['item'], $_POST['relation'] ) );
-					} else {
-						$manager->setError( M_ACCESSERR );
-					}
-					break;
+			if( !isset( $_GET['copy'] ) ) {
+				switch( $_POST['action'] ) {
+					case 'set':
+						if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $_POST['id'] == $user->id_utilisateur ) ) {
+							$cible->setItem( $_POST );
+						} else {
+							$manager->setError( M_ACCESSERR );
+						}
+						break;
+					case 'delete':
+						if( $userCan->admin or $userCan->delete ) {
+							$cible->deleteItem( intval( $_POST['id'] ) );
+						} else {
+							$manager->setError( M_ACCESSERR );
+						}
+						break;
+					case 'rel-set':
+						if( $userCan->admin or $userCan->create or $userCan->update ) {
+							$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
+							if( isset( $_POST['relation'] ) ) $cible->{'set_'.$_POST['relation']}( $_POST );
+							else $manager->setError( sprintf( M_RELSETERR, $_POST['item'], $_POST['relation'] ) );
+						} else {
+							$manager->setError( M_ACCESSERR );
+						}
+						break;
+					case 'rel-del':
+						if( $userCan->admin or $userCan->delete ) {
+							$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
+							if( isset( $_POST['relation'], $_POST['rel_id'] ) ) $cible->{'del_'.$_POST['relation']}( $_POST );
+							else $manager->setError( sprintf( M_RELDELERR, $_POST['item'], $_POST['relation'] ) );
+						} else {
+							$manager->setError( M_ACCESSERR );
+						}
+						break;
+				}
+			} else {
+				// Duplication
+				if( $userCan->admin or $userCan->create ) {
+					// On sauvegarde la source
+					$cible->setItem( $_POST );
+					// On récuoère un nouvel ID
+					$_POST['id_'.$cible->getItemName()] = $cible->getNextId();
+					// On sauvegarde la copie
+					$cible->setItem( $_POST );
+					// On affiche la copie
+					header( 'Location: index.php?item='.$cible->getItemName().'&action=edit&id='.$_POST['id_'.$cible->getItemName()] ); 
+				} else {
+					$manager->setError( M_ACCESSERR );
+				}
 			}
 		}
 		
@@ -249,6 +265,7 @@
 		$parentLink = $parentItem ? $parentItem.'&action=edit&id='.$parentId : false;
 		$backlink = $page->alias .'&p='.$p;
 		$savelink = $parentItem ? $page->alias.'&action=edit&id='.$id.'&parent='.$parentId : $page->alias.'&action=edit&id='.$id;
+		$copylink = $page->alias.'&action=edit&copy=1&id='.$id;
 		$dellink = $page->alias.'&action=delete&id='.$id;
 		
 		if( file_exists( TEMPLDIR.$page->alias.'.'.$action.'.php' ) ) {

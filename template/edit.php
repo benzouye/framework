@@ -94,7 +94,7 @@
 <?php
 			if( !$new ) {
 ?>
-								<button name="form-submit" formation="" type="submit" class="btn btn-secondary btn-sm navbar-btn">
+								<button name="form-submit" formaction="index.php?item=<?php echo $copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn">
 									<i class="fas fa-sm fa-copy"></i> Dupliquer
 								</button>
 <?php
