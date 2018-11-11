@@ -15,12 +15,65 @@
 		
 		if( $pagination ) {
 			class PDF extends FPDF {
+				
+				protected $NewPageGroup;
+				protected $PageGroups;
+				protected $CurrPageGroup;	
+				
 				function Footer() {
 					// Positionnement à 1,5 cm du bas
 					$this->SetXY(10, -15);
 					// Numéro de page
 					$this->SetFont( 'Arial', '', 8 );
-					$this->Cell(0,5,utf8_decode('Page '.$this->PageNo().'/{nb}'),0,0,'C');
+					$this->Cell(0,5,utf8_decode( $this->GroupPageNo().'/'.$this->PageGroupAlias() ),0,0,'C');
+				}
+				
+				function StartPageGroup()
+				{
+					$this->NewPageGroup = true;
+				}
+				
+				function GroupPageNo()
+				{
+					return $this->PageGroups[$this->CurrPageGroup];
+				}
+				
+				function PageGroupAlias()
+				{
+					return $this->CurrPageGroup;
+				}
+
+				function _beginpage($orientation, $format, $rotation)
+				{
+					parent::_beginpage($orientation, $format, $rotation);
+					if($this->NewPageGroup)
+					{
+						// start a new group
+						$n = sizeof($this->PageGroups)+1;
+						$alias = "{nb$n}";
+						$this->PageGroups[$alias] = 1;
+						$this->CurrPageGroup = $alias;
+						$this->NewPageGroup = false;
+					}
+					elseif($this->CurrPageGroup)
+						$this->PageGroups[$this->CurrPageGroup]++;
+				}
+
+				function _putpages()
+				{
+					$nb = $this->page;
+					if (!empty($this->PageGroups))
+					{
+						// do page number replacement
+						foreach ($this->PageGroups as $k => $v)
+						{
+							for ($n = 1; $n <= $nb; $n++)
+							{
+								$this->pages[$n] = str_replace($k, $v, $this->pages[$n]);
+							}
+						}
+					}
+					parent::_putpages();
 				}
 			}
 			$pdf = new PDF();
