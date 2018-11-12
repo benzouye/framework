@@ -146,7 +146,7 @@ $( document ).ready( function(){
 							labels: chartLabels,
 							datasets:[
 								{
-									label: response.item.description,
+									label: response.item.indicator,
 									data: chartValues,
 									backgroundColor: chartOptions.backgroundColor,
 								}
