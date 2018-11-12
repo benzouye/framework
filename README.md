@@ -32,7 +32,7 @@ By default, there is a table name prefix (prefix_), if you want, before importin
 
 # Configuration
 
-Edit the _config.php_ file with your files server information (line 68 and 70) and your database server information (line 98 to 108).
+Edit the _config.php_ file with your files server information (line 68 and 70) and the _database.php_ file with your database server information.
 
 You may change the favicon file located in _assets/img/_ directory to fit with your brand.
 
