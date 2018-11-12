@@ -111,7 +111,7 @@
 				$object->valideEmailUser( $_GET['identifiant'], $_GET['token'] );
 			}
 ?>
-			<a href="index.php" class="btn btn-default btn-sm">
+			<a href="index.php" class="btn btn-primary btn-sm">
 				<i class="fas fa-sm fa-caret-left"></i> Retour accueil
 			</a>
 <?php
