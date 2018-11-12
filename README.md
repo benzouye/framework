@@ -22,13 +22,13 @@ To ease display and ergonomy, this framework includes some open source librairie
 
 Download the full ZIP archive from Github and copy it on your web server directory.
 
-Works on PHP 7 or newer and with MySQL 5.7+ / MariaDB 10.2+.
+Works on PHP 7+ and with MySQL 5.7+ / MariaDB 10.2+.
 
 Framework is configured to work with UTF-8 characters encoding.
 
 Import the init_db.sql file into a MySQL/MariaDB database.
 
-By default, there is no table name prefix, if you want, before importing SQL dump, you may add a prefix on each table name for each CREATE TABLE commands, and specify it in the PHP configuration file (see next chapter).
+By default, there is a table name prefix (prefix_), if you want, before importing SQL dump, you may change this prefix on each table name for each SQL command (search and replace), and specify it in the PHP configuration file (see next chapter).
 
 # Configuration
 
@@ -41,6 +41,8 @@ You may change the favicon file located in _assets/img/_ directory to fit with y
 Access to your app using the URL defined in the _config.php_ file.
 
 Only one user is defined by default : "admin", with password "admin".
+
+After first connection, change name and password in the _Configuration_ menu (top right gear icon) and _Utilisateurs_ link.
 
 # Customization
 
@@ -62,7 +64,7 @@ This framework needs you to dive into the code for customization.
 * classes : contains all PHP classes, including specific item classes overriding Model class
 * items : contains items description files (cf. next chapter)
 * template : contains display templates
-* view : contains specific static views templates
+* view : contains static views templates
 
 ## Items
 
@@ -84,8 +86,8 @@ To create a new item you need at least to :
 
 1. create the database table corresponding to item description (cf. next chapters)
 2. add an item description file into the items/ directory (cf. next chapters)
-3. add the "require" line to this file in the config.php file
-4. configure it in the items management screen
+3. add the "require_once" line to this file in the config.php file
+4. configure it in the items configuration page
 
 ## Item database table structure
 
@@ -99,37 +101,45 @@ This table at least need to have these columns :
 * user_cre (int unsigned) : column to store the ID of the item creator (utilisateur)
 * date_cre (datetime) : column to store the date and time of item creation
 * user_maj (int unsigned) : column to store the item last update date and time
+* date_maj (datetime) : column to store the date and time of item update
 
 ## Item description file structure
 
 The file has to be named like this : Model{ItemName}.php
 Structure of these files is ruled. It's only composed of one variable declaration.
 This variable has to be named like this $model_{item_name}. {item_name} will have to be coherent trough the whole code.
-This variable has to be a PHP object composed like this :
+This variable has to be a PHP object composed like this ( M = mandatory, O = Optional ) :
 
-* itemName (string) : the code name of the item, wich have to be coherent to filename and variable name
-* table (string) : the table name corresponding to the item, with prefix if necessary (or DBPREF defined variable)
-* single (string) : the item display name (singular)
-* plural (string) : the item display name (plural)
-* orderby (string) : the order criteria to display items. Here use SQL syntax with DB column names
-* columns (array) : an array of column objects (cf. next chapter)
+* (M) itemName (string) : the code name of the item, wich have to be identical to filename and variable name seen before
+* (M) table (string) : the table name corresponding to the item, with prefix if defined before (or concatenate with DBPREF defined variable)
+* (M) single (string) : the item display name (singular)
+* (M) plural (string) : the item display name (plural)
+* (M) columns (array) : an array of column objects (cf. next chapter)
+* (O) relations (array) : an array of relation objects (cf. next chapter)
+* (O) orderby (string) : the order criteria to display items. Here use SQL syntax with DB column names
+* (O) defaultFilters (array) : an array of filters (cf. next chapter)
+* (O) objectActions (array) : an array of objectAction objects (cf. next chapter)
+* (O) prints (array) : an array of print objects (cf. next chapter)
+* (O) readOnlyStates (array) : an array of PHP object describing data conditions to avoid item edit (cf. next chapters)
 
 ## Column object structure
 
 The column object will has to be coherent with DB table structure.
 
-It has to be composed at least like this :
+It has to be composed at least like this ( M = mandatory, O = Optional ) :
 
-* name (string) : column name in database
-* nicename (string) : display name of the field
-* grid (object) : Bootstrap grid size to display the field.
+* (M) name (string) : column name in database
+* (M) nicename (string) : display name of the field
+* (M) grid (object) : Bootstrap grid size to display the field. An objet with 3 porperties :
   1. div (integer) : field container width (12 = full width)
   2. label (integer) : field label width in container
   3. value (integer) : field value width in container
-* params (array) : list of HTML input attributes. Only "type" attribute is mandatory (see next chapter for details)
-* visible (boolean) : wether the field is visible or not on table list
-* editable (boolean) : wether the field is editable or not on edit page
-* required (boolean) : wether the field is required or not on edit page
+* (M) params (array) : list of HTML input attributes. Only "type" attribute is mandatory (see next chapter for details)
+* (M) visible (boolean) : wether the field is visible or not on table list
+* (M) editable (boolean) : wether the field is editable or not on edit page
+* (M) required (boolean) : wether the field is required or not on edit page
+* (O) default (mixed) : the default value for field in new item
+* (O) unit (string) : the unit of the field (as $ or km or 
 
 ### Column type parameter
 
@@ -141,7 +151,7 @@ Here is the different types currently accepted :
 * image : display a file input control, need to be linked to a string column in the database table (stores the filename)
 * number : display a number input control, need to be linked to a nueric column in the database table (stores a number)
 * password : display a password control, need to be linked to a 60 chars length string column in the database table (stores bcrypt values)
-* text : display a text input control, need to be linked to a string column in the database table (stores strings)
+* text : display a text input control, need to be linked to a string column in the database table (stores strings) (you can combined this type with _auto-complete_ attribute to enable AJAX autocomplete)
 * textarea : display a textarea control, need to be linked to a TEXT column in the database table (stores long strings)
 * select : display a select input control, need to be linked to a integer column in the database table (stores id of selected element)
   Select input implies a link with another item (i.e. foreign key). So you have to define this link with 3 attributes :
@@ -156,17 +166,18 @@ If an item exists only by its parent item (eg. : an order line exists only by it
 To do so, you need to add :
 
 * a "parentItem" attribute to the item object as a string containing the parent item name
-* a "relations" attribute to the parent item object containing an array of objects, each object represents a relation, with the following attributes :
+* a "relation" object to the parent item description file _relations_ property, composed like this :
   * item (string) : child item name
   * name (string) : nice name to display on screen
   * grid (integer) : display width grid (12 = full width)
-  * static (boolean) : wether the relation use the standard display or not. True imply to create a specific template to display relation
+  * static (boolean) : wether the relation use the standard display or not.
+    True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
 
 ### Actions
 
 In each item description file, you can add a "objectAction" element, as an array containing PHP objects composed like this :
 
-* alias : string, name to be used in code (ie no accent, uppercase or special character)
+* alias : string, name to be used in code (ie no accent or uppercase or special character)
 * nicename: string, action display name
 * visible : boolean, determine wether a button is displayed or not on list and edit page
 * icon : string, fontawesome icon alias to display on buttons
@@ -174,20 +185,20 @@ In each item description file, you can add a "objectAction" element, as an array
 
 To make these actions effective, you will need to :
 
-* declare this item "variant" (complexe) in item management screen
+* declare this item "variant" (complexe) in item configuration screen
 * create a PHP class extending the existing Model class containing at least a method named as the action alias performing what you need
 
 ### Prints
 
-In each item description file, you can add a "prints" element, as an array containing PHP objects composed like this :
+In each item description file, you can add a "print" object to the item description file _prints_ property, composed like this :
 
-* alias : string, name to be used in code (ie no accent, uppercase or special character)
+* alias : string, name to be used in code (ie no accent or uppercase or special character)
 * nicename: string, action display name
 * visible : boolean, determine wether a link is displayed or not on edit page
 * separator : boolean, determine if the link is just a separator in prints list
 * pagination : boolean, determine if the print needs to be paginate
 
-To define the each print behavior, you will need to :
+To define each print behavior, you will need to :
 
 * create a PHP file in the template directory named like this print.{item\_name}.{print\_alias}.php
 
@@ -200,7 +211,7 @@ In each item description file, you can add a "readOnlyStates" element, as an arr
 
 ### Default filters
 
-In each item description file, you can add a "defaultFilters" element, as an array containing elements like this :
+In each item description file, you can add a "defaultFilter" object to the item description file _defaultFilters_ property, as an associative array formed like this :
 
 * key : string, db column name for filter
 * value : mixed, value filtered
