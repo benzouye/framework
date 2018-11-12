@@ -691,7 +691,7 @@ class Model {
 		
 		switch( $colonne->params['type'] ) {
 			case 'number' :
-				$html = number_format($valeur, 2, ',', ' ');
+				$html = $valeur;
 				if( property_exists( $colonne, 'unit' ) ) {
 					$html .= ' '.$colonne->unit;
 				}
