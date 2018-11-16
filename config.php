@@ -65,9 +65,9 @@
 	*	Configuration répertoires
 	*/
 	// URL du site
-	define( 'SITEURL'	, 'http://localhost:8080/framework/' );
+	define( 'SITEURL'	, 'http://localhost/projets/framework/' );
 	// Chemin depuis la racine du serveur web
-	define( 'SITEDIR'	, 'framework/' );
+	define( 'SITEDIR'	, 'projets/framework/' );
 	// Répertoire des fichier de vue PHP
 	define( 'VIEWDIR'	, 'view/' );
 	// Répertoire des fichiers de classes PHP
@@ -136,10 +136,10 @@
 	/*
 	*	Variables de session par défaut
 	*/
-	if( !isset( $_SESSION['item'] ) ) $_SESSION['item'] = 'home';
-	if( !isset( $_SESSION['search'] ) ) $_SESSION['search'] = array();
-	if( !isset( $_SESSION['page'] ) ) $_SESSION['page'] = '1';
-	if( !isset( $_SESSION['action'] ) ) $_SESSION['action'] = 'list';
+	if( !isset( $_SESSION[DBPREF.'_item'] ) ) $_SESSION[DBPREF.'_item'] = 'home';
+	if( !isset( $_SESSION[DBPREF.'_search'] ) ) $_SESSION[DBPREF.'_search'] = array();
+	if( !isset( $_SESSION[DBPREF.'_page'] ) ) $_SESSION[DBPREF.'_page'] = '1';
+	if( !isset( $_SESSION[DBPREF.'_action'] ) ) $_SESSION[DBPREF.'_action'] = 'list';
 	
 	/*
 	*	Classes Obligatoires
