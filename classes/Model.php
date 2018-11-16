@@ -9,6 +9,7 @@ class Model {
 	protected $single;
 	protected $plural;
 	protected $columns;
+	protected $ignoredParams = ['item','columnKey','columnLabel','where','extensions'];
 	protected $defaultFilters;
 	protected $objectActions;
 	protected $prints;
@@ -366,101 +367,41 @@ class Model {
 		return $this->plural;
 	}
 	
-	public function getSearchCriteria( $search, $sql = false ) {
-		$criteres = $sql ? 'WHERE 1=1 ' : '';
-		foreach( $search as $input => $valeur ) {
-			foreach( $this->columns as $colonne ) {
-				if( $colonne->name == $input ) {
-					switch( $colonne->params['type'] ) {
-						case 'select' :
-							if( $valeur > 0 ) {
-								$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
-								foreach( $foreignItems as $foreignItem ) {
-									if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
-										$libelle = $foreignItem->{$colonne->params['columnLabel']};
-										break;
-									}
-								}
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' = '.$valeur.' '
-									: $colonne->nicename.' = '.$libelle.$this->searchSep;
-							}
-							break;
-						case 'checkbox' :
-							if( strlen( $valeur ) > 0 ) {
-								$criteres .= $sql
-									? ' AND '.$colonne->name.' = '.$valeur.' '
-									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
-							}
-							break;
-						case 'date' :
-							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
-							if ( $search[$input][0] > 0 ) {
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
-									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
-							}
-							if ( $search[$input][1] > 0 ) {
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
-									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
-							}
-							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
-								$criteres .= $this->searchSep;
-							}
-							break;
-						case 'number' :
-							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
-							if ( $search[$input][0] > 0 ) {
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
-									: $colonne->nicename.' >= '.$search[$input][0];
-							}
-							if ( $search[$input][1] > 0 ) {
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
-									: $linkWord.' <= '.$search[$input][1];
-							}
-							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
-								$criteres .= $this->searchSep;
-							}
-							break;
-						default :
-							if( strlen( $valeur ) > 0 ) {
-								$criteres .= $sql
-									? 'AND '.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
-									: $colonne->nicename.' contient '.$valeur.$this->searchSep;
-							}
-					}
-				}
-			}
-		}
-		if( !$sql ) {
-			$criteres = rtrim( $criteres, ' / ' );
-		}
-		
-		return $criteres;
-	}
-	
 	public function setItem( $data, $register = false ) {
 		$this->id = $register ? $this->nextId : $data['id_'.$this->itemName];
 		$columns = '';
 		$values = '';
 		$update = '';
 		foreach( $this->columns as $colonne ) {
-			if( $colonne->params['type'] == 'image' ) {
-				// Traitement upload des images
-				$width = isset( $colonne->params['width'] ) ? $colonne->params['width'] : DFWIDTH;
-				$height = isset( $colonne->params['height'] ) ? $colonne->params['height'] : DFHEIGHT;
-				
+			
+			// Traitement upload des fichiers
+			if( in_array( $colonne->params['type'], ['image','file'] ) && isset( $_FILES[$colonne->name] ) ) {
 				$up = new Telechargement( SITEDIR.UPLDIR,'form-submit',$colonne->name );
-				$up->Set_Redim($width,$height);
+				$up->Set_Nomme_fichier( $this->itemName.'_'.$this->id.'_'.$colonne->name.'_'.uniqid() , true );
+				
+				$extensions = [ 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ];
+				if( isset( $colonne->params['extensions'] ) ) {
+					$extensions = $colonne->params['extensions'];
+				}
+				$up->Set_Extensions_accepte( $extensions );
+				
+				if( $colonne->params['type'] == 'image' ) {
+					$width = isset( $colonne->params['width'] ) ? $colonne->params['width'] : DFWIDTH;
+					$height = isset( $colonne->params['height'] ) ? $colonne->params['height'] : DFHEIGHT;
+					$up->Set_Redim($width,$height);
+				}
+				
 				$up->Upload();
 				$messages = $up->Get_Tab_message();
 				$resultats = $up->Get_Tab_result();
 				
-				$data[$colonne->name] = $resultats['resultat'][0][SITEDIR.UPLDIR][0]['nom'];
+				if( isset( $resultats['resultat'][0] ) ) {
+					$data[$colonne->name] = $resultats['resultat'][0][SITEDIR.UPLDIR][0]['nom'];
+				} else {
+					$data[$colonne->name] = null;
+				}
 			}
+			
 			$flag = false;
 			
 			foreach( $data as $key => $value ) {
@@ -548,6 +489,87 @@ class Model {
 		}
 	}
 	
+	public function getSearchCriteria( $search, $sql = false ) {
+		$criteres = $sql ? 'WHERE 1=1 ' : '';
+		foreach( $search as $input => $valeur ) {
+			foreach( $this->columns as $colonne ) {
+				if( $colonne->name == $input ) {
+					switch( $colonne->params['type'] ) {
+						case 'select' :
+							if( $valeur > 0 ) {
+								$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+								foreach( $foreignItems as $foreignItem ) {
+									if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
+										$libelle = $foreignItem->{$colonne->params['columnLabel']};
+										break;
+									}
+								}
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' = '.$valeur.' '
+									: $colonne->nicename.' = '.$libelle.$this->searchSep;
+							}
+							break;
+						case 'checkbox' :
+							if( strlen( $valeur ) > 0 ) {
+								$criteres .= $sql
+									? ' AND '.$colonne->name.' = '.$valeur.' '
+									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
+							}
+							break;
+						case 'date' :
+							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
+							if ( $search[$input][0] > 0 ) {
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
+							}
+							if ( $search[$input][1] > 0 ) {
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
+							}
+							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
+								$criteres .= $this->searchSep;
+							}
+							break;
+						case 'number' :
+							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
+							if ( $search[$input][0] > 0 ) {
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									: $colonne->nicename.' >= '.$search[$input][0];
+							}
+							if ( $search[$input][1] > 0 ) {
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									: $linkWord.' <= '.$search[$input][1];
+							}
+							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
+								$criteres .= $this->searchSep;
+							}
+							break;
+						case 'image' :
+							break;
+						case 'file' :
+							break;
+						case 'number' :
+						default :
+							if( strlen( $valeur ) > 0 ) {
+								$criteres .= $sql
+									? 'AND '.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
+									: $colonne->nicename.' contient '.$valeur.$this->searchSep;
+							}
+					}
+				}
+			}
+		}
+		if( !$sql ) {
+			$criteres = rtrim( $criteres, ' / ' );
+		}
+		
+		return $criteres;
+	}
+	
 	public function displayInput( $id, $name, $valeur, $class = '' ) {
 		$html = '';
 		$colonne = $this->getColumn( $name );
@@ -569,7 +591,7 @@ class Model {
 		}
 		
 		foreach( $colonne->params as $key=>$value ) {
-			if( $key != 'item' && $key != 'columnKey' && $key != 'columnLabel' && $key != 'where' )
+			if( !in_array( $key , $this->ignoredParams ) )
 				$format .= $key.'="'.( $value == 'image' ? 'file' : $value ).'" ';
 		}
 		
@@ -616,7 +638,15 @@ class Model {
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
-					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" /><a title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-xs"><i class="fas fa-sm fa-times"></i></a>';
+					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" />&nbsp;<button title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-sm"><i class="fas fa-sm fa-times"></i></button>';
+				} else {
+					$format .= 'value="'.$valeur.'" ';
+					$html .= '<input '.$format.'>';
+				}
+				break;
+			case 'file' :
+				if( strlen($valeur) > 4  ) {
+					$html .= '<a class="file-link btn btn-secondary btn-sm" href="'.SITEURL.UPLDIR.$valeur.'" target="_blank"><i class="fas fa-sm fa-search"></i> Consulter</a>&nbsp;<button title="Supprimer ce fichier" data-name="'.$colonne->name.'" class="delete-file btn btn-danger btn-sm"><i class="fas fa-sm fa-times"></i></button>';
 				} else {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
@@ -651,7 +681,7 @@ class Model {
 		if( $class ) $format .= 'class ="'.$class.'" ';
 		
 		foreach( $colonne->params as $key=>$value ) {
-			if( $key != 'item' && $key != 'columnKey' && $key != 'columnLabel' && $key != 'where' && $key != 'disabled' )
+			if( !in_array( $key , $this->ignoredParams ) && $key != 'disabled' )
 			$format .= $key.'="'.$value.'" ';
 		}
 		
@@ -677,6 +707,10 @@ class Model {
 				break;
 			case 'date' :
 				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre le</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et le</span></div><input '.$format.'>';
+				break;
+			case 'image' :
+				break;
+			case 'file' :
 				break;
 			default :
 				$html .= '<input '.$format.'>';
@@ -728,6 +762,11 @@ class Model {
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
 					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" />';
+				}
+				break;
+			case 'file' :
+				if( strlen($valeur) > 4  ) {
+					$html = '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier"><i class="fas fa-sm fa-search"></i></a>';
 				}
 				break;
 			default :
