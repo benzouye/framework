@@ -6,7 +6,7 @@
 					<div class="card-body row">
 <?php
 	foreach( $colonnes as $colonne ) {
-		if( $colonne->params['type'] != 'password' && $colonne->params['type'] != 'image' ) {
+		if( !in_array( $colonne->params['type'], ['password','image','file'] ) ) {
 			$colGrid = $grille;
 ?>
 						<div class="form-group row col-<?php echo $colGrid->div; ?>">
