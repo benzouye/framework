@@ -100,9 +100,9 @@ class Manager {
 		$good_mdp = true;
 		$good_session = true;
 		
-		if( isset( $_SESSION['userId'] ) ) {
+		if( isset( $_SESSION[DBPREF.'_userId'] ) ) {
 			foreach( $this->users as $user ) {
-				if( $_SESSION['userId'] === $user->id_utilisateur ) {
+				if( $_SESSION[DBPREF.'_userId'] === $user->id_utilisateur ) {
 					$good_session = true;
 					$this->user = $user;
 					break;
@@ -123,7 +123,7 @@ class Manager {
 							$good_mdp = true;
 							$this->setMessage( M_LOGIN );
 							$this->user = $user;
-							$_SESSION['userId'] = $user->id_utilisateur;
+							$_SESSION[DBPREF.'_userId'] = $user->id_utilisateur;
 							break;
 						}
 					}
