@@ -57,6 +57,34 @@
 				'required' => true
 			),
 			(object) array(
+				'name' => 'image',
+				'nicename' => 'Image',
+				'align' => 'center',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 4,
+				),
+				'params' => array( 'type' => 'image', 'extensions' => array( 'jpg', 'jpeg', 'png', 'gif', 'svg' ) ),
+				'visible' => true,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
+				'name' => 'fichier',
+				'nicename' => 'Fichier',
+				'align' => 'center',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 4,
+				),
+				'params' => array( 'type' => 'file', 'extensions' => array( 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ) ),
+				'visible' => true,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
 				'name' => 'id_etat',
 				'nicename' => 'Etat',
 				'align' => 'center',
