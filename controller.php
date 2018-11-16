@@ -64,9 +64,9 @@
 	$title = $manager->getOption('sitetitle');
 	if( $static ) {
 		// Pour une page statique
-		$_SESSION['search'] = array();
-		$_SESSION['item'] = $page->alias;
-		$_SESSION['page'] = 1;
+		$_SESSION[DBPREF.'_search'] = array();
+		$_SESSION[DBPREF.'_item'] = $page->alias;
+		$_SESSION[DBPREF.'_page'] = 1;
 		$action = 'list';
 		$title = $page->nom;
 		if( file_exists( VIEWDIR.$page->alias.'.php' ) ) {
@@ -177,8 +177,8 @@
 				
 				// Si retour à la liste purge de la session
 				if( $_GET['action'] == 'list' ) {
-					$_SESSION['search'] = array();
-					$_SESSION['page'] = 1;
+					$_SESSION[DBPREF.'_search'] = array();
+					$_SESSION[DBPREF.'_page'] = 1;
 				}
 			} else {
 				$action = 'list';
@@ -187,29 +187,29 @@
 		} else {
 			$action = 'list';
 		}
-		$_SESSION['action'] = $action;
+		$_SESSION[DBPREF.'_action'] = $action;
 		
 		// Réinitialisation session si changement item
-		if( $_SESSION['item'] != $page->alias ) {
-			$_SESSION['search'] = $defaultFilters;
-			$_SESSION['item'] = $page->alias;
-			$_SESSION['page'] = 1;
+		if( $_SESSION[DBPREF.'_item'] != $page->alias ) {
+			$_SESSION[DBPREF.'_search'] = $defaultFilters;
+			$_SESSION[DBPREF.'_item'] = $page->alias;
+			$_SESSION[DBPREF.'_page'] = 1;
 		}
 		
 		// Initialisation du numéro de page à afficher
-		if( isset( $_GET['p'] ) ) $_SESSION['page'] = intval( $_GET['p'] );
+		if( isset( $_GET['p'] ) ) $_SESSION[DBPREF.'_page'] = intval( $_GET['p'] );
 		
 		if( isset( $_POST['search'] ) ) {
-			$_SESSION['search'] = $_POST;
-			$_SESSION['page'] = 1;
+			$_SESSION[DBPREF.'_search'] = $_POST;
+			$_SESSION[DBPREF.'_page'] = 1;
 		}
 		
-		$search = $_SESSION['search'];
-		$p = $_SESSION['page'];
+		$search = $_SESSION[DBPREF.'_search'];
+		$p = $_SESSION[DBPREF.'_page'];
 		
 		// Traitement recherche
 		$criteres = '';
-		$paginate = $_SESSION['action'] == 'print' ? false : true;
+		$paginate = $_SESSION[DBPREF.'_action'] == 'print' ? false : true;
 		if( count($search) > 0 ) {
 			$items = $object->getItems( $search, $paginate, $p );
 			$criteres = '<span class="search">';
