@@ -39,10 +39,7 @@ $( document ).ready( function(){
 	
 	// Affichage des alertes dans le header
 	$('#helpers').insertAfter('#header');
-	$('.alert').show('slow', function() {
-		// Et disparition temporisée des alertes
-		// setTimeout( function() { $('.alert').hide( 'slow' ); }, 3000 );
-	});
+	$('.alert').show('slow');
 	
 	// Alerte à la suppression
 	$('form.delete').on("submit",function(e) {
@@ -60,8 +57,15 @@ $( document ).ready( function(){
 	
 	// Suppression d'une image unique liée
 	$('.delete-image').click( function(e) {
-		$(this).parent().append('<input class="form-control" type="file" name="'+$(this).data('name')+'" value="jpg" />');
+		$(this).parent().append('<input class="form-control" type="file" name="'+$(this).data('name')+'" />');
 		$(this).parent().find('img').remove();
+		$(this).remove();
+	});
+	
+	// Suppression d'une image unique liée
+	$('.delete-file').click( function(e) {
+		$(this).parent().append('<input class="form-control" type="file" name="'+$(this).data('name')+'" />');
+		$(this).parent().find('a.file-link').remove();
 		$(this).remove();
 	});
 	
