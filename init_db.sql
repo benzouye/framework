@@ -46,7 +46,7 @@ CREATE TABLE `prefix_document` (
   KEY `FK_document_id_type_document` (`id_type_document`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
-  CONSTRAINT `FK_document_id_type_document` FOREIGN KEY (`id_type_document`) REFERENCES `type_document` (`id_type_document`),
+  CONSTRAINT `FK_document_id_type_document` FOREIGN KEY (`id_type_document`) REFERENCES `prefix_type_document` (`id_type_document`),
   CONSTRAINT `prefix_document_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
   CONSTRAINT `prefix_document_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
