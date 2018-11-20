@@ -1,4 +1,7 @@
 <?php
+	// Mise en tampon
+	ob_start();
+	
 	// Gestion de session
 	session_start();
 	
@@ -7,6 +10,9 @@
 	
 	// Contrôleur
 	require_once( 'controller.php' );
+	
+	// Libération tampon d'affichage
+	ob_end_flush();
 	
 	// Affichage du header HTML si pas impression
 	if( $action != 'print' ) {
