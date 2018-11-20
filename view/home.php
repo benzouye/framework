@@ -38,6 +38,9 @@
 						case 4 :
 							$html = '<canvas data-analyse="'.$element->id_analyse.'" class="homepage-chart"></canvas>';
 							break;
+						case 5 :
+							$html = '<div class="leaflet-display" id="leaflet-'.$element->id_analyse.'" data-analyse="'.$element->id_analyse.'"></div>';
+							break;
 					}
 							
 				} else {
