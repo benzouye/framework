@@ -43,6 +43,11 @@
 					$retour = $object->getDistinctValues( $_GET['colonne'], $_GET['term'] );
 				}
 				break;
+			case 'option' :
+				if( isset( $_GET['alias'] ) ) {
+					$retour = $manager->getOption( $_GET['alias'] );
+				}
+				break;
 		}
 	}
 	
