@@ -32,7 +32,7 @@
 			case 'analyse' :
 				if( $id ) {
 					$object = new $nomClasse( $bdd, $manager, $model );
-					$retour['message'] = 'Graph values for analyse '.$id;
+					$retour['message'] = 'Values for analyse '.$id;
 					$retour['item'] = $object->getItem( $id );
 					$retour['data'] = $object->getDatas();
 				}
@@ -45,7 +45,8 @@
 				break;
 			case 'option' :
 				if( isset( $_GET['alias'] ) ) {
-					$retour = $manager->getOption( $_GET['alias'] );
+					$retour['message'] = 'Value for option '.$_GET['alias'];
+					$retour['data'] = $manager->getOption( $_GET['alias'] );
 				}
 				break;
 		}
