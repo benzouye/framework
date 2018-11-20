@@ -15,8 +15,9 @@
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 		<link rel='stylesheet' href="<?php echo SITEURL; ?>assets/css/fullcalendar.min.css" />
 		<link rel='stylesheet' href="<?php echo SITEURL; ?>assets/css/scheduler.min.css" />
-		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/style.css">
+		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/leaflet.css">
 		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/fontawesome.css">
+		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/style.css">
 	</head>
 	<body>
 		<div class="wrapper">
