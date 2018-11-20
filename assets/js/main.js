@@ -166,49 +166,59 @@ $( document ).ready( function(){
 	}
 	
 	// Cartes Leaflet
-	var leafletOptions = {
-			'center_lat': 45.38350155204992,
-			'center_lng': 4.501991271972657,
-			'zoom': 11,
-			'min_zoom': 2,
-			'max_zoom': 18,
-			'lat': 0,
-			'lng': 0,
-	};
 	if( $(".leaflet-input").length ) {
-		$(".leaflet-input").each( function(e) {
-			
-			L.Icon.Default.imagePath = 'assets/img/';
-			
-			var id = $(this).attr('id');
-			var leafletOptions = JSON.parse( $('input[name="'+id+'"]').val() );
-			
-			var leafletMap = L.map( id ).setView( [ leafletOptions.center_lat, leafletOptions.center_lng ], leafletOptions.zoom );
-			console.log( leafletOptions );
-			
-			L.tileLayer( 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-				maxZoom: leafletOptions.max_zoom,
-				minZoom: leafletOptions.min_zoom,
-				attribution: '© <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors'
-			}).addTo(leafletMap);
-			
-			var marker = L.marker( [ leafletOptions.lat, leafletOptions.lng ] ).addTo( leafletMap );
-			
-			leafletMap.on( 'click', function(e) {
-				leafletMap.eachLayer( function(layer) {
-					if( layer instanceof L.Marker ) {
-						leafletMap.removeLayer(layer);
-					}
-				});
-				let marker = L.marker( [ e.latlng.lat, e.latlng.lng ] ).addTo( leafletMap );
-				leafletOptions.lat = e.latlng.lat;
-				leafletOptions.lng = e.latlng.lng;
-				leafletOptions.zoom = leafletMap.getZoom();
-				leafletOptions.center_lat = leafletMap.getCenter().lat;
-				leafletOptions.center_lng = leafletMap.getCenter().lng;
+		
+		$.ajax({
+			method: "GET",
+			url: "ajax.php",
+			data: {
+				ajaxGet: "option",
+				parent_item: "option",
+				alias: "leafletOptions"
+			},
+			dataType: 'json',
+			error: function( response ) {
+				console.log( response );
+			},
+			success: function( response ) {
+				var leafletOptions = JSON.parse( response );
 				
-				$('input[name="'+id+'"]').val( JSON.stringify( leafletOptions ) );
-			});
+				$(".leaflet-input").each( function(e) {
+					
+					L.Icon.Default.imagePath = 'assets/img/';
+					var id = $(this).attr('id');
+					
+					if( $('input[name="'+id+'"]').val().length ) {
+						leafletOptions = JSON.parse( $('input[name="'+id+'"]').val() );
+					}
+					
+					var leafletMap = L.map( id ).setView( [ leafletOptions.center_lat, leafletOptions.center_lng ], leafletOptions.zoom );
+					
+					L.tileLayer( 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+						maxZoom: leafletOptions.max_zoom,
+						minZoom: leafletOptions.min_zoom,
+						attribution: '© <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors'
+					}).addTo(leafletMap);
+					
+					var marker = L.marker( [ leafletOptions.lat, leafletOptions.lng ] ).addTo( leafletMap );
+					
+					leafletMap.on( 'click', function(e) {
+						leafletMap.eachLayer( function(layer) {
+							if( layer instanceof L.Marker ) {
+								leafletMap.removeLayer(layer);
+							}
+						});
+						let marker = L.marker( [ e.latlng.lat, e.latlng.lng ] ).addTo( leafletMap );
+						leafletOptions.lat = e.latlng.lat;
+						leafletOptions.lng = e.latlng.lng;
+						leafletOptions.zoom = leafletMap.getZoom();
+						leafletOptions.center_lat = leafletMap.getCenter().lat;
+						leafletOptions.center_lng = leafletMap.getCenter().lng;
+						
+						$('input[name="'+id+'"]').val( JSON.stringify( leafletOptions ) );
+					});
+				});
+			}
 		});
 	}
 });
