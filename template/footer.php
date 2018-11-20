@@ -18,6 +18,7 @@
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/Chart.min.js"></script>
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/fullcalendar.min.js"></script>
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/scheduler.min.js"></script>
+		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/leaflet.js"></script>
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/fr.js"></script>
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/main.js"></script>
 	</body>
