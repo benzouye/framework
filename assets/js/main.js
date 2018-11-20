@@ -167,17 +167,34 @@ $( document ).ready( function(){
 	
 	// Cartes Leaflet
 	L.Icon.Default.imagePath = 'assets/img/';
-	var redIcon = L.icon({
-		iconUrl: L.Icon.Default.imagePath+'marker-icon-red.png',
-		shadowUrl: L.Icon.Default.imagePath+'marker-shadow.png',
-		iconSize:     [25, 41],
-		shadowSize:   [41, 41],
-		iconAnchor:   [12.5, 41],
-		shadowAnchor: [12.5, 41],
-		popupAnchor:  [12.5, 0]
-	});
 	var icons = {
-		"red": redIcon,
+		"1": L.icon({
+			iconUrl: L.Icon.Default.imagePath+'marker-icon-red.png',
+			shadowUrl: L.Icon.Default.imagePath+'marker-shadow.png',
+			iconSize:     [25, 41],
+			shadowSize:   [41, 41],
+			iconAnchor:   [12.5, 41],
+			shadowAnchor: [12.5, 41],
+			popupAnchor:  [12.5, 0]
+		}),
+		"2": L.icon({
+			iconUrl: L.Icon.Default.imagePath+'marker-icon.png',
+			shadowUrl: L.Icon.Default.imagePath+'marker-shadow.png',
+			iconSize:     [25, 41],
+			shadowSize:   [41, 41],
+			iconAnchor:   [12.5, 41],
+			shadowAnchor: [12.5, 41],
+			popupAnchor:  [12.5, 0]
+		}),
+		"3": L.icon({
+			iconUrl: L.Icon.Default.imagePath+'marker-icon-green.png',
+			shadowUrl: L.Icon.Default.imagePath+'marker-shadow.png',
+			iconSize:     [25, 41],
+			shadowSize:   [41, 41],
+			iconAnchor:   [12.5, 41],
+			shadowAnchor: [12.5, 41],
+			popupAnchor:  [12.5, 0]
+		}),
 	};
 	
 	if( $(".leaflet-input").length ) {
