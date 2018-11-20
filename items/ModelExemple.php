@@ -14,6 +14,14 @@
 				'values' => array( 3 ),
 			),
 		),
+		'relations' => array(
+			(object) array(
+				'item' => 'document',
+				'name' => 'Document',
+				'grid' => 6,
+				'static' => false,
+			),
+		),
 		'columns' => array(
 			(object) array(
 				'name' => 'id_exemple',
@@ -80,6 +88,19 @@
 					'value' => 4,
 				),
 				'params' => array( 'type' => 'file', 'extensions' => array( 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ) ),
+				'visible' => true,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
+				'name' => 'localisation',
+				'nicename' => 'Localisation',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'localisation' ),
 				'visible' => true,
 				'editable' => true,
 				'required' => false
