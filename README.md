@@ -150,6 +150,7 @@ Here is the different types currently accepted :
 * date : display a datePicker control, need to be linked to a date column in the database table (stores yyyy-mm-dd values)
 * file : display a file input control, need to be linked to a string column in the database table (stores the filename) (you can combined this type with _extensions_ attribute as an array of strings to limit file extensions possibilities)
 * image : display a file input control, need to be linked to a string column in the database table (stores the filename) (you can combined this type with _extensions_ attribute as an array of strings to limit file extensions possibilities)
+* localisation : display an openstreetmap control and allow to store coordinates in database, need to be link to a text column in database table
 * number : display a number input control, need to be linked to a nueric column in the database table (stores a number)
 * password : display a password control, need to be linked to a 60 chars length string column in the database table (stores bcrypt values)
 * text : display a text input control, need to be linked to a string column in the database table (stores strings) (you can combined this type with _auto-complete_ attribute to enable AJAX autocomplete)
