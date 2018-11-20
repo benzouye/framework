@@ -552,7 +552,8 @@ class Model {
 							break;
 						case 'file' :
 							break;
-						case 'number' :
+						case 'localisation' :
+							break;
 						default :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
@@ -652,6 +653,9 @@ class Model {
 					$html .= '<input '.$format.'>';
 				}
 				break;
+			case 'localisation' :
+					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.htmlspecialchars($valeur).'"><div class="leaflet-input" id="'.$colonne->name.'"></div>';
+				break;
 			default :
 				$format .= 'value="'.$valeur.'" ';
 				$html .= '<input '.$format.'>';
@@ -712,6 +716,8 @@ class Model {
 				break;
 			case 'file' :
 				break;
+			case 'localisation' :
+				break;
 			default :
 				$html .= '<input '.$format.'>';
 		}
@@ -768,6 +774,8 @@ class Model {
 				if( strlen($valeur) > 4  ) {
 					$html = '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier"><i class="fas fa-sm fa-search"></i></a>';
 				}
+				break;
+			case 'localisation' :
 				break;
 			default :
 				$html = $valeur;
