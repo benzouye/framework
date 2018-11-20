@@ -166,8 +166,21 @@ $( document ).ready( function(){
 	}
 	
 	// Cartes Leaflet
+	L.Icon.Default.imagePath = 'assets/img/';
+	var redIcon = L.icon({
+		iconUrl: L.Icon.Default.imagePath+'marker-icon-red.png',
+		shadowUrl: L.Icon.Default.imagePath+'marker-shadow.png',
+		iconSize:     [25, 41],
+		shadowSize:   [41, 41],
+		iconAnchor:   [12.5, 41],
+		shadowAnchor: [12.5, 41],
+		popupAnchor:  [12.5, 0]
+	});
+	var icons = {
+		"red": redIcon,
+	};
+	
 	if( $(".leaflet-input").length ) {
-		
 		$.ajax({
 			method: "GET",
 			url: "ajax.php",
@@ -181,11 +194,9 @@ $( document ).ready( function(){
 				console.log( response );
 			},
 			success: function( response ) {
-				var leafletOptions = JSON.parse( response );
+				var leafletOptions = JSON.parse( response.data );
 				
 				$(".leaflet-input").each( function(e) {
-					
-					L.Icon.Default.imagePath = 'assets/img/';
 					var id = $(this).attr('id');
 					
 					if( $('input[name="'+id+'"]').val().length ) {
@@ -219,6 +230,62 @@ $( document ).ready( function(){
 					});
 				});
 			}
+		});
+	}
+	
+	// Analyse Leaflet
+	if( $(".leaflet-display").length ) {
+		$(".leaflet-display").each( function(e) {
+			
+			var id = $(this).attr('id');
+			var leafletMap = L.map( id );
+			
+			$.ajax({
+				method: "GET",
+				url: "ajax.php",
+				data: {
+					ajaxGet: "option",
+					parent_item: "option",
+					alias: "leafletOptions"
+				},
+				dataType: 'json',
+				error: function( response ) {
+					console.log( response );
+				},
+				success: function( response ) {
+					var leafletOptions = JSON.parse( response.data );
+					leafletMap.setView( [ leafletOptions.center_lat, leafletOptions.center_lng ], leafletOptions.zoom );
+					L.tileLayer( 'http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+						maxZoom: leafletOptions.max_zoom,
+						minZoom: leafletOptions.min_zoom,
+						attribution: '© <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors'
+					}).addTo(leafletMap);
+				}
+			});
+			
+			$.ajax({
+				method: "GET",
+				url: "ajax.php",
+				data: {
+					ajaxGet: "analyse",
+					parent_item: "analyse",
+					parent_id: $(this).data("analyse")
+				},
+				dataType: 'json',
+				error: function( response ) {
+					console.log( response );
+				},
+				success: function( response ) {
+					var markers = response.data;
+					
+					for( marker in markers ) {
+						let markerIcon = icons[markers[marker].Icon];
+						let markerOptions = JSON.parse( markers[marker].Options );
+						let newMarker = L.marker( [ markerOptions.lat, markerOptions.lng ], { "icon": markerIcon } ).addTo( leafletMap );
+						newMarker.bindPopup( markers[marker].Label );
+					}
+				}
+			})
 		});
 	}
 });
