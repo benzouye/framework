@@ -18,6 +18,11 @@ $( document ).ready( function(){
 
 	// Sélecteur de couleur
 	$( ".colorpicker" ).colorpicker();
+	
+	// Empêcher validation formulaire par entrée
+	$('form').keydown( function(e) {
+		if( e.keyCode==13 ) e.preventDefault();
+	});
 
 	// Affichage du formulaire de changement de mot de passe
 	$( ".update-password" ).change( function(e){
