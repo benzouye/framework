@@ -201,11 +201,12 @@ CREATE TABLE `prefix_option` (
 
 INSERT INTO `prefix_option` (`id_option`, `alias`, `valeur`, `description`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'keywords',	'',	'Liste des mots clé de la balise meta',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:22'),
-(3,	'sitedesc',	'',	'Description du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:04'),
-(5,	'sitetitle',	'Framework',	'Titre du site',	1,	'2017-10-24 07:47:06',	1,	'2018-11-05 10:26:15'),
-(6,	'hometext',	' ',	'Contenu de la page d\'accueil',	1,	'2017-10-24 07:47:06',	1,	'2018-10-29 18:10:20'),
-(8,	'nbparpage',	'10',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2017-11-03 10:26:59'),
-(10,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47');
+(2,	'sitedesc',	'',	'Description du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:04'),
+(3,	'sitetitle',	'Framework',	'Titre du site',	1,	'2017-10-24 07:47:06',	1,	'2018-11-05 10:26:15'),
+(4,	'hometext',	' ',	'Contenu de la page d\'accueil',	1,	'2017-10-24 07:47:06',	1,	'2018-10-29 18:10:20'),
+(5,	'nbparpage',	'10',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2017-11-03 10:26:59'),
+(6,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47'),
+(7,	'leafletOptions',	'{ \"center_lat\": 45.38350155204992,\"center_lng\": 4.501991271972657, \"zoom\": 11,\"min_zoom\": 2,\"max_zoom\": 18,\"lat\": 0,\"lng\": 0}',	'Configuration Leaflet par défaut JSON',	1,	'2018-11-20 10:49:13',	1,	'2018-11-20 11:01:46');
 
 DROP TABLE IF EXISTS `prefix_type_analyse`;
 CREATE TABLE `prefix_type_analyse` (
