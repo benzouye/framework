@@ -3,6 +3,8 @@ $( document ).ready( function(){
 	// Paramètres régionaux du sélecteur de date
 	$( ".datepicker" ).datepicker({
 		firstDay: 1,
+		changeMonth: true,
+		changeYear: true,
 		closeText: 'Fermer',
 		prevText: 'Précédent',
 		nextText: 'Suivant',
