@@ -87,6 +87,11 @@
 							<div class="card-footer">
 <?php
 		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and ( !$readOnly or $userCan->admin ) ) {
+?>
+								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
+									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
+								</button>
+<?php
 			if( !$new ) {
 ?>
 								<button name="form-submit" formaction="index.php?item=<?php echo $copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn float-right">
@@ -94,11 +99,6 @@
 								</button>
 <?php
 			}
-?>
-								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
-								</button>
-<?php
 		}
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
