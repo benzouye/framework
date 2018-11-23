@@ -155,6 +155,7 @@ $( document ).ready( function(){
 									label: response.item.indicator,
 									data: chartValues,
 									backgroundColor: chartOptions.backgroundColor,
+									lineTension: 0,
 								}
 							]
 						},
