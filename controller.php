@@ -279,6 +279,6 @@
 			$manager->setError( sprintf( M_TMPLERR, $page->alias.'.'.$action ) );
 		}
 		$subTitle = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
-		$title = $page->nom.' | '.$subTitle;
+		$title = $manager->getOption('sitetitle').' | '.$page->nom.' | '.$subTitle;
 	}
 ?>
