@@ -37,6 +37,10 @@
 					$retour['data'] = $object->getDatas();
 				}
 				break;
+			case 'schedule' :
+				$object = new $nomClasse( $bdd, $manager, $model );
+				$retour = $object->get_scheduler( $_GET );
+				break;
 			case 'distinct' :
 				if( isset( $_GET['colonne'], $_GET['term'] ) ) {
 					$object = new Model( $bdd, $manager, $model );
