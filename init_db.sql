@@ -228,7 +228,8 @@ INSERT INTO `prefix_type_analyse` (`id_type_analyse`, `libelle`, `user_cre`, `da
 (2,	'Tableau croisé',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
 (3,	'Valeur unique',	1,	'2018-01-03 11:47:22',	NULL,	NULL),
 (4,	'Graphique',	1,	'2018-11-02 15:24:27',	NULL,	NULL),
-(5,	'Carte',	1,	'2018-11-19 16:34:10',	NULL,	NULL);
+(5,	'Carte',	1,	'2018-11-19 16:34:10',	NULL,	NULL),
+(6,	'Calendrier',	1,	'2018-11-19 16:34:10',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_type_document`;
 CREATE TABLE `prefix_type_document` (
