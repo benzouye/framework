@@ -118,6 +118,32 @@ $( document ).ready( function(){
 		});
 	});
 	
+	// FullCalendar
+	if( $(".homepage-calendar").length ) {
+		$(".homepage-calendar").each( function(e) {
+			
+			var canvas = $(this);
+			
+			$.ajax({
+				method: "GET",
+				url: "ajax.php",
+				data: {
+					ajaxGet: "analyse",
+					parent_item: "analyse",
+					parent_id: canvas.data("analyse")
+				},
+				dataType: 'json',
+				error: function( response ) {
+					console.log( response );
+				},
+				success: function( response ) {
+					let calendarOptions = JSON.parse( response.item.options );
+					canvas.fullCalendar( calendarOptions );
+				}
+			});
+		});
+	}
+	
 	// Graphique ChartJS
 	if( $(".homepage-chart").length ) {
 		$(".homepage-chart").each( function(e) {
