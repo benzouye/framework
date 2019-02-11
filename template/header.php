@@ -21,7 +21,7 @@
 	</head>
 	<body>
 		<div class="wrapper">
-			<nav id="sidebar" class="sticky-top bg-dark">
+			<nav id="sidebar" class="sticky-top bg-dark no-print">
 				<div class="sidebar-header">
 					<h3><?php echo $manager->getOption('sitetitle'); ?></h3>
 				</div>
@@ -56,7 +56,7 @@
 	if( $user ) {
 ?>
 
-				<nav class="sticky-top navbar navbar-expand-lg navbar-dark bg-dark">
+				<nav class="sticky-top navbar navbar-expand-lg navbar-dark bg-dark no-print">
 					<ul class="nav navbar-nav ml-auto">
 						<li class="nav-item">
 							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>">Identifiant : <strong><?php echo $user->identifiant; ?></strong></a>
@@ -89,7 +89,7 @@
 	}
 ?>
 				<section class="container-fluid">
-					<div id="header">
+					<div id="header" class="no-print">
 						<h1><i class="fas fa-<?php echo $page->icon; ?>"></i> <?php echo $page->nom; ?></h1>
 						<p><?php echo $description; ?></p>
 					</div>
