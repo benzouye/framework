@@ -181,7 +181,7 @@
 					if( !property_exists( $relation, 'many' ) ) {
 						$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
 					} else {
-						$addLink = 'data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-toggle="modal" data-target="#relation-modal"';
+						$addLink = 'href="#" data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-toggle="modal" data-target="#relation-modal"';
 						$classLink .= ' add-relation';
 					}
 ?>
