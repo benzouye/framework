@@ -83,7 +83,7 @@
 					}
 				}
 ?>
-					<tr <?php echo $nbItems == 1 ? 'height="66"' : ''; ?> class="<?php echo $trClass; ?>">
+					<tr class="<?php echo $trClass; ?>">
 						<td class="text-center">
 							<a title="Ouvrir" href="index.php?item=<?php echo $page->alias;?>&action=edit&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="fas fa-xs fa-search"></i>
