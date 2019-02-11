@@ -103,8 +103,8 @@ $( document ).ready( function(){
 				$('#relation-ul').append('<input type="hidden" name="id" value="'+parentId+'">');
 				$('#relation-ul').append('<input type="hidden" name="item" value="'+parentItem+'">');
 				$('#relation-ul').append('<input type="hidden" name="relation" value="'+relItem+'">');
-				if( reponse.data.length > 0 ) {
-					$.each( reponse.data, function( i, item ) {
+				if( response.data.length > 0 ) {
+					$.each( response.data, function( i, item ) {
 						$('#relation-ul').append('<li class="list-group-item"><input type="checkbox" name="'+relItem+'[]" value="'+item.id+'" /> '+item.nom+'</li>');
 					});
 				} else {
