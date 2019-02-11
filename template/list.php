@@ -1,5 +1,6 @@
 <?php
 	if( $userCan->admin or $userCan->read ) {
+		$nbItems = count($items);
 ?>
 			<div class="card">
 				<div class="card-body">
@@ -15,7 +16,7 @@
 <?php
 		}
 		if( count($search) > 0 && ( $userCan->admin or $userCan->read ) ) {
-			if( count($items)>0 ) {
+			if( $nbItems>0 ) {
 ?>
 					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-times"></span> Supprimer les filtres</a>
 <?php
@@ -31,7 +32,7 @@
 			</div>
 			<?php $object->displayPagination( $p ); ?>
 <?php
-		if( count($items)>0 ) {
+		if( $nbItems>0 ) {
 ?>
 			<div class="table-responsive">
 			<table class="table table-sm table-striped table-hover table-bordered">
@@ -82,7 +83,7 @@
 					}
 				}
 ?>
-					<tr class="<?php echo $trClass; ?>">
+					<tr <?php echo $nbItems == 1 ? 'height="66"' : ''; ?> class="<?php echo $trClass; ?>">
 						<td class="text-center">
 							<a title="Ouvrir" href="index.php?item=<?php echo $page->alias;?>&action=edit&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="fas fa-xs fa-search"></i>
