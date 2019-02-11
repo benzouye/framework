@@ -41,6 +41,9 @@
 						case 5 :
 							$html = '<div class="leaflet-display" id="leaflet-'.$element->id_analyse.'" data-analyse="'.$element->id_analyse.'"></div>';
 							break;
+						case 6 :
+							$html = '<div class="homepage-calendar" id="calendar-'.$element->id_analyse.'" data-analyse="'.$element->id_analyse.'"></div>';
+							break;
 					}
 							
 				} else {
