@@ -37,7 +37,7 @@ $( document ).ready( function(){
 	});
 	
 	// Activation des tooltips
-	$( 'a,button' ).tooltip();
+	$( 'a,button' ).tooltip({boundary: 'window'});
 	
 	// Affichage des alertes dans le header
 	$('#helpers').insertAfter('#header');
