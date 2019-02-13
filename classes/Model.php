@@ -10,6 +10,7 @@ class Model {
 	protected $plural;
 	protected $columns;
 	protected $ignoredParams = ['item','columnKey','columnLabel','where','extensions'];
+	protected $disabledExceptions = ['select','checkbox'];
 	protected $defaultFilters;
 	protected $objectActions;
 	protected $prints;
@@ -422,11 +423,6 @@ class Model {
 					break;
 				}
 			}
-			if( $colonne->params['type'] == 'checkbox' && !$flag ) {
-				$columns .= $colonne->name.',';
-				$values .= '0,';
-				$update .= $colonne->name.' = 0,';
-			}
 		}
 		$idUser = $register ? 1 : $this->manager->getUser()->id_utilisateur;
 		$columns = $columns.' date_cre, user_cre';
@@ -597,18 +593,25 @@ class Model {
 		}
 		
 		if( !$colonne->editable ) {
-			$format .= 'readonly="readonly" ';
+			if( in_array( $colonne->params['type'] , $this->disabledExceptions ) ) {
+				$format .= 'disabled="disabled" ';
+			} else {
+				$format .= 'readonly="readonly" ';
+			}
 		}
 		
 		if( $colonne->required ) {
-			$format .= 'required ';
+			$format .= 'required="required" ';
 		}
 		
 		if( $colonne->params['type'] == 'text' && isset($colonne->params['auto-complete']) ) {
 			$class .= " auto-complete ";
 			$format .= ' data-parent-item="'.$this->itemName.'" data-colonne="'.$colonne->name.'" ';
 		}
-		if( $colonne->params['type'] != 'checkbox' ) $format .= ' class="'.$class.'" ';
+		
+		if( $colonne->params['type'] != 'checkbox' ) {
+			$format .= ' class="'.$class.'" ';
+		}
 		
 		switch( $colonne->params['type'] ) {
 			case 'password' :
@@ -633,9 +636,10 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$format .= ' value="1" ';
-				if( $valeur == 1 ) $format .= 'checked="checked" ';
-				$html .= '<div class="custom-control custom-checkbox"><input '.$format.' class="custom-control-input" type="checkbox" id="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
+				$html .= '<div class="custom-control custom-checkbox">';
+				$html .= '<input type="checkbox" class="custom-control-input" '.$format.' value="1" id="'.$name.'" '.($valeur==1 ? 'checked="checked"':'').'>';
+				$html .= '<label class="custom-control-label" for="'.$name.'"></label>';
+				$html .= '</div>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
