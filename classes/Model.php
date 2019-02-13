@@ -597,7 +597,7 @@ class Model {
 		}
 		
 		if( !$colonne->editable ) {
-			$class .= ' form-control-plaintext ';
+			$format .= 'readonly="readonly" ';
 		}
 		
 		if( $colonne->required ) {
