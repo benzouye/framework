@@ -423,6 +423,11 @@ class Model {
 					break;
 				}
 			}
+			if( $colonne->params['type'] == 'checkbox' && !$flag && $colonne->editable ) {
+				$columns .= $colonne->name.',';
+				$values .= '0,';
+				$update .= $colonne->name.' = 0,';
+			}
 		}
 		$idUser = $register ? 1 : $this->manager->getUser()->id_utilisateur;
 		$columns = $columns.' date_cre, user_cre';
