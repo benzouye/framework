@@ -1,7 +1,7 @@
 			<form class="form-horizontal" method="POST" action="index.php?item=<?php echo $page->alias;?>">
 				<div class="card">
 					<div class="card-header">
-						<span class="card-title">Critères de recherche</span>
+						<span class="card-title">CritÃ¨res de recherche</span>
 					</div>
 					<div class="card-body row">
 <?php
@@ -9,9 +9,9 @@
 		if( !in_array( $colonne->params['type'], ['password','image','file'] ) ) {
 			$colGrid = $grille;
 ?>
-						<div class="form-group row col-<?php echo $colGrid->div; ?>">
-							<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-							<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
+						<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
+							<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+							<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
 								<?php echo $object->displaySearchInput( $colonne->name, 'form-control form-control-sm' ); ?>
 
 							</div>
