@@ -133,6 +133,15 @@ th {
     #sidebarCollapse span {
         display: none;
     }
+	#sidebarButton, #menuButton {
+		display: block;
+	}
+}
+
+@media (min-width: 769px) {
+	#sidebarButton, #menuButton {
+		display: none;
+	}
 }
 
 @media print {  
