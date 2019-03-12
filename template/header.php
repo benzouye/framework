@@ -38,26 +38,33 @@
 		}
 	}
 ?>
+					<li id="sidebarButton">
+						<a class="btn btn-light btn-sm" title="Fermer le menu"><span class="fas fa-backspace"></span></a>
+					</li>
 				</ul>
 			</nav>
 			<main class="bg-light">
 <?php
-	$description = $page->description;
+	$description = '';
 	if( !$static ) {
 		$badgeAction = '';
 		if( $readOnly ) {
 			$badgeAction = 'Consultation';
 		} else {
-			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
+			$badgeAction = ( $new && $action == 'edit' ) ? 'CrĂ©ation' : $actions[$action];
 		}
-		$description .= ' <span class="badge badge-dark">'.$badgeAction.'</span>';
+		$description = ' <span class="badge badge-light">'.$badgeAction.'</span>';
 	}
 	
 	if( $user ) {
 ?>
 
-				<nav class="sticky-top navbar navbar-expand-lg navbar-dark bg-dark no-print">
+				<nav class="sticky-top navbar navbar-expand navbar-dark bg-dark no-print">
+					<span class="navbar-brand"><i class="fas fa-<?php echo $page->icon; ?>"></i> <?php echo $page->nom; ?> <?php echo $description; ?></span>
 					<ul class="nav navbar-nav ml-auto">
+						<li id="menuButton">
+							<a class="btn btn-light btn-sm" title="Accès au menu"><span class="fas fa-bars"></span></a>
+						</li>
 						<li class="nav-item">
 							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>">Identifiant : <strong><?php echo $user->identifiant; ?></strong></a>
 						</li>
@@ -90,6 +97,4 @@
 ?>
 				<section class="container-fluid">
 					<div id="header" class="no-print">
-						<h1><i class="fas fa-<?php echo $page->icon; ?>"></i> <?php echo $page->nom; ?></h1>
-						<p><?php echo $description; ?></p>
 					</div>
