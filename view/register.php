@@ -7,7 +7,7 @@
 			<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=register">
 				<div class="card panel-primary">
 					<div class="card-header">
-						<span class="card-title">Informations principales</span>
+						<span class="card-title">Données à renseigner</span>
 					</div>
 					<div class="card-body row">
 <?php
@@ -31,9 +31,9 @@
 				// Valeur par défaut
 				$valeur = property_exists( $colonne , 'default' ) ? $colonne->default : '';
 ?>
-						<div class="row form-group form-group-sm col-sm-<?php echo $colGrid->div; ?>">
-							<label class="col-sm-<?php echo $colGrid->label; ?> control-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
-							<div class="input-group col-sm-<?php echo $colGrid->value; ?>">
+						<div class="row form-group form-group-sm col-12 col-xl-<?php echo $colGrid->div; ?>">
+							<label class="col-6 col-xl-<?php echo $colGrid->label; ?> control-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
+							<div class="input-group col-6 col-xl-<?php echo $colGrid->value; ?>">
 								<?php echo $object->displayInput( 0, $colonne->name, $valeur, 'form-control' ); ?>
 
 							</div>
