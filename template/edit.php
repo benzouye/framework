@@ -66,9 +66,9 @@
 			
 			if( $userCan->admin or !$adminInput ) {
 ?>
-								<div class="form-group row col-<?php echo $colGrid->div; ?>">
-									<div class="col-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-									<div class="col-<?php echo $colGrid->value; ?> input-group input-group-sm">
+								<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
+									<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+									<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
 <?php
 				if( $readOnly && !$userCan->admin ) {
 					echo $object->displayField( $colonne->name, $valeur );
@@ -185,7 +185,7 @@
 						$classLink .= ' add-relation';
 					}
 ?>
-					<div class="col-sm-<?php echo $relation->grid; ?>">
+					<div class="col-12 col-md-<?php echo $relation->grid; ?>">
 						<div class="card">
 							<div class="card-header">
 								<span class="panel-title"><?php echo $relation->name .$nbItems; ?></span>
@@ -224,14 +224,15 @@
 				
 			}
 ?>
-				</div>
 				<div id="relation-modal" class="modal fade" tabindex="-1" role="dialog">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<form method="POST" action="index.php?item=<?php echo $savelink; ?>">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-									<h4 class="modal-title">Choisissez les éléments à ajouter</h4>
+									<h5 class="modal-title">Choisissez les éléments à ajouter</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
 								</div>
 								<div class="modal-body">
 									<ul id="relation-ul" class="list-group"></ul>
