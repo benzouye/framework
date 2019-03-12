@@ -1,6 +1,6 @@
 
 				<div class="row">
-					<div class="col-sm-4">
+					<div class="col-12 col-lg-4">
 						<p>Veuillez vous connecter.</p>
 						<form method="POST" action="index.php">
 							<div class="form-group">
