@@ -50,7 +50,7 @@
 					$html = '<p><em>Aucune données à afficher</em></p>';
 				}
 ?>
-					<div class="col-<?php echo $requete->grid; ?>">
+					<div class="col-12 col-md-<?php echo $requete->grid; ?>">
 						<div class="card card-dark">
 							<div class="card-header">
 								<span class="card-title"><?php echo $requete->description; ?></span> <span class="badge badge-light float-right"><?php echo $nbElements; ?></span>
