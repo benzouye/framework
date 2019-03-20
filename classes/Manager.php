@@ -15,13 +15,8 @@ class Manager {
 	public function __construct( PDO $bdd, $debug ) {
 		$this->bdd = $bdd;
 		$this->debug = $debug;
-		$this->refreshData();
-	}
-	
-	public function refreshData() {
+		
 		$this->setOptions();
-		$this->setUsers();
-		$this->setUser();
 		$this->setItemAndMenus();
 	}
 	
@@ -29,7 +24,7 @@ class Manager {
 		return $this->debug;
 	}
 	
-	protected function setOptions() {
+	public function setOptions() {
 		try {
 			$requete = $this->bdd->query( '
 				SELECT *
@@ -48,7 +43,7 @@ class Manager {
 		}
 	}
 	
-	protected function setUsers() {
+	public function setUsers() {
 		try {
 			$requete = $this->bdd->query( '
 				SELECT *
@@ -67,7 +62,7 @@ class Manager {
 		}
 	}
 	
-	protected function setItemAndMenus() {
+	public function setItemAndMenus() {
 		try {
 			$requete = $this->bdd->query( '
 				SELECT *
@@ -94,7 +89,7 @@ class Manager {
 		sort( $this->menuIds );
 	}
 	
-	protected function setUser() {
+	public function setUser() {
 		$good_ident = true;
 		$good_valide = true;
 		$good_mdp = true;
@@ -140,7 +135,8 @@ class Manager {
 	}
 	
 	public function getUser() {
-		$this->refreshData();
+		$this->setUsers();
+		$this->setUser();
 		return $this->user;
 	}
 	
