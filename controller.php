@@ -151,6 +151,8 @@
 					$manager->setError( M_ACCESSERR );
 				}
 			}
+			$manager->setOptions();
+			$manager->setItemAndMenus();
 		}
 		
 		// Chargement de l'objet associé pour les pages non statiques
@@ -218,7 +220,6 @@
 		} else {
 			$items = $object->getItems( null, $paginate, $p );
 		}
-		$manager->refreshData();
 		
 		// Initialisation de l'id demandé
 		$next = $object->getNextId();
