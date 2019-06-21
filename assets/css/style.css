@@ -119,6 +119,14 @@ th {
 	width: 100%;
 }
 
+.navbar-brand>.fas {
+	margin-right: 10px;
+}
+
+.navbar-brand>.badge {
+	margin-left: 10px;
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
