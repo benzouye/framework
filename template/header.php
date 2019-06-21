@@ -51,7 +51,7 @@
 		if( $readOnly ) {
 			$badgeAction = 'Consultation';
 		} else {
-			$badgeAction = ( $new && $action == 'edit' ) ? 'CrĂ©ation' : $actions[$action];
+			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
 		}
 		$description = ' <span class="badge badge-light">'.$badgeAction.'</span>';
 	}
