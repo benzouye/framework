@@ -170,9 +170,6 @@
 <?php
 		// Affichage des relations pour les variants en modification
 		if( !$new && count($relations) > 0 ) {
-?>
-				<div class="row">
-<?php
 			foreach( $relations as $relation ) {
 				if( method_exists( $object, 'get_'.$relation->item ) ) {
 					$items = $object->{'get_'.$relation->item}();
@@ -224,31 +221,79 @@
 				
 			}
 ?>
-				<div id="relation-modal" class="modal fade" tabindex="-1" role="dialog">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<form method="POST" action="index.php?item=<?php echo $savelink; ?>">
-								<div class="modal-header">
-									<h5 class="modal-title">Choisissez les éléments à ajouter</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<ul id="relation-ul" class="list-group"></ul>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-										<i class="fas fa-sm fa-caret-left"></i> Retour
-									</button>
-									<button type="submit" class="btn btn-success btn-sm">
-										<i class="fas fa-sm fa-caret-save"></i> Sauvegarder
-									</button>
-								</div>
-							</form>
+					<div id="relation-modal" class="modal fade" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form method="POST" action="index.php?item=<?php echo $savelink; ?>">
+									<div class="modal-header">
+										<h5 class="modal-title">Choisissez les éléments à ajouter</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<ul id="relation-ul" class="list-group"></ul>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+											<i class="fas fa-sm fa-caret-left"></i> Retour
+										</button>
+										<button type="submit" class="btn btn-success btn-sm">
+											<i class="fas fa-sm fa-caret-save"></i> Sauvegarder
+										</button>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
-				</div>
+<?php
+		}
+		
+		// Affichage de l'historique
+		if( !$new && $userCan->admin ) {
+?>
+					<div class="col-sm-12">
+						<div class="card">
+							<div class="card-header">
+								<span class="panel-title">Historique</span>
+							</div>
+							<div class="card-body">
+<?php
+			$historiques = $object->getHistorique();
+			if( count( $historiques ) > 0 ) {
+?>
+							<table class="table table-sm table-striped table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Utilisateur</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+<?php
+				foreach( $historiques as $historique ) {
+?>
+									<tr>
+										<td><?php echo $historique->date_cre; ?></td>
+										<td><?php echo $historique->identifiant; ?></td>
+										<td><?php echo $historique->action; ?></td>
+									</tr>
+<?php
+				}
+?>
+								</tbody>
+							</table>
+<?php
+			} else {
+?>
+								<p>Aucun élément ...</p>
+<?php
+			}
+?>
+							</div>
+						</div>
+					</div>
 <?php
 		}
 	}
