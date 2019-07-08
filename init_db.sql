@@ -1,5 +1,3 @@
--- Adminer 4.3.1 MySQL dump
-
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
@@ -270,6 +268,17 @@ CREATE TABLE `prefix_utilisateur` (
   CONSTRAINT `utilisateur_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
   CONSTRAINT `utilisateur_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
   CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `prefix_groupe` (`id_groupe`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `prefix_historique`;
+CREATE TABLE `prefix_historique` (
+	`id_historique` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`date_cre` datetime NOT NULL,
+	`user_cre` int(10) unsigned NOT NULL,
+	`item` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+	`item_id` int(10) unsigned NOT NULL,
+	`action` text COLLATE utf8_unicode_ci,
+	PRIMARY KEY (`id_historique`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `prefix_utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
