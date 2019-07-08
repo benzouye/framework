@@ -449,6 +449,8 @@ class Model {
 			}
 			$requete->closeCursor();
 			
+			$this->setHistorique();
+			
 			$this->manager->setMessage( sprintf( M_ITEMSET, $this->single ) );
 		}
 		catch( Exception $e ) {
@@ -470,6 +472,8 @@ class Model {
 			);
 			$requete->closeCursor();
 			
+			$this->setHistorique();
+			
 			$this->manager->setMessage( 'L\'élément <em>'.$this->single.'</em> ID = '.$id.' a bien été supprimé.' );
 			
 			return true;
@@ -487,6 +491,52 @@ class Model {
 			}
 			
 			return false;
+		}
+	}
+	
+	private function setHistorique() {
+		try {
+			$requete = $this->bdd->prepare( '
+				INSERT INTO '.DBPREF.'historique ( user_cre, date_cre, item, item_id, action )
+				VALUES( :user_cre, NOW(), :item, :item_id, :action );'
+			);
+			$requete->execute( array(
+				'user_cre' =>  $this->manager->getUser()->id_utilisateur ,
+				'item' => $this->itemName,
+				'item_id' => $this->id,
+				'action' => json_encode( $_POST )
+			));
+		}
+		catch( Exception $e ) {
+			$this->manager->setError( 'Erreur lors de la création de l\'historique' );
+		}
+		$requete->closeCursor();
+	}
+	
+	public function getHistorique() {
+		$historique = false;
+		try {
+			$requete = $this->bdd->query( '
+				SELECT
+					H.user_cre,
+					U.identifiant,
+					DATE_FORMAT( H.date_cre, "%d/%m/%Y à %H:%i:%s" ) AS date_cre,
+					action
+				FROM
+					'.DBPREF.'historique H
+						INNER JOIN '.DBPREF.'utilisateur U
+							ON U.user_cre = U.id_utilisateur
+				WHERE
+					H.item = '.$this->bdd->quote( $this->itemName ).'
+					AND H.item_id = '.$this->id.'
+				ORDER BY date_cre DESC;'
+			);
+			$historique = $requete->fetchAll();
+			
+			return $historique;
+		}
+		catch( Exception $e ) {
+			$this->manager->setError( 'Erreur lors de la récupération de l\'historique' );
 		}
 	}
 	
