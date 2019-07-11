@@ -529,7 +529,8 @@ class Model {
 				WHERE
 					H.item = '.$this->bdd->quote( $this->itemName ).'
 					AND H.item_id = '.$this->id.'
-				ORDER BY date_cre DESC;'
+				ORDER BY date_cre DESC
+				LIMIT 3;'
 			);
 			$historique = $requete->fetchAll();
 			
