@@ -86,19 +86,26 @@
 		
 		// Utilisation du template dédié
 		if( file_exists( TEMPLDIR.'print.'.$page->alias.'.'.$type.'.php' ) ) {
-			include( TEMPLDIR.'print.'.$page->alias.'.'.$type.'.php' );
+			$fichier = TEMPLDIR.'print.'.$page->alias.'.'.$type.'.php';
+			include( $fichier );
+		
+			if( method_exists( $page->alias, 'setDocument' ) ) {
+				$flagOkDoc = $object->setDocument( $nomFichier, $type );
+			}
+			if( $flagOkDoc ) {
+				$pdf->Output( 'F', UPLDIR.$nomFichier, true );
+			}
+		}
+		// Ou du template général
+		elseif( file_exists( TEMPLDIR.'print.'.$type.'.php' ) ) {
+			$fichier = TEMPLDIR.'print.'.$type.'.php';
+			include( $fichier );
 		}
 		// Ou message d'erreur
 		else {
+			$fichier = $action.'.'.$page->alias.'.'.$type;
 			$pdf->AddPage('P');
-			$pdf->MultiCell(190,5,utf8_decode('Le fichier template d\'impression pour print.'.$page->alias.'.'.$type.' n\'existe pas. Contactez l\'administrateur pour faire corriger ce problème. '), 1 );
-		}
-		
-		if( method_exists( $page->alias, 'setDocument' ) ) {
-			$flagOkDoc = $object->setDocument( $nomFichier, $type );
-		}
-		if( $flagOkDoc ) {
-			$pdf->Output( 'F', UPLDIR.$nomFichier, true );
+			$pdf->MultiCell(190,5,utf8_decode('Le fichier template d\'impression '.$fichier.' n\'existe pas. Contactez l\'administrateur pour faire corriger ce problème. '), 1 );
 		}
 		$pdf->Output();
 	}
