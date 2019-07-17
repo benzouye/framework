@@ -1,7 +1,7 @@
 <?php
 	$model_document = (object) array(
 		'itemName' => 'document',
-		'parentItem' => 'inscription',
+		'parentItem' => 'exemple',
 		'table' => DBPREF.'document',
 		'single' => 'document',
 		'plural' => 'documents',
@@ -21,27 +21,27 @@
 				'required' => false
 			),
 			(object) array(
-				'name' => 'id_inscription',
-				'nicename' => 'Inscription',
-				'align' => 'center',
+				'name' => 'id_exemple',
+				'nicename' => 'Exemple',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
-					'value' => 4,
+					'value' => 1,
 				),
-				'params' => array( 'type' => 'number' ),
+				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => true,
 				'editable' => false,
-				'required' => true
+				'required' => false
 			),
 			(object) array(
 				'name' => 'id_type_document',
 				'nicename' => 'Type de document',
 				'align' => 'center',
+				'default' => 1,
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
-					'value' => 4,
+					'value' => 2,
 				),
 				'params' => array(
 					'type' => 'select',
@@ -61,10 +61,10 @@
 					'label' => 2,
 					'value' => 4,
 				),
-				'params' => array( 'type' => 'url' ),
+				'params' => array( 'type' => 'file' ),
 				'visible' => true,
-				'editable' => false,
-				'required' => false
+				'editable' => true,
+				'required' => true
 			),
 		)
 	);
