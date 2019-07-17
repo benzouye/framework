@@ -28,6 +28,9 @@
 		}
 ?>
 					<?php echo $criteres; ?>
+					<div class="float-right">
+						<a title="Imprimer" target="_blank" href="index.php?item=<?php echo $page->alias;?>&action=print&type=list" class="btn btn-secondary btn-sm"><span class="fas fa-print"></span></a>
+					</div>
 				</div>
 			</div>
 			<?php $object->displayPagination( $p ); ?>
