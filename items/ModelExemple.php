@@ -95,6 +95,7 @@
 			(object) array(
 				'name' => 'localisation',
 				'nicename' => 'Localisation',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
