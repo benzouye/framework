@@ -114,6 +114,7 @@
 		'search' => 'Rechercher',
 		'print' => 'Imprimer',
 		'extract' => 'Extraction',
+		'export' => 'Export',
 	);
 	
 	// Classes CSS des états
