@@ -896,6 +896,47 @@ class Model {
 		}
 	}
 	
+	public function getFieldXLS( $name, $valeur ) {
+		$texte = '';
+		$colonne = $this->getColumn( $name );
+		
+		switch( $colonne->params['type'] ) {
+			case 'number' :
+				$texte = $valeur;
+				if( property_exists( $colonne, 'unit' ) ) {
+					$texte .= ' '.$colonne->unit;
+				}
+				break;
+			case 'date' :
+				if( $valeur != null ) {
+					$texte = date( UIDATE, strtotime($valeur));
+				}
+				break;
+			case 'textarea' :
+				$texte = strip_tags( $valeur );
+				break;
+			case 'time' :
+				$texte = substr( $valeur, 0, 5);
+				break;
+			case 'select' :
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				foreach( $foreignItems as $foreignItem ) {
+					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
+						$texte = $foreignItem->{$colonne->params['columnLabel']};
+						break;
+					}
+				}
+				break;
+			case 'checkbox' :
+				$texte = ($valeur == 1 ? 'X' : '');
+				break;
+			default :
+				$texte = $valeur;
+		}
+		
+		return $texte;
+	}
+	
 	public function displayPagination( $paged = 1, $range = 2, $bottom = false ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		
