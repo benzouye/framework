@@ -245,6 +245,8 @@ CREATE TABLE `prefix_type_document` (
   CONSTRAINT `prefix_type_document_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+INSERT INTO `prefix_type_document` ( `libelle`, `user_cre`, `date_cre` )
+VALUES ( 'Type1', 1, NOW() );
 
 DROP TABLE IF EXISTS `prefix_utilisateur`;
 CREATE TABLE `prefix_utilisateur` (
