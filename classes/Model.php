@@ -885,12 +885,6 @@ class Model {
 				$html = ($valeur == 1 ? 'X' : '');
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 				break;
-			case 'image' :
-				break;
-			case 'file' :
-				break;
-			case 'localisation' :
-				break;
 			default :
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 		}
