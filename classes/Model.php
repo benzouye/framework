@@ -836,6 +836,8 @@ class Model {
 				}
 				break;
 			case 'localisation' :
+				$localisation = json_decode( $valeur );
+				$html = $localisation->lat.'<br />'.$localisation->lng;
 				break;
 			default :
 				$html = $valeur;
