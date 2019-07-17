@@ -844,6 +844,58 @@ class Model {
 		return $html;
 	}
 	
+	public function displayFieldPDF( $name, $valeur, $pdf, $nbColonnes = 1, $largeur = 277, $hauteur = 7 ) {
+		$html = '';
+		$colonne = $this->getColumn( $name );
+		$largeur = $largeur/$nbColonnes;
+		
+		switch( $colonne->params['type'] ) {
+			case 'number' :
+				$html = $valeur;
+				if( property_exists( $colonne, 'unit' ) ) {
+					$html .= ' '.$colonne->unit;
+				}
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				break;
+			case 'date' :
+				if( $valeur != null ) {
+					$html = date( UIDATE, strtotime($valeur));
+					$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				}
+				break;
+			case 'textarea' :
+				$html = strip_tags( $valeur );
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				break;
+			case 'time' :
+				$html = substr( $valeur, 0, 5);
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				break;
+			case 'select' :
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				foreach( $foreignItems as $foreignItem ) {
+					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
+						$html = $foreignItem->{$colonne->params['columnLabel']};
+						break;
+					}
+				}
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				break;
+			case 'checkbox' :
+				$html = ($valeur == 1 ? 'X' : '');
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				break;
+			case 'image' :
+				break;
+			case 'file' :
+				break;
+			case 'localisation' :
+				break;
+			default :
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+		}
+	}
+	
 	public function displayPagination( $paged = 1, $range = 2, $bottom = false ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		
