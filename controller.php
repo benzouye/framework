@@ -61,14 +61,13 @@
 	$type = isset( $_GET['type'] ) ? $_GET['type'] : 'fiche';
 	
 	// Chargement et définition template
-	$title = $manager->getOption('sitetitle');
+	$title = $manager->getOption('sitetitle').' | '.$page->nom;
 	if( $static ) {
 		// Pour une page statique
 		$_SESSION[DBPREF.'_search'] = array();
 		$_SESSION[DBPREF.'_item'] = $page->alias;
 		$_SESSION[DBPREF.'_page'] = 1;
 		$action = 'list';
-		$title = $page->nom;
 		if( file_exists( VIEWDIR.$page->alias.'.php' ) ) {
 			$template = VIEWDIR.$page->alias.'.php';
 		} else {
@@ -280,6 +279,6 @@
 			$manager->setError( sprintf( M_TMPLERR, $page->alias.'.'.$action ) );
 		}
 		$subTitle = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
-		$title = $manager->getOption('sitetitle').' | '.$page->nom.' | '.$subTitle;
+		$title .= ' | '.$subTitle;
 	}
 ?>
