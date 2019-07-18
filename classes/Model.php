@@ -9,8 +9,8 @@ class Model {
 	protected $single;
 	protected $plural;
 	protected $columns;
-	protected $ignoredParams = ['item','columnKey','columnLabel','where','extensions'];
-	protected $disabledExceptions = ['select','checkbox'];
+	protected $ignoredParams = ['item','columnKey','columnLabel','where','extensions', 'value'];
+	protected $disabledExceptions = ['select','checkbox','calculation'];
 	protected $defaultFilters;
 	protected $objectActions;
 	protected $prints;
@@ -173,14 +173,24 @@ class Model {
 		try {
 			$select = '';
 			$where = '';
+			$join = '';
+			$groupby = '';
 			$limit = '';
+			$isCalculated = false;
 			
 			if( $paginate ) $limit = 'LIMIT '.$page*$nbparpage.', '.$nbparpage;
 			
 			if( $search ) $where = $this->getSearchCriteria( $search, true );
 			
 			foreach( $this->columns as $colonne ) {
-				$select .= $colonne->name.',';
+				if( $colonne->params['type'] == 'calculation' ) {
+					$groupby = 'GROUP BY T.id_'.$this->itemName;
+					$join = $colonne->params['join'];
+					$select .= $colonne->params['function'].' AS '.$colonne->name.',';
+					$isCalculated = true;
+				} else {
+					$select .= 'T.'.$colonne->name.',';
+				}
 			}
 			$select = rtrim( $select, ',' );
 			
@@ -194,8 +204,10 @@ class Model {
 			
 			$requete = $this->bdd->query('
 				SELECT '.$select.'
-				FROM '.$this->table.'
+				FROM '.$this->table.' T
+				'.$join.'
 				'.$where.'
+				'.$groupby.'
 				ORDER BY '.$this->orderby.'
 				'.$limit.';'
 			);
@@ -255,6 +267,19 @@ class Model {
 	}
 	
 	public function getItem( $id, $action = 'list' ) {
+		$select = '';
+		$join = '';
+		$groupby = '';
+		
+		foreach( $this->columns as $colonne ) {
+			if( $colonne->params['type'] == 'calculation' ) {
+				$groupby = 'GROUP BY T.id_'.$this->itemName;
+				$join = $colonne->params['join'];
+				$select .= ', '.$colonne->params['function'].' AS '.$colonne->name;
+				break;
+			}
+		}
+		
 		if( $id == $this->nextId && $action == 'edit' ) {
 			// Réservation next ID
 			try {
@@ -276,9 +301,11 @@ class Model {
 		
 		try {
 			$requete = $this->bdd->prepare('
-				SELECT *
-				FROM '.$this->table.'
-				WHERE id_'.$this->itemName.' = ?;'
+				SELECT T.* '.$select.'
+				FROM '.$this->table.' T
+				'.$join.'
+				WHERE T.id_'.$this->itemName.' = ?
+				'.$groupby.';'
 			);
 			$requete->execute(array($id));
 			$this->currentItem = $requete->fetch();
@@ -606,6 +633,8 @@ class Model {
 							break;
 						case 'localisation' :
 							break;
+						case 'calculation' :
+							break;
 						default :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
@@ -778,6 +807,8 @@ class Model {
 				break;
 			case 'localisation' :
 				break;
+			case 'calculation' :
+				break;
 			default :
 				$html .= '<input '.$format.'>';
 		}
@@ -836,8 +867,10 @@ class Model {
 				}
 				break;
 			case 'localisation' :
-				$localisation = json_decode( $valeur );
-				$html = $localisation->lat.'<br />'.$localisation->lng;
+				$valeur = json_decode( $valeur );
+				if( is_object( $valeur ) ) {
+					$html = $valeur->lat.'<br />'.$valeur->lng ;
+				}
 				break;
 			default :
 				$html = $valeur;
@@ -887,7 +920,21 @@ class Model {
 				$html = ($valeur == 1 ? 'X' : '');
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 				break;
+			case 'image' :
+				$html = $valeur;
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				break;
+			case 'file' :
+				$html = $valeur;
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				break;
+			case 'localisation' :
+				$valeur = json_decode( $valeur );
+				$html = $valeur->lat.'/'.$valeur->lng;
+				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				break;
 			default :
+				$html = $valeur;
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 		}
 	}
