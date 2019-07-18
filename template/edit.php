@@ -60,8 +60,6 @@
 				if( $colonne->admin ) {
 					$adminInput = true;
 				}
-			} else {
-				$adminInput = false;
 			}
 			
 			if( $userCan->admin or !$adminInput ) {
