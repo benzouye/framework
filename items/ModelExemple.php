@@ -4,7 +4,7 @@
 		'table' => DBPREF.'exemple',
 		'single' => 'exemple',
 		'plural' => 'exemples',
-		'orderby' => 'date_cre DESC',
+		'orderby' => 'T.date_cre DESC',
 		'defaultFilters' => array(
 			'id_etat' => 1
 		),
@@ -125,6 +125,25 @@
 				'visible' => true,
 				'editable' => true,
 				'required' => true
+			),
+			(object) array(
+				'name' => 'doc_count',
+				'nicename' => 'Nb. docs.',
+				'align' => 'center',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 1,
+				),
+				'params' => array(
+					'type' => 'calculation',
+					'function' => 'IF( D.id_exemple IS NULL, 0, COUNT(*) )',
+					'value' => '*',
+					'join' => ' LEFT JOIN '.DBPREF.'document D ON T.id_exemple = D.id_exemple ',
+				),
+				'visible' => true,
+				'editable' => false,
+				'required' => false
 			),
 		),
 	);
