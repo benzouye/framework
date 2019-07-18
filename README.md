@@ -160,6 +160,9 @@ Here is the different types currently accepted :
   1. item (string) : name of the linked item
   2. columnKey (string) : column name for select option value (mainly id_{item\_name})
   3. columnLabel (string) : column name for select option label
+* calculation : display the result of a calculation (SUM, AVG, COUNT, etc.) used with GROUP BY SQL clause. You have to define this with 2 attributes :
+  1.function (string) : the SQL syntax for the calculation
+  2.join (string) : optional SQL JOIN syntax to get the data
 
 ### Parent/Child Relations
 
