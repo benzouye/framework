@@ -138,7 +138,6 @@
 				'params' => array(
 					'type' => 'calculation',
 					'function' => 'IF( D.id_exemple IS NULL, 0, COUNT(*) )',
-					'value' => '*',
 					'join' => ' LEFT JOIN '.DBPREF.'document D ON T.id_exemple = D.id_exemple ',
 				),
 				'visible' => true,
