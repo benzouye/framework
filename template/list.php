@@ -16,15 +16,9 @@
 <?php
 		}
 		if( count($search) > 0 && ( $userCan->admin or $userCan->read ) ) {
-			if( $nbItems>0 ) {
 ?>
 					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-times"></span> Supprimer les filtres</a>
 <?php
-			} else {
-?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-caret-left"></span> Retour à la liste</a>
-<?php
-			}
 		}
 ?>
 					<?php echo $criteres; ?>
