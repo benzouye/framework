@@ -1,7 +1,4 @@
-SET NAMES utf8;
-SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
-SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 DROP TABLE IF EXISTS `prefix_analyse`;
 CREATE TABLE `prefix_analyse` (
@@ -132,10 +129,10 @@ CREATE TABLE `prefix_groupe_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `prefix_groupe_item` (`id_groupe`, `alias`, `create`, `read`, `update`, `delete`) VALUES
-(1,	'analyse',	0,	1,	0,	0),
-(1,	'document',	0,	1,	0,	0),
 (1,	'home',	0,	1,	0,	0),
 (1,	'logout',	0,	1,	0,	0),
+(2,	'exemple',	1,	1,	1,	1),
+(2,	'type_document',	1,	1,	1,	1),
 (2,	'analyse',	1,	1,	1,	1),
 (2,	'document',	1,	1,	1,	1),
 (2,	'home',	0,	1,	0,	0),
