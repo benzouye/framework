@@ -6,14 +6,13 @@
 					<div class="card-body row">
 <?php
 	foreach( $colonnes as $colonne ) {
-		if( !in_array( $colonne->params['type'], ['password','image','file','localisation'] ) ) {
+		if( !in_array( $colonne->params['type'], ['password','image','file','localisation','calculation'] ) ) {
 			$colGrid = $grille;
 ?>
 						<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
 							<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
 							<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
 								<?php echo $object->displaySearchInput( $colonne->name, 'form-control form-control-sm' ); ?>
-
 							</div>
 						</div>
 <?php
