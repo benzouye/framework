@@ -3,7 +3,7 @@
 	$flagOkDoc = false;
 	
 	try {
-		$pagination = false;
+		$pagination = ( $type == 'list' );
 		foreach( $prints as $print ) {
 			if( $print->alias == $type ) {
 				if( $print->pagination ) {
@@ -11,6 +11,13 @@
 				}
 				break;
 			}
+		}
+	
+		function printHeaderList( $pdf, $object, $nb ) {
+			$pdf->SetFont( 'Arial','B', 16 );
+			$pdf->SetXY( 10, 10 );
+			$pdf->Cell(277,7, utf8_decode( 'Liste de résultats : '.$nb.' '.( $nb > 1 ? $object->getPlural() : $object->getSingle() ) ),1,1,'C');
+			$pdf->ln(3);
 		}
 		
 		if( $pagination ) {
