@@ -210,7 +210,7 @@
 		
 		// Traitement recherche
 		$criteres = '';
-		$paginate = $_SESSION[DBPREF.'_action'] == 'print' ? false : true;
+		$paginate = in_array( $_SESSION[DBPREF.'_action'], [ 'print', 'export' ] ) ? false : true;
 		if( count($search) > 0 ) {
 			$items = $object->getItems( $search, $paginate, $p );
 			$criteres = '<span class="search">';
