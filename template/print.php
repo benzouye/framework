@@ -24,7 +24,7 @@
 			class PDF extends FPDF {
 				
 				protected $NewPageGroup;
-				protected $PageGroups;
+				protected $PageGroups = [];
 				protected $CurrPageGroup;	
 				
 				function Footer() {
@@ -56,7 +56,7 @@
 					if($this->NewPageGroup)
 					{
 						// start a new group
-						$n = sizeof($this->PageGroups)+1;
+						$n = count($this->PageGroups)+1;
 						$alias = "{nb$n}";
 						$this->PageGroups[$alias] = 1;
 						$this->CurrPageGroup = $alias;
