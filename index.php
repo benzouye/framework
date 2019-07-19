@@ -11,9 +11,6 @@
 	// Contrôleur
 	require_once( 'controller.php' );
 	
-	// Libération tampon d'affichage
-	ob_end_flush();
-	
 	// Affichage du header HTML si pas impression
 	if( $action != 'print' ) {
 		require_once( TEMPLDIR.'header.php' );
@@ -28,4 +25,7 @@
 	if( $action != 'print' ) {
 		require_once( TEMPLDIR.'footer.php' );
 	}
+	
+	// Libération tampon d'affichage
+	ob_end_flush();
 ?>
