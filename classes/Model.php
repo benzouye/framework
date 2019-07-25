@@ -165,7 +165,7 @@ class Model {
 		}
 	}
 	
-	public function getItems( array $search = null, $paginate = false, $page = 1 ) {
+	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
 		$page = $page-1;
@@ -208,7 +208,7 @@ class Model {
 				'.$join.'
 				'.$where.'
 				'.$groupby.'
-				ORDER BY '.$this->orderby.'
+				ORDER BY '.( $orderby ? $orderby : $this->orderby ).'
 				'.$limit.';'
 			);
 			$this->items = $requete->fetchAll();
