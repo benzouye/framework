@@ -208,16 +208,22 @@
 		$search = $_SESSION[DBPREF.'_search'];
 		$p = $_SESSION[DBPREF.'_page'];
 		
-		// Traitement recherche
+		// Traitement recherche et tri
 		$criteres = '';
 		$paginate = in_array( $_SESSION[DBPREF.'_action'], [ 'print', 'export' ] ) ? false : true;
+		$orderby = false;
+		
+		if( !empty( $_GET['orderby'] ) && !empty( $_GET['orderway'] ) ) {
+			$orderby = '`'.$_GET['orderby'].'` '.$_GET['orderway'];
+		}
+		
 		if( count($search) > 0 ) {
-			$items = $object->getItems( $search, $paginate, $p );
+			$items = $object->getItems( $search, $paginate, $p, $orderby );
 			$criteres = '<span class="search">';
 			$criteres .= $object->getSearchCriteria( $search );
 			$criteres .= '</span>';
 		} else {
-			$items = $object->getItems( null, $paginate, $p );
+			$items = $object->getItems( null, $paginate, $p, $orderby );
 		}
 		
 		// Initialisation de l'id demandé
