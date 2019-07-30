@@ -50,8 +50,8 @@
 <?php
 					if( !in_array( $colonne->params['type'] , [ 'image', 'file', 'localisation' ] ) ) {
 ?>
-						&nbsp;<a class="text-secondary" title="Trier par <?php echo $colonne->nicename; ?> croissant" href="index.php?item=<?php echo $page->alias;?>&action=list&orderby=<?php echo $colonne->name; ?>&orderway=asc"><span class="col-sort fas fa-sort-amount-up fa-xs"></span></a>
-						&nbsp;<a class="text-secondary" title="Trier par <?php echo $colonne->nicename; ?> décroissant" href="index.php?item=<?php echo $page->alias;?>&action=list&orderby=<?php echo $colonne->name; ?>&orderway=desc"><span class="fas fa-sort-amount-down fa-xs"></span></a>
+						&nbsp;<a class="text-secondary" title="Trier par <?php echo $colonne->nicename; ?> croissant" href="index.php?item=<?php echo $page->alias;?>&orderby=<?php echo $colonne->name; ?>&orderway=asc"><span class="col-sort fas fa-sort-amount-up fa-xs"></span></a>
+						&nbsp;<a class="text-secondary" title="Trier par <?php echo $colonne->nicename; ?> décroissant" href="index.php?item=<?php echo $page->alias;?>&orderby=<?php echo $colonne->name; ?>&orderway=desc"><span class="fas fa-sort-amount-down fa-xs"></span></a>
 <?php
 					}
 ?>
