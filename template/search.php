@@ -21,7 +21,7 @@
 ?>
 					</div>
 					<div class="card-footer">
-						<input type="hidden" id="search" name="search">
+						<input type="hidden" id="search" name="search" value="1">
 						<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-search"></i> Rechercher</button>
 						<a href="index.php?item=<?php echo $page->alias;?>" class="btn btn-secondary btn-sm"><i class="fas fa-sm fa-caret-left"></i> Retour liste</a>
 					</div>
