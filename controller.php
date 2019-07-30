@@ -67,6 +67,7 @@
 		$_SESSION[DBPREF.'_search'] = array();
 		$_SESSION[DBPREF.'_item'] = $page->alias;
 		$_SESSION[DBPREF.'_page'] = 1;
+		$_SESSION[DBPREF.'_orderby'] = false;
 		$action = 'list';
 		if( file_exists( VIEWDIR.$page->alias.'.php' ) ) {
 			$template = VIEWDIR.$page->alias.'.php';
@@ -172,7 +173,7 @@
 		$defaultFilters = $object->getDefaultFilters();
 		
 		// Initialisation de l'action demandée
-		if( isset( $_GET['action'] ) ) {
+		if( !empty( $_GET['action'] ) ) {
 			if( array_key_exists( $_GET['action'], $actions ) ) {
 				$action = $_GET['action'];
 				
@@ -195,12 +196,13 @@
 			$_SESSION[DBPREF.'_search'] = $defaultFilters;
 			$_SESSION[DBPREF.'_item'] = $page->alias;
 			$_SESSION[DBPREF.'_page'] = 1;
+			$_SESSION[DBPREF.'_orderby'] = false;
 		}
 		
 		// Initialisation du numéro de page à afficher
-		if( isset( $_GET['p'] ) ) $_SESSION[DBPREF.'_page'] = intval( $_GET['p'] );
+		if( !empty( $_GET['p'] ) ) $_SESSION[DBPREF.'_page'] = intval( $_GET['p'] );
 		
-		if( isset( $_POST['search'] ) ) {
+		if( !empty( $_POST['search'] ) ) {
 			$_SESSION[DBPREF.'_search'] = $_POST;
 			$_SESSION[DBPREF.'_page'] = 1;
 		}
@@ -211,11 +213,11 @@
 		// Traitement recherche et tri
 		$criteres = '';
 		$paginate = in_array( $_SESSION[DBPREF.'_action'], [ 'print', 'export' ] ) ? false : true;
-		$orderby = false;
 		
 		if( !empty( $_GET['orderby'] ) && !empty( $_GET['orderway'] ) ) {
-			$orderby = '`'.$_GET['orderby'].'` '.$_GET['orderway'];
+			$_SESSION[DBPREF.'_orderby'] = '`'.$_GET['orderby'].'` '.$_GET['orderway'];
 		}
+		$orderby = $_SESSION[DBPREF.'_orderby'];
 		
 		if( count($search) > 0 ) {
 			$items = $object->getItems( $search, $paginate, $p, $orderby );
