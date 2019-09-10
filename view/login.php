@@ -4,7 +4,7 @@
 						<p>Veuillez vous connecter.</p>
 						<form method="POST" action="index.php">
 							<div class="form-group">
-								<input type="text" class="form-control" id="identifiant" name="identifiant" placeholder="Nom d'utilisateur">
+								<input type="text" class="form-control" id="identifiant" name="identifiant" placeholder="Nom d'utilisateur" autofocus>
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
