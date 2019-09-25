@@ -5,6 +5,14 @@
 		'single' => 'analyse',
 		'plural' => 'analyses',
 		'orderby' => 'ordre',
+		'relations' => array(
+			(object) array(
+				'item' => 'item',
+				'name' => 'Visibilité',
+				'grid' => 3,
+				'static' => false,
+			),
+		),
 		'columns' => array(
 			(object) array(
 				'name' => 'id_analyse',
