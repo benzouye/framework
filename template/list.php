@@ -1,6 +1,21 @@
 <?php
 	if( $userCan->admin or $userCan->read ) {
 		$nbItems = count($items);
+		$analyses = $manager->getItemAnalyses( $page->alias );
+		if( count( $analyses ) > 0 ) {
+?>
+			<div class="row">
+<?php
+			$oAnalyse = new Analyse( $bdd, $manager, $model_analyse );
+			
+			foreach( $analyses as $analyse ) {
+				$element = $oAnalyse->getItem( $analyse->id_analyse );
+				echo $oAnalyse->getDashboardHTML( $element );
+			}
+?>
+			</div>
+<?php
+		}
 ?>
 			<div class="card">
 				<div class="card-body">
