@@ -269,6 +269,17 @@ CREATE TABLE `prefix_utilisateur` (
   CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `prefix_groupe` (`id_groupe`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE IF EXISTS `prefix_analyse_item`;
+CREATE TABLE `prefix_analyse_item` (
+  `alias` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `id_analyse` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`alias`,`id_analyse`),
+  KEY `id_analyse` (`id_analyse`),
+  KEY `alias` (`alias`),
+  CONSTRAINT `prefix_analyse_item_ibfk_1` FOREIGN KEY (`alias`) REFERENCES `prefix_item` (`alias`),
+  CONSTRAINT `prefix_analyse_item_ibfk_2` FOREIGN KEY (`id_analyse`) REFERENCES `prefix_analyse` (`id_analyse`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 DROP TABLE IF EXISTS `prefix_historique`;
 CREATE TABLE `prefix_historique` (
 	`id_historique` int(10) unsigned NOT NULL AUTO_INCREMENT,
