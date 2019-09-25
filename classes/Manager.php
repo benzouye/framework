@@ -6,6 +6,7 @@ class Manager {
 	protected $errors = array();
 	protected $messages = array();
 	protected $options = array();
+	protected $analyses = array();
 	protected $items = array();
 	protected $menuIds = array();
 	protected $user = false;
@@ -281,6 +282,31 @@ class Manager {
 			$this->errors[] = sprintf( M_OPTERR, $alias );
 		}
 		return $retour;
+	}
+	
+	public function getItemAnalyses( $alias ) {
+		$this->analyses = array();
+		try {
+			$requete = $this->bdd->prepare( '
+				SELECT id_analyse
+				FROM '.DBPREF.'analyse_item
+				WHERE alias = ?;'
+			);
+			$requete->execute( [ $alias ] );
+			$this->analyses = $requete->fetchAll();
+			$requete->closeCursor();
+		}
+		catch( Exception $e ) {
+			if( $this->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = 'analyse';
+			}
+			$this->errors[] = sprintf( M_ITEMSERR, $msg );
+		}
+		finally {
+			return $this->analyses;
+		}
 	}
 	
 	public function setError( $message ) {
