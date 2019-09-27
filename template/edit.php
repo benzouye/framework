@@ -250,16 +250,18 @@
 		
 		// Affichage de l'historique
 		if( !$new && $userCan->admin ) {
+			$historiques = $object->getHistorique();
+			$nbHistoriques = count( $historiques );
 ?>
 						<div class="col-sm-12">
 							<div class="card">
 								<div class="card-header">
 									<span class="panel-title">Historique</span>
+									<span class="badge badge-light" data-toggle="collapse" href="#body-historique"><?php echo $nbHistoriques; ?></span>
 								</div>
-								<div class="card-body">
+								<div class="card-body" id="body-historique">
 <?php
-			$historiques = $object->getHistorique();
-			if( count( $historiques ) > 0 ) {
+			if( $nbHistoriques > 0 ) {
 ?>
 									<table class="table table-sm table-striped table-hover table-bordered">
 										<thead>
