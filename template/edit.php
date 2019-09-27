@@ -257,7 +257,7 @@
 							<div class="card">
 								<div class="card-header">
 									<span class="panel-title">Historique</span>
-									<a class="badge badge-light" data-toggle="collapse" href="#body-historique"><?php echo $nbHistoriques; ?></a>
+									<a title="Afficher/Masquer l'historique" class="badge badge-light" data-toggle="collapse" href="#body-historique"><?php echo $nbHistoriques; ?></a>
 								</div>
 								<div class="card-body collapse" id="body-historique">
 <?php
