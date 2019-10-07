@@ -126,13 +126,10 @@ class analyse extends Model {
 			<div class="col-12 col-md-'.$requete->grid.'">
 				<div class="card card-dark">
 					<div class="card-header">
-						<span class="card-title">'.$requete->description.'</span> <span class="badge badge-light float-right">'.$nbElements.'</span>
+						<span class="card-title">'.$requete->description.'</span> <span class="badge badge-light float-right">'.$nbElements.'</span> <a title="Voir les données" href="index.php?item=analyse&action=extract&id='.$element->id_analyse.'" class="btn btn-secondary btn-sm"><span class="fas fa-search"></span></a>
 					</div>
 					<div class="card-body">
 						'.$html.'
-					</div>
-					<div class="card-footer no-print">
-						<a href="index.php?item=analyse&action=extract&id='.$element->id_analyse.'" class="btn btn-secondary btn-sm"><span class="fas fa-search"></span> Voir les données</a>
 					</div>
 				</div>
 			</div>';
