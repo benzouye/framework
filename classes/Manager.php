@@ -288,9 +288,13 @@ class Manager {
 		$this->analyses = array();
 		try {
 			$requete = $this->bdd->prepare( '
-				SELECT id_analyse
-				FROM '.DBPREF.'analyse_item
-				WHERE alias = ?;'
+				SELECT AI.id_analyse
+				FROM
+					'.DBPREF.'analyse_item AI
+						INNER JOIN '.DBPREF.'analyse A
+							ON AI.id_analyse = A.id_analyse
+				WHERE AI.alias = ?
+				ORDER BY A.ordre;'
 			);
 			$requete->execute( [ $alias ] );
 			$this->analyses = $requete->fetchAll();
