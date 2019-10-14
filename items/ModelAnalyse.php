@@ -10,7 +10,7 @@
 				'item' => 'item',
 				'name' => 'Visibilité',
 				'grid' => 3,
-				'static' => false,
+				'static' => true,
 			),
 		),
 		'columns' => array(
