@@ -16,8 +16,8 @@
 <?php
 		}
 ?>
+									<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-save"></i> Sauvegarder</button>
 								</ul>
-								<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-save"></i> Sauvegarder</button>
 								<input type="hidden" name="item" value="analyse"/>
 								<input type="hidden" name="id" value="<?php echo $id; ?>"/>
 								<input type="hidden" name="relation" value="item"/>
