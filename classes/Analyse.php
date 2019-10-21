@@ -124,7 +124,7 @@ class analyse extends Model {
 		
 		$html = '
 			<div class="col-12 col-md-'.$requete->grid.'">
-				<div class="card card-dark">
+				<div class="card card-dark border-dark">
 					<div class="card-header">
 						<span class="card-title">'.$requete->description.'</span> <a title="Voir les données ('.$nbElements.')" href="index.php?item=analyse&action=extract&id='.$element->id_analyse.'" class="btn btn-light btn-sm float-right"><span class="fas fa-search"></span></a>
 					</div>
