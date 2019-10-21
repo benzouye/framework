@@ -39,7 +39,7 @@
 	}
 ?>
 					<li id="sidebarButton">
-						<a class="btn btn-light btn-sm" title="Fermer le menu"><span class="fas fa-backspace"></span></a>
+						<a class="btn btn-dark btn-sm" title="Fermer le menu"><span class="fas fa-backspace"></span></a>
 					</li>
 				</ul>
 			</nav>
