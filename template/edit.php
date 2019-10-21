@@ -1,7 +1,7 @@
 <?php
 	if( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
 ?>
-					<div class="card">
+					<div class="card border-dark">
 						<div class="card-header">
 <?php
 		// Bouton suppression
@@ -182,7 +182,7 @@
 					}
 ?>
 						<div class="col-12 col-md-<?php echo $relation->grid; ?>">
-							<div class="card">
+							<div class="card border-dark">
 								<div class="card-header">
 									<span class="panel-title"><?php echo $relation->name .$nbItems; ?></span>
 								</div>
@@ -254,7 +254,7 @@
 			$nbHistoriques = count( $historiques );
 ?>
 						<div class="col-sm-12">
-							<div class="card">
+							<div class="card border-dark">
 								<div class="card-header">
 									<span class="panel-title">Historique</span>
 									<a title="Afficher/Masquer l'historique" class="badge badge-light" data-toggle="collapse" href="#body-historique"><?php echo $nbHistoriques; ?></a>
