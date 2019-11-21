@@ -165,14 +165,14 @@ class Model {
 		}
 	}
 	
-	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false ) {
+	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false, $ownerLimit = false ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
 		$page = $page-1;
 		
 		try {
 			$select = '';
-			$where = '';
+			$where = 'WHERE 1=1 ';
 			$join = '';
 			$groupby = '';
 			$limit = '';
@@ -180,7 +180,9 @@ class Model {
 			
 			if( $paginate ) $limit = 'LIMIT '.$page*$nbparpage.', '.$nbparpage;
 			
-			if( $search ) $where = $this->getSearchCriteria( $search, true );
+			if( $search ) $where .= $this->getSearchCriteria( $search, true );
+			
+			if( $ownerLimit ) $where .= ' AND T.user_cre = '.$ownerLimit.' OR T.user_maj = '.$ownerLimit;
 			
 			foreach( $this->columns as $colonne ) {
 				if( $colonne->params['type'] == 'calculation' ) {
@@ -196,7 +198,7 @@ class Model {
 			
 			$requete = $this->bdd->query('
 				SELECT COUNT(*)
-				FROM '.$this->table.'
+				FROM '.$this->table.' T
 				'.$where.';'
 			);
 			$this->nbItems = $requete->fetchColumn();
@@ -569,7 +571,7 @@ class Model {
 	}
 	
 	public function getSearchCriteria( $search, $sql = false ) {
-		$criteres = $sql ? 'WHERE 1=1 ' : '';
+		$criteres = '';
 		foreach( $search as $input => $valeur ) {
 			foreach( $this->columns as $colonne ) {
 				if( $colonne->name == $input ) {
@@ -584,14 +586,14 @@ class Model {
 									}
 								}
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' = '.$valeur.' '
+									? 'AND T.'.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' = '.$libelle.$this->searchSep;
 							}
 							break;
 						case 'checkbox' :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' = '.$valeur.' '
+									? ' AND T.'.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
 							}
 							break;
@@ -599,12 +601,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? 'AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? 'AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -615,12 +617,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? 'AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.$search[$input][0];
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? 'AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.$search[$input][1];
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -638,7 +640,7 @@ class Model {
 						default :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
+									? 'AND T.'.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
 									: $colonne->nicename.' contient '.$valeur.$this->searchSep;
 							}
 					}

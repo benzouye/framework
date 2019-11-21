@@ -219,13 +219,16 @@
 		}
 		$orderby = $_SESSION[DBPREF.'_orderby'];
 		
+		// Utilisateur limité
+		$ownerLimit = ( $userCan->all or $userCan->admin ) ? false : $user->id_utilisateur;
+		
 		if( count($search) > 0 ) {
-			$items = $object->getItems( $search, $paginate, $p, $orderby );
+			$items = $object->getItems( $search, $paginate, $p, $orderby, $ownerLimit );
 			$criteres = '<span class="search">';
 			$criteres .= $object->getSearchCriteria( $search );
 			$criteres .= '</span>';
 		} else {
-			$items = $object->getItems( null, $paginate, $p, $orderby );
+			$items = $object->getItems( null, $paginate, $p, $orderby, $ownerLimit );
 		}
 		
 		// Initialisation de l'id demandé
