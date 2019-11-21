@@ -151,11 +151,12 @@ class Manager {
 						COALESCE( GI.`read`, 0 ) AS `read`,
 						COALESCE( GI.`update`, 0 ) AS `update`,
 						COALESCE( GI.`delete`, 0 ) AS `delete`,
+						COALESCE( GI.`all`, 0 ) AS `all`,
 						U.`admin` + COALESCE( GI.`create`, 0 ) + COALESCE( GI.`read`, 0 ) + COALESCE( GI.`update`, 0 ) + COALESCE( GI.`delete`, 0 ) AS `access`
 					FROM
 						'.DBPREF.'utilisateur U
 							LEFT JOIN (
-									SELECT GI.id_groupe, GI.alias, GI.create, GI.read, GI.update, GI.delete
+									SELECT GI.id_groupe, GI.alias, GI.create, GI.read, GI.update, GI.delete, GI.all
 									FROM
 										'.DBPREF.'groupe_item GI
 											INNER JOIN '.DBPREF.'item I
