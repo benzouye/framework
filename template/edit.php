@@ -1,5 +1,11 @@
 <?php
-	if( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
+	// Propriétaire de l'objet
+	$owner = false;
+	if( $userCan->admin or $userCan->all or $item->user_cre == $user->id_utilisateur or $item->user_maj == $user->id_utilisateur ) {
+		$owner = true;
+	}
+	
+	if( $owner and ( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) ) {
 ?>
 					<div class="card border-dark">
 						<div class="card-header">
@@ -308,5 +314,7 @@
 ?>
 					</div>
 <?php
+	} else {
+		$manager->setError( M_ACCESSERR );
 	}
 ?>
