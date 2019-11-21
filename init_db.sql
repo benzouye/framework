@@ -121,6 +121,7 @@ CREATE TABLE `prefix_groupe_item` (
   `read` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `update` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `delete` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `all` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_groupe`,`alias`),
   KEY `alias` (`alias`),
   KEY `id_groupe` (`id_groupe`),
