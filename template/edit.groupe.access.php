@@ -10,6 +10,7 @@
 											<th width="50">Consultation</th>
 											<th width="50">Modification</th>
 											<th width="50">Suppression</th>
+											<th width="50">Tous</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -20,6 +21,7 @@
 			$gRead = false;
 			$gUpdate = false;
 			$gDelete = false;
+			$gAll = false;
 			foreach( $gAccess as $gObject ) {
 				if( $gObject->alias == $element->alias ) {
 					foreach( $gObject as $right => $value ) {
@@ -27,6 +29,7 @@
 						if( $right == 'read' && $value == 1 ) $gRead = true;
 						if( $right == 'update' && $value == 1 ) $gUpdate = true;
 						if( $right == 'delete' && $value == 1 ) $gDelete = true;
+						if( $right == 'all' && $value == 1 ) $gAll = true;
 					}
 				}
 			}
@@ -37,6 +40,7 @@
 											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][read]" <?php echo $gRead ? 'checked="checked"' : ''; ?> /></td>
 											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][update]" <?php echo $gUpdate ? 'checked="checked"' : ''; ?> /></td>
 											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][delete]" <?php echo $gDelete ? 'checked="checked"' : ''; ?> /></td>
+											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][all]" <?php echo $gAll ? 'checked="checked"' : ''; ?> /></td>
 										</tr>
 <?php
 		}
