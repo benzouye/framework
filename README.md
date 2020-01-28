@@ -28,7 +28,7 @@ Framework is configured to work with UTF-8 characters encoding.
 
 Import the init_db.sql file into a MySQL/MariaDB database.
 
-By default, there is a table name prefix (prefix_), if you want, before importing SQL dump, you may change this prefix on each table name for each SQL command (search and replace), and specify it in the PHP configuration file (see next chapter).
+By default, there is a table name prefix (prefix_), if you want, before importing SQL dump, you may change this prefix on each table name for each SQL command (search _prefix_ string and replace it by your own string), and specify it in the PHP configuration file (see next chapter).
 
 # Configuration
 
@@ -53,7 +53,8 @@ This framework needs you to dive into the code for customization.
 ### Main files
 
 * index.php : entry page that calls everything else
-* config.php : contains all default app parameters such app directory, items includes, database parameters, etc.
+* config.php : contains all default app parameters such app directory, items includes, etc.
+* database.php : contains database connexion parameters
 * controller.php : contains the main app logic and routing
 * ajax.php : file that manages ajax calls and generates JSON answers
 * init_db.sql : SQL script to run once at installation
@@ -139,7 +140,7 @@ It has to be composed at least like this ( M = mandatory, O = Optional ) :
 * (M) editable (boolean) : wether the field is editable or not on edit page
 * (M) required (boolean) : wether the field is required or not on edit page
 * (O) default (mixed) : the default value for field in new item
-* (O) unit (string) : the unit of the field (as $ or km or 
+* (O) unit (string) : the unit of the field (such as $ or km or kW ...)
 
 ### Column type parameter
 
