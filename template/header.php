@@ -90,6 +90,9 @@
 ?>
 							</div>
 						</li>
+						<li class="nav-item">
+							<a title="Se déconnecter" class="nav-link" href="<?php echo SITEURL.'index.php?item=logout'; ?>"><span class="fas fa-power-off"></span></a>
+						</li>
 					</ul>
 				</nav>
 <?php
