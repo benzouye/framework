@@ -65,9 +65,6 @@
 						<li id="menuButton">
 							<a class="btn btn-light btn-sm" title="Accès au menu"><span class="fas fa-bars"></span></a>
 						</li>
-						<li class="nav-item">
-							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>">Identifiant : <strong><?php echo $user->identifiant; ?></strong></a>
-						</li>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" title="Menu configuration" href="#" id="parametersMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="parametersMenu">
@@ -89,6 +86,9 @@
 		}
 ?>
 							</div>
+						</li>
+						<li class="nav-item">
+							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="fas fa-user"></span></a>
 						</li>
 						<li class="nav-item">
 							<a title="Se déconnecter" class="nav-link" href="<?php echo SITEURL.'index.php?item=logout'; ?>"><span class="fas fa-power-off"></span></a>
