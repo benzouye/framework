@@ -31,10 +31,12 @@
 	if( $user ) {
 		$menus = $manager->getMenu(1);
 		foreach( $menus as $menu ) {
-			$liClass = $page->alias == $menu->alias ? 'class="active" ' : '';
+			if( $manager->getUserCan( $menu->alias )->access > 0 ) {
+				$liClass = $page->alias == $menu->alias ? 'class="active" ' : '';
 ?>
 					<li <?php echo $liClass; ?>><a href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a></li>
 <?php
+			}
 		}
 	}
 ?>
@@ -77,10 +79,12 @@
 								<div class="dropdown-divider"></div>
 <?php
 				foreach( $menus as $menu ) {
-					$liClass = $page->alias == $menu->alias ? 'active' : '';
+					if( $manager->getUserCan( $menu->alias )->access > 0 ) {
+						$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
 								<a class="dropdown-item <?php echo $liClass; ?>" href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a>
 <?php
+					}
 				}
 			}
 		}
