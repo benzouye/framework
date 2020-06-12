@@ -165,14 +165,14 @@ class Model {
 		}
 	}
 	
-	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false, $ownerLimit = false ) {
+	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
 		$page = $page-1;
 		
 		try {
 			$select = '';
-			$where = 'WHERE 1=1 ';
+			$where = '';
 			$join = '';
 			$groupby = '';
 			$limit = '';
@@ -180,9 +180,7 @@ class Model {
 			
 			if( $paginate ) $limit = 'LIMIT '.$page*$nbparpage.', '.$nbparpage;
 			
-			if( $search ) $where .= $this->getSearchCriteria( $search, true );
-			
-			if( $ownerLimit ) $where .= ' AND T.user_cre = '.$ownerLimit.' OR T.user_maj = '.$ownerLimit;
+			if( $search ) $where = $this->getSearchCriteria( $search, true );
 			
 			foreach( $this->columns as $colonne ) {
 				if( $colonne->params['type'] == 'calculation' ) {
@@ -198,7 +196,7 @@ class Model {
 			
 			$requete = $this->bdd->query('
 				SELECT COUNT(*)
-				FROM '.$this->table.' T
+				FROM '.$this->table.'
 				'.$where.';'
 			);
 			$this->nbItems = $requete->fetchColumn();
@@ -571,7 +569,7 @@ class Model {
 	}
 	
 	public function getSearchCriteria( $search, $sql = false ) {
-		$criteres = '';
+		$criteres = $sql ? 'WHERE 1=1 ' : '';
 		foreach( $search as $input => $valeur ) {
 			foreach( $this->columns as $colonne ) {
 				if( $colonne->name == $input ) {
@@ -586,14 +584,14 @@ class Model {
 									}
 								}
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' = '.$valeur.' '
+									? 'AND '.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' = '.$libelle.$this->searchSep;
 							}
 							break;
 						case 'checkbox' :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? ' AND T.'.$colonne->name.' = '.$valeur.' '
+									? ' AND '.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
 							}
 							break;
@@ -601,12 +599,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
+									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
+									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -617,12 +615,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
+									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.$search[$input][0];
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
+									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.$search[$input][1];
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -640,7 +638,7 @@ class Model {
 						default :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? 'AND T.'.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
+									? 'AND '.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
 									: $colonne->nicename.' contient '.$valeur.$this->searchSep;
 							}
 					}
@@ -671,7 +669,7 @@ class Model {
 		
 		if( $colonne->params['type'] == 'color' && $colonne->editable ) {
 			$format .= 'type="text" ';
-			$class .= ' colorpicker ';
+			$class .= ' colorpicker-input ';
 		}
 		
 		foreach( $colonne->params as $key=>$value ) {
@@ -838,7 +836,7 @@ class Model {
 				}
 				break;
 			case 'textarea' :
-				$html = strip_tags( $valeur );
+				$html = nl2br( strip_tags( $valeur ) );
 				break;
 			case 'time' :
 				$html = substr( $valeur, 0, 5);
@@ -881,16 +879,16 @@ class Model {
 		return $html;
 	}
 	
-	public function displayFieldPDF( $name, $valeur, $pdf, $nbColonnes = 1, $largeur = 277, $hauteur = 7 ) {
+	public function displayFieldPDF( $name, $valeur, $pdf, $largeur = 277, $hauteur = 7 ) {
 		$html = '';
 		$colonne = $this->getColumn( $name );
-		$largeur = $largeur/$nbColonnes;
+		$valeur = str_replace( '€', utf8_encode( chr(128) ), $valeur );
 		
 		switch( $colonne->params['type'] ) {
 			case 'number' :
 				$html = $valeur;
 				if( property_exists( $colonne, 'unit' ) ) {
-					$html .= ' '.$colonne->unit;
+					$html .= ' '.str_replace( '€', utf8_encode( chr(128) ), $colonne->unit );
 				}
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 				break;
