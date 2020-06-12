@@ -8,23 +8,34 @@
 		$pdf->SetFillColor( 255, 255, 255 );
 		printHeaderList( $pdf, $object, $nbItems );
 		
-		$pdf->setXY( 10, 20 );
 		$nbColonnes = count( $colonnes );
-		$largeur = 277;
-		$hauteur = 7;
+		$largeur = 277/$nbColonnes;
+		$hauteur = 5;
+		$maxHauteur = 0;
 		
+		$cpt = 0;
 		$pdf->SetFont( 'Arial','B', 12 );
 		foreach( $colonnes as $colonne ) {
-			$pdf->Cell( 277/$nbColonnes, $hauteur, utf8_decode( $colonne->nicename ), 1, 0, 'C' );
+			$pdf->setXY( 10 + ( $largeur*$cpt ), 20 );
+			$pdf->MultiCell( $largeur, $hauteur, utf8_decode( $colonne->nicename ), 0, 'C' );
+			$maxHauteur = $pdf->getY() > $maxHauteur ? $pdf->getY() : $maxHauteur;
+			$cpt++;
 		}
-		$pdf->ln();
 		
+		$cpt = 0;
+		$pdf->rect( 10, 20, 277, $maxHauteur );
+		foreach( $colonnes as $colonne ) {
+			$pdf->rect( 10 + ( $largeur*$cpt ), 20, $largeur, $maxHauteur );
+			$cpt++;
+		}
+		
+		$pdf->setXY( 10, $maxHauteur );
 		$pdf->SetFont( 'Arial','', 10 );
 		foreach( $items as $element ) {
 			foreach( $colonnes as $colonne ) {
-				$object->displayFieldPDF( $colonne->name, $element->{$colonne->name}, $pdf, $nbColonnes, $largeur, $hauteur );
+				$object->displayFieldPDF( $colonne->name, $element->{$colonne->name}, $pdf, $largeur, $hauteur );
 			}
-			$pdf->Cell( 277/$nbColonnes, $hauteur, '', 0, 1, 'C', 1 );
+			$pdf->ln();
 		}
 	}
 ?>
