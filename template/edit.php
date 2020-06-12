@@ -1,11 +1,5 @@
 <?php
-	// Propriétaire de l'objet
-	$owner = false;
-	if( $userCan->admin or $userCan->all or $item->user_cre == $user->id_utilisateur or $item->user_maj == $user->id_utilisateur ) {
-		$owner = true;
-	}
-	
-	if( $owner and ( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) ) {
+	if( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
 ?>
 					<div class="card border-dark">
 						<div class="card-header">
@@ -176,16 +170,22 @@
 		// Affichage des relations pour les variants en modification
 		if( !$new && count($relations) > 0 ) {
 			foreach( $relations as $relation ) {
-				if( method_exists( $object, 'get_'.$relation->item ) ) {
-					$items = $object->{'get_'.$relation->item}();
-					$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge badge-light">'.count( $items ).'</span>' : '';
-					$classLink = 'btn btn-secondary btn-sm';
-					if( !property_exists( $relation, 'many' ) ) {
-						$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
-					} else {
-						$addLink = 'href="#" data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-toggle="modal" data-target="#relation-modal"';
-						$classLink .= ' add-relation';
-					}
+				$toDisplay = true;
+				if( $relation->displayCondition && method_exists( $object, 'get_display_condition' ) ) {
+					$toDisplay = $object->get_display_condition();
+				}
+				
+				if( $toDisplay ) {
+					if( method_exists( $object, 'get_'.$relation->item ) ) {
+						$items = $object->{'get_'.$relation->item}();
+						$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge badge-light">'.count( $items ).'</span>' : '';
+						$classLink = 'btn btn-secondary btn-sm';
+						if( !property_exists( $relation, 'many' ) ) {
+							$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
+						} else {
+							$addLink = 'href="#" data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-toggle="modal" data-target="#relation-modal"';
+							$classLink .= ' add-relation';
+						}
 ?>
 						<div class="col-12 col-md-<?php echo $relation->grid; ?>">
 							<div class="card border-dark">
@@ -194,20 +194,20 @@
 								</div>
 								<div class="card-body">
 <?php
-					if( count( $items ) > 0 ) {
-						if( file_exists( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' ) )
-							require_once( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' );
-						else
-							$manager->setError( sprintf( M_TMPLERR, $action.'.'.$page->alias.'.'.$relation->item ) );
-					} else {
+						if( count( $items ) > 0 ) {
+							if( file_exists( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' ) )
+								require_once( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' );
+							else
+								$manager->setError( sprintf( M_TMPLERR, $action.'.'.$page->alias.'.'.$relation->item ) );
+						} else {
 ?>
 									<p>Aucun élément ...</p>
 <?php
-					}
+						}
 ?>
 								</div>
 <?php
-					if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and ( !$readOnly or $userCan->admin ) ) {
+						if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 								<div class="card-footer">
 									<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
@@ -220,10 +220,10 @@
 							</div>
 						</div>
 <?php
-				} else {
-					$manager->setError( sprintf( M_CLASSERR, $relation->name ) );
+					} else {
+						$manager->setError( sprintf( M_CLASSERR, $relation->name ) );
+					}
 				}
-				
 			}
 ?>
 						<div id="relation-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -314,7 +314,5 @@
 ?>
 					</div>
 <?php
-	} else {
-		$manager->setError( M_ACCESSERR );
 	}
 ?>
