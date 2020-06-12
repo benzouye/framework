@@ -178,6 +178,7 @@ To do so, you need to add :
   * grid (integer) : display width grid (12 = full width)
   * static (boolean) : wether the relation use the standard display or not.
     True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
+  * displayCondition (boolean) : wether the relation should diplay among condition. If true, you need to create a specific class for the item and define a public get_display_condition method returning true or false depending on wished condition
 
 ### Actions
 
