@@ -31,11 +31,12 @@ $( document ).ready( function(){
 
 	// Affichage du formulaire de changement de mot de passe
 	$( ".update-password" ).change( function(e){
-		var templateInput = '<input required type="password" placeholder="Nouveau mot de passe" name="'+$(this).data('name')+'" class="form-control">';
+		let cible = $(this).parent().parent();
+		let templateInput = '<input id="new-pass-input" required type="password" placeholder="Nouveau mot de passe" name="'+$(this).data('name')+'" class="form-control form-control-sm">';
 		if( $(this).prop('checked') == true ) {
-			$(templateInput).insertAfter(this);
+			cible.append( templateInput );
 		} else {
-			$(this).next().remove();
+			$('#new-pass-input').remove();
 		}
 	});
 	
