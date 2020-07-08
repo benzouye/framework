@@ -31,7 +31,11 @@
 	if( $user ) {
 		$menus = $manager->getMenu(1);
 		foreach( $menus as $menu ) {
-			if( $manager->getUserCan( $menu->alias )->access > 0 ) {
+			$flagUserCan = false;
+			foreach( $userCaps as $cap ) {
+				if( $cap->alias == $menu->alias && $cap->access > 0 ) $flagUserCan = true;
+			}
+			if( $flagUserCan ) {
 				$liClass = $page->alias == $menu->alias ? 'class="active" ' : '';
 ?>
 					<li <?php echo $liClass; ?>><a href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a></li>
@@ -67,30 +71,49 @@
 						<li id="menuButton">
 							<a class="btn btn-light btn-sm" title="Accès au menu"><span class="fas fa-bars"></span></a>
 						</li>
+<?php
+		$menuCount = 0;
+		$menuIds = $manager->getMenuIds();
+		foreach( $menuIds as $menuId ) {
+			$menus = $manager->getMenu($menuId);
+			$menuCount += count( $menus );
+		}
+		if( $menuCount > 0 ) {
+?>
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" title="Menu configuration" href="#" id="parametersMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cog"></i></a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="parametersMenu">
 <?php
-		$menuIds = $manager->getMenuIds();
-		foreach( $menuIds as $menuId ) {
-			$menus = $manager->getMenu($menuId);
-			if( count( $menus ) > 0 ) {
+			$premierMenu = true;
+			foreach( $menuIds as $menuId ) {
+				$menus = $manager->getMenu($menuId);
+				if( count( $menus ) > 0 ) {
+					if( !$premierMenu ) {
 ?>
 								<div class="dropdown-divider"></div>
 <?php
-				foreach( $menus as $menu ) {
-					if( $manager->getUserCan( $menu->alias )->access > 0 ) {
-						$liClass = $page->alias == $menu->alias ? 'active' : '';
+					}
+					foreach( $menus as $menu ) {
+						$flagUserCan = false;
+						foreach( $userCaps as $cap ) {
+							if( $cap->alias == $menu->alias && $cap->access > 0 ) $flagUserCan = true;
+						}
+						if( $flagUserCan ) {
+							$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
 								<a class="dropdown-item <?php echo $liClass; ?>" href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a>
 <?php
+						}
 					}
 				}
+				$premierMenu = false;
 			}
-		}
 ?>
 							</div>
 						</li>
+<?php
+		}
+?>
 						<li class="nav-item">
 							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="fas fa-user"></span></a>
 						</li>
