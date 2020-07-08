@@ -106,12 +106,12 @@ class Manager {
 					$good_session = false;
 				}
 			}
-		} elseif( isset( $_POST['email'] ) && isset ( $_POST['password'] ) && !isset( $_GET['item'] ) ) {
+		} elseif( isset( $_POST['identifiant'] ) && isset ( $_POST['password'] ) && !isset( $_GET['item'] ) ) {
 			$good_ident = false;
 			$good_valide = false;
 			$good_mdp = false;
 			foreach( $this->users as $user ) {
-				if( $_POST['email'] === $user->email ) {
+				if( $_POST['identifiant'] === $user->identifiant ) {
 					$good_ident = true;
 					if( $user->valide ) {
 						$good_valide = true;
