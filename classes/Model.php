@@ -528,7 +528,7 @@ class Model {
 				VALUES( :user_cre, NOW(), :item, :item_id, :action );'
 			);
 			$requete->execute( array(
-				'user_cre' =>  $this->manager->getUser()->id_utilisateur ,
+				'user_cre' =>  $this->manager->getUser()->id_utilisateur ? $this->manager->getUser()->id_utilisateur : 1,
 				'item' => $this->itemName,
 				'item_id' => $this->id,
 				'action' => json_encode( $_POST )
