@@ -31,11 +31,10 @@
 				// Valeur par défaut
 				$valeur = property_exists( $colonne , 'default' ) ? $colonne->default : '';
 ?>
-						<div class="row form-group form-group-sm col-12 col-xl-<?php echo $colGrid->div; ?>">
-							<label class="col-6 col-xl-<?php echo $colGrid->label; ?> control-label" for="<?php echo $colonne->name; ?>"><?php echo $colonne->nicename; ?></label>
-							<div class="input-group col-6 col-xl-<?php echo $colGrid->value; ?>">
-								<?php echo $object->displayInput( 0, $colonne->name, $valeur, 'form-control' ); ?>
-
+						<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
+							<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+							<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
+								<?php echo $object->displayInput( 0, $colonne->name, $valeur, 'form-control form-control-sm' ); ?>
 							</div>
 						</div>
 <?php
@@ -62,6 +61,7 @@
 				$validationLink = SITEURL.'index.php?item=register&validation=1&identifiant='.$_POST['identifiant'].'&token='.urlencode($token);
 				$_POST['token'] = $token;
 				$_POST['valide'] = 0;
+				$_POST['user_cre'] = 1;
 				
 				// Enregistrement du compte non validé
 				$nbAvant = $manager->getNbErrors();
@@ -71,22 +71,24 @@
 				// Envoi du mail de validation
 				if( $nbAvant === $nbApres ) {
 					// Adresse email
+					$title = $manager->getOption('sitetitle');
+					$email = $manager->getOption('sitemail');
 					$destinataire = $_POST['email'];
 					
 					// Header HTML
 					$headers  = 'MIME-Version: 1.0' . "\r\n";
 					$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
-					$headers .= 'From: WebApp <'.$manager->getOption('sitemail').'>' . "\r\n";
-					$headers .= 'Reply-To: WebApp <'.$manager->getOption('sitemail').'>' . "\r\n";
+					$headers .= 'From: '.$title.' <'.$email.'>' . "\r\n";
+					$headers .= 'Reply-To: '.$title.' <'.$email.'>' . "\r\n";
 
 					// Sujet
-					$sujet = '[WebApp] Activez votre compte';
+					$sujet = '['.$title.'] Activez votre compte';
 
 					// message
 					$message = '
 <html>
 	<head>
-		<title>[WebApp] Activez votre compte</title>
+		<title>['.$title.'] Activez votre compte</title>
 	</head>
 	<body>
 		<style>p{ margin-top: 20px; } td{ border: 1px solid; padding: 5px; }</style>
@@ -100,10 +102,10 @@
 					if( mail($destinataire, $sujet, $message, $headers) ) {
 						$manager->setMessage( sprintf( M_EMAILOK, $_POST['email'] ) );
 					} else {
-						$manager->setError( sprintf( M_EMAILERR, $_POST['email'], $manager->getOption('sitemail'), $manager->getOption('sitemail') ) );
+						$manager->setError( sprintf( M_EMAILERR, $_POST['email'], $email, $email ) );
 					}
 				} else {
-					
+					$manager->setError( sprintf( M_ITEMSETERR, $_POST['email'] ) );
 				}
 			}
 			if( isset( $_GET['validation'], $_GET['identifiant'], $_GET['token'] ) ) {
