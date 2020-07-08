@@ -106,12 +106,12 @@ class Manager {
 					$good_session = false;
 				}
 			}
-		} elseif( isset( $_POST['identifiant'] ) && isset ( $_POST['password'] ) && !isset( $_GET['item'] ) ) {
+		} elseif( isset( $_POST['email'] ) && isset ( $_POST['password'] ) && !isset( $_GET['item'] ) ) {
 			$good_ident = false;
 			$good_valide = false;
 			$good_mdp = false;
 			foreach( $this->users as $user ) {
-				if( $_POST['identifiant'] === $user->identifiant ) {
+				if( $_POST['email'] === $user->email ) {
 					$good_ident = true;
 					if( $user->valide ) {
 						$good_valide = true;
@@ -141,11 +141,12 @@ class Manager {
 		return $this->user;
 	}
 	
-	public function getUserCan( $alias ) {
+	public function getUserCan( $alias = false ) {
 		if( $this->user ) {
 			try {
 				$requete = $this->bdd->query('
 					SELECT
+						I.alias,
 						U.`admin`,
 						COALESCE( GI.`create`, 0 ) AS `create`,
 						COALESCE( GI.`read`, 0 ) AS `read`,
@@ -155,19 +156,19 @@ class Manager {
 						U.`admin` + COALESCE( GI.`create`, 0 ) + COALESCE( GI.`read`, 0 ) + COALESCE( GI.`update`, 0 ) + COALESCE( GI.`delete`, 0 ) AS `access`
 					FROM
 						'.DBPREF.'utilisateur U
-							LEFT JOIN (
-									SELECT GI.id_groupe, GI.alias, GI.create, GI.read, GI.update, GI.delete, GI.all
-									FROM
-										'.DBPREF.'groupe_item GI
-											INNER JOIN '.DBPREF.'item I
-												ON GI.alias = I.alias
-												AND I.admin = 0
-									WHERE GI.alias = '.$this->bdd->quote( $alias ).'
-								) GI
+							CROSS JOIN '.DBPREF.'item I
+							LEFT JOIN '.DBPREF.'groupe_item GI
 								ON GI.id_groupe = U.id_groupe
-					WHERE U.id_utilisateur = '.$this->user->id_utilisateur.';'
+								AND I.alias = GI.alias
+					WHERE
+						U.id_utilisateur = '.$this->user->id_utilisateur.'
+						'.( $alias ? 'AND I.alias = '.$this->bdd->quote( $alias ) : '' ).';'
 				);
-				$this->userCap = $requete->fetch();
+				if( $alias ) {
+					$this->userCap = $requete->fetch();
+				} else {
+					$this->userCap = $requete->fetchAll();
+				}
 			}
 			catch( Exception $e ) {
 				if( $this->getDebug() ) {
