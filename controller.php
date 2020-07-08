@@ -28,6 +28,7 @@
 	
 	// Initialisation utilisateur
 	$user = $manager->getUser();
+	$userCaps = $manager->getUserCan();
 	
 	// Initialisation de la page affichée
 	if( isset( $_GET['item'] ) ) {
