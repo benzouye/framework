@@ -115,7 +115,7 @@
 				if( ( $userCan->admin or $userCan->read ) and $page->alias == 'analyse' ) {
 ?>
 						<td class="text-center">
-							<a title="RĂ©sultat" href="index.php?item=<?php echo $page->alias;?>&action=extract&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
+							<a title="Résultat" href="index.php?item=<?php echo $page->alias;?>&action=extract&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="fas fa-xs fa-chart-bar"></i>
 							</a>
 						</td>
