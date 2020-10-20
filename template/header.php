@@ -20,13 +20,15 @@
 		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/style.css">
 	</head>
 	<body>
-		<div class="wrapper">
-			<nav id="sidebar" class="sticky-top bg-dark no-print">
-				<div class="sidebar-header">
-					<h3><?php echo $manager->getOption('sitetitle'); ?></h3>
-				</div>
-
-				<ul class="list-unstyled components">
+		<div class="container-fluid">
+			<div class="row min-vh-100 flex-column flex-md-row">
+				<aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1">
+					<nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
+						<span class="navbar-brand">
+							<i class="fas fa-<?= $manager->getOption('siteicon'); ?> fa-fw"></i> <?= $manager->getOption('sitetitle'); ?>
+						</span>
+						<div class="collapse navbar-collapse ">
+							<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-around">
 <?php
 	if( $user ) {
 		$menus = $manager->getMenu(1);
@@ -36,20 +38,23 @@
 				if( $cap->alias == $menu->alias && $cap->access > 0 ) $flagUserCan = true;
 			}
 			if( $flagUserCan ) {
-				$liClass = $page->alias == $menu->alias ? 'class="active" ' : '';
+				$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
-					<li <?php echo $liClass; ?>><a href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a></li>
+								<li class="nav-item <?= $liClass; ?>">
+									<a class="nav-link" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
+										<i title="<?= $menu->nom; ?>" data-toggle="tooltip" class="fas fa-<?= $menu->icon; ?> fa-fw"></i> <span class="d-none d-md-inline"><?= $menu->nom; ?></span>
+									</a>
+								</li>
 <?php
 			}
 		}
 	}
 ?>
-					<li id="sidebarButton">
-						<a class="btn btn-dark btn-sm" title="Fermer le menu"><span class="fas fa-backspace"></span></a>
-					</li>
-				</ul>
-			</nav>
-			<main class="bg-light">
+							</ul>
+						</div>
+					</nav>
+				</aside>
+				<main class="col p-0 bg-faded flex-grow-1">
 <?php
 	$description = '';
 	if( !$static ) {
@@ -59,18 +64,15 @@
 		} else {
 			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
 		}
-		$description = ' <span class="badge badge-light">'.$badgeAction.'</span>';
+		$description = ' <span class="badge badge-dark">'.$badgeAction.'</span>';
 	}
 	
 	if( $user ) {
 ?>
 
-				<nav class="sticky-top navbar navbar-expand navbar-dark bg-dark no-print">
-					<span class="navbar-brand"><i class="fas fa-<?php echo $page->icon; ?>"></i> <?php echo $page->nom; ?> <?php echo $description; ?></span>
+				<nav class="sticky-top navbar navbar-expand navbar-light bg-light no-print">
+					<span class="navbar-brand"><i class="fas fa-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
 					<ul class="nav navbar-nav ml-auto">
-						<li id="menuButton">
-							<a class="btn btn-light btn-sm" title="Accès au menu"><span class="fas fa-bars"></span></a>
-						</li>
 <?php
 		$menuCount = 0;
 		$menuIds = $manager->getMenuIds();
@@ -101,7 +103,7 @@
 						if( $flagUserCan ) {
 							$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
-								<a class="dropdown-item <?php echo $liClass; ?>" href="<?php echo SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?php echo $menu->icon; ?>"></i> <?php echo $menu->nom; ?></a>
+								<a class="dropdown-item <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>"><i class="fas fa-sm fa-<?= $menu->icon; ?>"></i> <?= $menu->nom; ?></a>
 <?php
 						}
 					}
@@ -115,10 +117,10 @@
 		}
 ?>
 						<li class="nav-item">
-							<a title="Mon profil" class="nav-link" href="<?php echo SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="fas fa-user"></span></a>
+							<a title="Mon profil" class="nav-link" href="<?= SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="fas fa-user"></span></a>
 						</li>
 						<li class="nav-item">
-							<a title="Se déconnecter" class="nav-link" href="<?php echo SITEURL.'index.php?item=logout'; ?>"><span class="fas fa-power-off"></span></a>
+							<a title="Se déconnecter" class="nav-link" href="<?= SITEURL.'index.php?item=logout'; ?>"><span class="fas fa-power-off"></span></a>
 						</li>
 					</ul>
 				</nav>
