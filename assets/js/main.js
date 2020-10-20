@@ -17,14 +17,6 @@ $( document ).ready( function(){
 		weekHeader: 'Sem.',
 		dateFormat: "yy-mm-dd"
 	});
-	
-	// Gestion sidebar mobile
-	$("#sidebarButton").click( function(e) {
-		$("#sidebar").css({"margin-left":"-250px"});
-	});
-	$("#menuButton").click( function(e) {
-		$("#sidebar").css({"margin-left":"0px"});
-	});
 
 	// Sélecteur de couleur
 	$( ".colorpicker" ).colorpicker();
