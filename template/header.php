@@ -41,8 +41,8 @@
 				$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
 								<li class="nav-item <?= $liClass; ?>">
-									<a class="nav-link" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
-										<i title="<?= $menu->nom; ?>" data-toggle="tooltip" class="fas fa-<?= $menu->icon; ?> fa-fw"></i> <span class="d-none d-md-inline"><?= $menu->nom; ?></span>
+									<a title="<?= $menu->nom; ?>" data-toggle="tooltip" class="nav-link" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
+										<i class="fas fa-<?= $menu->icon; ?> fa-fw"></i> <span class="d-none d-md-inline"><?= $menu->nom; ?></span>
 									</a>
 								</li>
 <?php
