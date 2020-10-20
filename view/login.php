@@ -13,7 +13,7 @@
 <?php
 	if( $manager->getOption('allowregister') ) {
 ?>
-							<a class="btn btn-secondary" href="index.php?item=register">Pas encore inscrit ?</a>
+							<a class="btn btn-outline-secondary" href="index.php?item=register">Pas encore inscrit ?</a>
 <?php
 	}
 ?>
