@@ -6,73 +6,6 @@ a:focus {
     transition: all 0.3s;
 }
 
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
-
-.wrapper {
-    display: flex;
-    width: 100%;
-}
-
-#sidebar {
-    min-width: 250px;
-    color: #fff;
-    transition: all 0.3s;
-	height: 100vh;
-}
-
-#sidebar.active {
-    margin-left: -250px;
-}
-
-#sidebar .sidebar-header {
-	background: #222;
-    padding: 7.5px;
-}
-
-#sidebar ul p {
-    color: #fff;
-    padding: 10px;
-}
-
-#sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
-}
-
-#sidebar ul li a:hover {
-    color: #000;
-    background: #fff;
-}
-
-#sidebar ul li.active>a,
-a[aria-expanded="true"] {
-    color: #fff;
-    background: #666;
-}
-
-a[data-toggle="collapse"] {
-    position: relative;
-}
-
-ul ul a {
-	color: #000;
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #ccc;
-}
-
-/* ---------------------------------------------------
-    CONTENT STYLE
------------------------------------------------------ */
-
-main {
-    width: 100%;
-    transition: all 0.3s;
-}
-
 section {
 	padding: 20px;
 }
@@ -125,31 +58,6 @@ th {
 
 .navbar-brand>.badge {
 	margin-left: 10px;
-}
-
-/* ---------------------------------------------------
-    MEDIAQUERIES
------------------------------------------------------ */
-
-@media (max-width: 768px) {
-    #sidebar {
-        margin-left: -250px;
-    }
-    #sidebar.active {
-        margin-left: 0;
-    }
-    #sidebarCollapse span {
-        display: none;
-    }
-	#sidebarButton, #menuButton {
-		display: block;
-	}
-}
-
-@media (min-width: 769px) {
-	#sidebarButton, #menuButton {
-		display: none;
-	}
 }
 
 @media print {  
