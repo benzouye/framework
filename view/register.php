@@ -1,5 +1,5 @@
 <?php
-	if( !$user ) {
+	if( !$user && $manager->getOption('allowregister') ) {
 		$object = new Utilisateur( $bdd, $manager, $model_utilisateur );
 		if( !isset($_POST['identifiant']) and !isset( $_GET['validation'] ) ) {
 			$colonnes = $object->getColumns();
