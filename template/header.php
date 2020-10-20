@@ -21,14 +21,14 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-			<div class="row min-vh-100 flex-column flex-md-row">
-				<aside class="col-12 col-md-2 p-0 bg-dark flex-shrink-1">
-					<nav class="navbar navbar-expand navbar-dark bg-dark flex-md-column flex-row align-items-start py-2">
+			<div class="row min-vh-100 flex-column flex-xl-row">
+				<aside class="col-12 col-xl-2 p-0 bg-dark flex-shrink-1">
+					<nav class="navbar navbar-expand navbar-dark bg-dark flex-xl-column flex-row align-items-start py-2">
 						<span class="navbar-brand">
 							<i class="fas fa-<?= $manager->getOption('siteicon'); ?> fa-fw"></i> <?= $manager->getOption('sitetitle'); ?>
 						</span>
 						<div class="collapse navbar-collapse ">
-							<ul class="flex-md-column flex-row navbar-nav w-100 justify-content-around">
+							<ul class="flex-xl-column flex-row navbar-nav w-100 justify-content-around">
 <?php
 	if( $user ) {
 		$menus = $manager->getMenu(1);
@@ -42,7 +42,7 @@
 ?>
 								<li class="nav-item <?= $liClass; ?>">
 									<a title="<?= $menu->nom; ?>" data-toggle="tooltip" class="nav-link" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
-										<i class="fas fa-<?= $menu->icon; ?> fa-fw"></i> <span class="d-none d-md-inline"><?= $menu->nom; ?></span>
+										<i class="fas fa-<?= $menu->icon; ?> fa-fw"></i> <span class="d-none d-xl-inline"><?= $menu->nom; ?></span>
 									</a>
 								</li>
 <?php
@@ -54,7 +54,7 @@
 						</div>
 					</nav>
 				</aside>
-				<main class="col p-0 bg-faded flex-grow-1">
+				<main class="col-12 col-xl-10 p-0 bg-faded flex-grow-1">
 <?php
 	$description = '';
 	if( !$static ) {
