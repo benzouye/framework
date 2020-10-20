@@ -7,6 +7,7 @@
 	$manager->showErrors();
 	$manager->showMessages();
 ?>
+			</div>
 		</div>
 
 		<script type="text/javascript" src="<?php echo SITEURL; ?>assets/js/jquery.js"></script>
