@@ -22,25 +22,25 @@
 <?php
 		if( !$parentItem && ( $userCan->admin or $userCan->create ) ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-secondary btn-sm"><span class="fas fa-plus"></span> Ajouter</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=edit" class="btn btn-secondary btn-sm"><span class="fas fa-plus"></span><span class="d-none d-xl-inline"> Ajouter</span></a>
 <?php
 		}
 		if( $userCan->admin or $userCan->read ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-secondary btn-sm"><span class="fas fa-search"></span> Rechercher</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=search" class="btn btn-secondary btn-sm"><span class="fas fa-search"></span><span class="d-none d-xl-inline"> Rechercher</span></a>
 <?php
 		}
 		if( count($search) > 0 && ( $userCan->admin or $userCan->read ) ) {
 ?>
-					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-times"></span> Supprimer les filtres</a>
+					<a href="index.php?item=<?php echo $page->alias;?>&action=list" class="btn btn-secondary btn-sm"><span class="fas fa-trash-alt"></span><span class="d-none d-xl-inline"> Supprimer les filtres</span></a>
 <?php
 		}
 ?>
-					<?php echo $criteres; ?>
 					<div class="float-right">
 						<a title="Imprimer" target="_blank" href="index.php?item=<?php echo $page->alias;?>&action=print&type=list" class="btn btn-secondary btn-sm"><span class="fas fa-print"></span></a>
 						<a title="Exporter" href="index.php?item=<?php echo $page->alias;?>&action=export&type=list" class="btn btn-secondary btn-sm"><span class="fas fa-download"></span></a>
 					</div>
+					<?php echo $criteres; ?>
 				</div>
 			</div>
 			<?php $object->displayPagination( $p ); ?>
@@ -145,7 +145,7 @@
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $element->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button type="submit" title="Supprimer" class="btn btn-danger btn-sm"><i class="fas fa-xs fa-times"></i></button>
+								<button type="submit" title="Supprimer" class="btn btn-danger btn-sm"><i class="fas fa-xs fa-trash-alt"></i></button>
 							</form>
 <?php
 					}
