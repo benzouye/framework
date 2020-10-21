@@ -28,7 +28,7 @@
 							<i class="fas fa-<?= $manager->getOption('siteicon'); ?> fa-fw"></i> <?= $manager->getOption('sitetitle'); ?>
 						</span>
 						<div class="collapse navbar-collapse ">
-							<ul class="flex-xl-column flex-row navbar-nav w-100 justify-content-around">
+							<ul class="flex-xl-column flex-row navbar-nav w-100 justify-content-start">
 <?php
 	if( $user ) {
 		$menus = $manager->getMenu(1);
