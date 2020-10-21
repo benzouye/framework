@@ -171,8 +171,8 @@
 		if( !$new && count($relations) > 0 ) {
 			foreach( $relations as $relation ) {
 				$toDisplay = true;
-				if( $relation->displayCondition && method_exists( $object, 'get_display_condition' ) ) {
-					$toDisplay = $object->get_display_condition();
+				if( property_exists( $relation, 'displayCondition' ) && method_exists( $object, 'get_display_condition' ) ) {
+					if( $relation->displayCondition ) $toDisplay = $object->get_display_condition();
 				}
 				
 				if( $toDisplay ) {
