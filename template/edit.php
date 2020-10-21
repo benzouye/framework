@@ -10,7 +10,7 @@
 							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
 								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
 								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button id="item-delete" type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-times"></i> Supprimer</button>
+								<button id="item-delete" type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-trash-alt"></i><span class="d-none d-xl-inline"> Supprimer</span></button>
 							</form>
 <?php
 		}
@@ -18,7 +18,7 @@
 		if( ( $userCan->admin or $userCan->create ) and !$parentItem and !$new ) {
 ?>
 							<a href="index.php?item=<?php echo $page->alias; ?>&action=edit" class="btn btn-secondary btn-sm float-right">
-								<i class="fas fa-sm fa-plus"></i> Nouveau
+								<i class="fas fa-sm fa-plus"></i><span class="d-none d-xl-inline"> Nouveau</span>
 							</a>
 <?php
 		}
@@ -87,13 +87,13 @@
 		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-									<i class="fas fa-sm fa-save"></i> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?>
+									<i class="fas fa-sm fa-save"></i><span class="d-none d-xl-inline"> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?></span>
 								</button>
 <?php
 			if( !$new ) {
 ?>
 								<button name="form-submit" formaction="index.php?item=<?php echo $copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn float-right">
-									<i class="fas fa-sm fa-copy"></i> Dupliquer
+									<i class="fas fa-sm fa-copy"></i><span class="d-none d-xl-inline"> Dupliquer</span>
 								</button>
 <?php
 			}
@@ -101,13 +101,13 @@
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
 								<a href="index.php" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-caret-left"></i> Retour accueil
+									<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour accueil</span>
 								</a>
 <?php
 		} else {
 ?>
 								<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
+									<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour liste <?php echo $object->getPlural(); ?></span>
 								</a>
 <?php
 		}
@@ -131,7 +131,7 @@
 		if( $nbPrints > 0 && !$new && $visiblePrints ) {
 ?>
 									<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										<i class="fas fa-sm fa-print"></i> Imprimer
+										<i class="fas fa-sm fa-print"></i><span class="d-none d-xl-inline"> Imprimer</span>
 									</button>
 									<div class="dropdown-menu" aria-labelledby="menuPrint">
 <?php
@@ -172,7 +172,7 @@
 			foreach( $relations as $relation ) {
 				$toDisplay = true;
 				if( property_exists( $relation, 'displayCondition' ) && method_exists( $object, 'get_display_condition' ) ) {
-					if( $relation->displayCondition ) $toDisplay = $object->get_display_condition();
+					$toDisplay = $object->get_display_condition();
 				}
 				
 				if( $toDisplay ) {
@@ -211,7 +211,7 @@
 ?>
 								<div class="card-footer">
 									<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
-										<i class="fas fa-sm fa-plus"></i> Ajouter
+										<i class="fas fa-sm fa-plus"></i><span class="d-none d-xl-inline"> Ajouter</span>
 									</a>
 								</div>
 <?php
@@ -241,10 +241,10 @@
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-												<i class="fas fa-sm fa-caret-left"></i> Retour
+												<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour</span>
 											</button>
 											<button type="submit" class="btn btn-success btn-sm">
-												<i class="fas fa-sm fa-caret-save"></i> Sauvegarder
+												<i class="fas fa-sm fa-caret-save"></i><span class="d-none d-xl-inline"> Sauvegarder</span>
 											</button>
 										</div>
 									</form>
