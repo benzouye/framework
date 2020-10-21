@@ -100,6 +100,7 @@ $( document ).ready( function(){
 			},
 			dataType: 'json',
 			success: function( response ) {
+				console.log( response.message );
 				$('#relation-ul').append('<input type="hidden" name="action" value="rel-set">');
 				$('#relation-ul').append('<input type="hidden" name="id" value="'+parentId+'">');
 				$('#relation-ul').append('<input type="hidden" name="item" value="'+parentItem+'">');
@@ -138,7 +139,8 @@ $( document ).ready( function(){
 					console.log( response );
 				},
 				success: function( response ) {
-					let calendarOptions = JSON.parse( response.item.options );
+					console.log( response.message );
+					let calendarOptions = JSON.parse( response.options );
 					canvas.fullCalendar( calendarOptions );
 				}
 			});
@@ -164,9 +166,10 @@ $( document ).ready( function(){
 					console.log( response );
 				},
 				success: function( response ) {
+					console.log( response.message );
 					let chartLabels = [];
 					let chartValues = [];
-					let chartOptions = JSON.parse( response.item.options );
+					let chartOptions = JSON.parse( response.options );
 					
 					for( item in response.data ) {
 						chartLabels.push( response.data[item].Label );
@@ -179,7 +182,7 @@ $( document ).ready( function(){
 							labels: chartLabels,
 							datasets:[
 								{
-									label: response.item.indicator,
+									label: response.indicator,
 									data: chartValues,
 									backgroundColor: chartOptions.backgroundColor,
 									lineTension: 0,
@@ -241,6 +244,7 @@ $( document ).ready( function(){
 				console.log( response );
 			},
 			success: function( response ) {
+				console.log( response.message );
 				var leafletOptions = JSON.parse( response.data );
 				
 				$(".leaflet-input").each( function(e) {
