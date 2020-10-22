@@ -6,6 +6,14 @@ a:focus {
     transition: all 0.3s;
 }
 
+aside {
+	z-index: 1030;
+}
+
+#topmenu {
+	box-shadow: 0 0 5px grey;
+}
+
 section {
 	padding: 20px;
 }
