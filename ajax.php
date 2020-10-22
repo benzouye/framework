@@ -47,17 +47,15 @@
 					}
 					break;
 				case 'schedule' :
-					$object = new $nomClasse( $bdd, $manager, $model );
-					$retour['data'] = $object->get_scheduler( $_GET );
-					$retour['message'] = 'Datas for this schedule';
+					if( !empty( $_GET['parent_item'] ) ) {
+						$object = new $nomClasse( $bdd, $manager, $model );
+						$retour = $object->get_scheduler( $_GET );
+					}
 					break;
 				case 'distinct' :
 					if( isset( $_GET['colonne'], $_GET['term'] ) ) {
 						$object = new Model( $bdd, $manager, $model );
-						$retour['data'] = $object->getDistinctValues( $_GET['colonne'], $_GET['term'] );
-						$retour['message'] = 'Datas for colonne '.$_GET['colonne'].' and term '.$_GET['term'];
-					} else {
-						$retour['message'] = 'No colonne and term was supplied';
+						$retour = $object->getDistinctValues( $_GET['colonne'], $_GET['term'] );
 					}
 					break;
 				case 'option' :
