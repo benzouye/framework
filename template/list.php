@@ -106,7 +106,7 @@
 				}
 ?>
 					<tr class="<?php echo $trClass; ?>">
-						<td class="text-center">
+						<td class="text-center align-middle">
 							<a title="Ouvrir" href="index.php?item=<?php echo $page->alias;?>&action=edit&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="fas fa-xs fa-search"></i>
 							</a>
@@ -114,7 +114,7 @@
 <?php
 				if( ( $userCan->admin or $userCan->read ) and $page->alias == 'analyse' ) {
 ?>
-						<td class="text-center">
+						<td class="text-center align-middle">
 							<a title="Résultat" href="index.php?item=<?php echo $page->alias;?>&action=extract&id=<?php echo $element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="fas fa-xs fa-chart-bar"></i>
 							</a>
@@ -125,14 +125,14 @@
 					$tdClass = property_exists( $colonne, 'align' ) ? 'text-'.$colonne->align : '';
 					if( $colonne->visible ) {
 ?>
-						<td class="<?php echo $tdClass; ?>"><?php echo $object->displayField( $colonne->name, $element->{$colonne->name} ); ?></td>
+						<td class="<?php echo $tdClass; ?> align-middle"><?php echo $object->displayField( $colonne->name, $element->{$colonne->name} ); ?></td>
 <?php
 					}
 				}
 				foreach( $objectActions as $objectAction ) {
 					if( $objectAction->visible && ( !$readOnly or $userCan->admin ) ) {
 ?>
-						<td class="text-center"><?php echo $object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
+						<td class="text-center align-middle"><?php echo $object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
 <?php
 					}
 				}
