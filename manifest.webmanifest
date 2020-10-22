@@ -6,7 +6,7 @@
 	"description": "Home made PHP framekork",
 	"dir": "ltr",
 	"lang": "fr",
-	"orientation": "portrait"
+	"orientation": "portrait",
 	"icons": [{
 		"src": "img/homescreen48.png",
 		"sizes": "48x48",
