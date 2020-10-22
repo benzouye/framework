@@ -24,7 +24,7 @@ class SimpleTable {
 		
 		// Somme de l'indicateur
 		foreach( $datas as $data ) {
-			$this->total += $data->{$this->indicator};
+			$this->total += floatval($data->{$this->indicator});
 		}
 		
 		// Entête de colonne
@@ -86,7 +86,7 @@ class SimpleTable {
 			}
 			if( $this->percent ) {
 				$this->html .= '<td>';
-				$this->html .= round( $data->{$this->indicator} / $this->total * 100, 2 );
+				$this->html .= round( floatval($data->{$this->indicator}) / $this->total * 100, 2 );
 				$this->html .= '</td>';
 			}
 			$this->html .= '</tr>';
