@@ -9,6 +9,7 @@
 		
 		<title><?php echo $title; ?></title>
 		
+		<link rel="manifest" href="<?php echo SITEURL; ?>manifest.webmanifest">
 		<link rel="icon" href="<?php echo SITEURL; ?>assets/img/favicon.ico" />
 		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/bootstrap.css">
 		<link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/bootstrap-colorpicker.min.css" />
