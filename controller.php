@@ -17,8 +17,12 @@
 		if( $_GET['item'] == 'logout' ) {
 			// Déconnexion de session
 			$logout = true;
-			session_unset();
-			session_destroy();
+			unset( $_SESSION[DBPREF.'_userId'] );
+			unset( $_SESSION[DBPREF.'_item'] );
+			unset( $_SESSION[DBPREF.'_search'] );
+			unset( $_SESSION[DBPREF.'_page'] );
+			unset( $_SESSION[DBPREF.'_action'] );
+			unset( $_SESSION[DBPREF.'_orderby'] );
 			$manager->setMessage( M_LOGOUT );
 		}
 		if( $_GET['item'] == 'register' ) {
