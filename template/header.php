@@ -23,7 +23,7 @@
 		<div class="container-fluid">
 			<div class="row min-vh-100 flex-column flex-xl-row">
 				<aside class="col-12 col-xl-2 p-0 bg-dark flex-shrink-1">
-					<nav class="navbar navbar-expand navbar-dark bg-dark flex-xl-column flex-row align-items-start py-2">
+					<nav id="sidemenu" class="sticky-top navbar navbar-expand navbar-dark bg-dark flex-xl-column flex-row flex-wrap align-items-start py-2">
 						<span class="navbar-brand">
 							<i class="fas fa-<?= $manager->getOption('siteicon'); ?> fa-fw"></i> <?= $manager->getOption('sitetitle'); ?>
 						</span>
@@ -70,7 +70,7 @@
 	if( $user ) {
 ?>
 
-				<nav class="sticky-top navbar navbar-expand navbar-light bg-light no-print">
+				<nav id="topmenu" class="sticky-top navbar navbar-expand navbar-light bg-light no-print flex-wrap-reverse">
 					<span class="navbar-brand"><i class="fas fa-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
 					<ul class="nav navbar-nav ml-auto">
 <?php
