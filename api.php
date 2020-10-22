@@ -4,24 +4,26 @@
 	require_once( 'config.php' );
 	$manager = new Manager( $bdd, $debug );
 	$user = $manager->getUser();
-	$retour = array( 'message' => 'Unauthorized user' );
+	$retour = array(
+		'message' => 'Unauthorized user',
+		'data' => false
+	);
 	
 	// Authentification OK
 	if( $user ) {
 		
 		if( !empty( $_POST['id'] ) ) {
-			$id = intval( $_POST['id'] );
-			$analyse = new Analyse( $bdd, $manager, $model_analyse );
+			$Analyse = new Analyse( $bdd, $manager, $model_analyse );
+			$item = $Analyse->getItem( intval( $_POST['id'] ) );
 			
-			$retour = array(
-				'message' => 'Datas for custom API '.$id,
-				'data' => $analyse->getDatas();,
-			);
+			if( $item->description ) {
+				$retour['message'] = $item->description;
+				$retour['data'] = $Analyse->getDatas();
+			} else {
+				$retour['message'] = 'This API ID does not exist';
+			}
 		} else {
-			$retour = array(
-				'message' => 'Bad Request, missing parameters',
-				'data' => false,
-			);
+			$retour['message'] = 'Missing POST parameter';
 		}
 	}
 	
