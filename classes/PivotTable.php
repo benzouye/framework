@@ -38,7 +38,7 @@ class PivotTable {
 		}
 		$this->rows[] = 'TOTAL';
 		
-		// Initialisation du résultat
+		// Initialisation du rĂ©sultat
 		foreach( $this->columns as $column ) {
 			foreach( $this->rows as $row ) {
 				$this->datas[$row][$column] = array( $this->indicator => 0, 'count' => 0 );
@@ -49,14 +49,14 @@ class PivotTable {
 		foreach( $datas as $data ) {
 			foreach( $this->columns as $column ) {
 				if( $data->{$this->column} == $column ) {
-					$this->datas['TOTAL'][$column][$this->indicator] += $data->{$this->indicator};
+					$this->datas['TOTAL'][$column][$this->indicator] += floatval($data->{$this->indicator});
 					$this->datas['TOTAL'][$column]['count'] += 1;
 				}
 				foreach( $this->rows as $row ) {
 					if( $data->{$this->column} == $column && $data->{$this->row} == $row ) {
-						$this->datas[$row][$column][$this->indicator] += $data->{$this->indicator};
+						$this->datas[$row][$column][$this->indicator] += floatval($data->{$this->indicator});
 						$this->datas[$row][$column]['count'] += 1;
-						$this->datas[$row]['TOTAL'][$this->indicator] += $data->{$this->indicator};
+						$this->datas[$row]['TOTAL'][$this->indicator] += floatval($data->{$this->indicator});
 						$this->datas[$row]['TOTAL']['count'] += 1;
 					}
 				}
