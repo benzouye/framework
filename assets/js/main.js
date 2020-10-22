@@ -32,11 +32,6 @@ $( document ).ready( function(){
 		}
 	});
 	
-	// Reload après print
-	$('.btnReload').click( function() {
-		window.location.href = window.location.href;
-	});
-	
 	// Activation des tooltips
 	$( 'a,button' ).tooltip({boundary: 'window'});
 	
