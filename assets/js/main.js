@@ -19,7 +19,7 @@ $( document ).ready( function(){
 	});
 
 	// Sélecteur de couleur
-	$( ".colorpicker" ).colorpicker();
+	$( ".colorpicker-input" ).colorpicker();
 
 	// Affichage du formulaire de changement de mot de passe
 	$( ".update-password" ).change( function(e){
