@@ -138,7 +138,7 @@
 				}
 				if( ( $userCan->admin or $userCan->delete ) and !$parentItem ) {
 ?>
-						<td class="text-center">
+						<td class="text-center align-middle">
 <?php
 					if( !$readOnly or $userCan->admin ) {
 ?>
