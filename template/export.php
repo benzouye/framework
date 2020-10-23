@@ -5,20 +5,25 @@
 	$nom = date('Ymd_His').'.xls';
 	$chemin = EXPDIR.$nom;
 	$lien = SITEURL.$chemin;
+	$notPrintColonnes = [ 'password', 'file', 'image' ];
 	
 	if( count( $items ) > 0 ) {
 		
 		$excel = [];
 		$entetes = [];
 		foreach( $colonnes as $colonne ) {
-			$entetes[] = $colonne->nicename;
+			if( !in_array( $colonne->params['type'], $notPrintColonnes ) && !$colonne->admin ) {
+				$entetes[] = $colonne->nicename;
+			}
 		}
 		array_push( $excel, $entetes );
 		
 		foreach( $items as $element ) {
 			$ligne = [];
 			foreach( $colonnes as $colonne ) {
-				array_push( $ligne, $object->getFieldXLS( $colonne->name, $element->{$colonne->name} ) );
+				if( !in_array( $colonne->params['type'], $notPrintColonnes ) && !$colonne->admin ) {
+					array_push( $ligne, $object->getFieldXLS( $colonne->name, $element->{$colonne->name} ) );
+				}
 			}
 			array_push( $excel, $ligne );
 		}
