@@ -403,30 +403,36 @@ class Model {
 		foreach( $this->columns as $colonne ) {
 			
 			// Traitement upload des fichiers
-			if( in_array( $colonne->params['type'], ['image','file'] ) && isset( $_FILES[$colonne->name] ) ) {
-				$up = new Telechargement( SITEDIR.UPLDIR,'form-submit',$colonne->name );
-				$up->Set_Nomme_fichier( $this->itemName.'_'.$this->id.'_'.$colonne->name.'_'.uniqid() , true );
+			if( in_array( $colonne->params['type'], ['image','file'] ) ) {
 				
-				$extensions = [ 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ];
-				if( isset( $colonne->params['extensions'] ) ) {
-					$extensions = $colonne->params['extensions'];
-				}
-				$up->Set_Extensions_accepte( $extensions );
+				$handle = new Verot\Upload\Upload( $_FILES[$colonne->name] );
+				$data[$colonne->name] = null;
+				$extension = $handle->file_src_name_ext;
+				$nomFichier = $this->itemName.'_'.$this->id.'_'.$colonne->name.'_'.uniqid();
 				
-				if( $colonne->params['type'] == 'image' ) {
-					$width = isset( $colonne->params['width'] ) ? $colonne->params['width'] : DFWIDTH;
-					$height = isset( $colonne->params['height'] ) ? $colonne->params['height'] : DFHEIGHT;
-					$up->Set_Redim($width,$height);
-				}
-				
-				$up->Upload();
-				$messages = $up->Get_Tab_message();
-				$resultats = $up->Get_Tab_result();
-				
-				if( isset( $resultats['resultat'][0] ) ) {
-					$data[$colonne->name] = $resultats['resultat'][0][SITEDIR.UPLDIR][0]['nom'];
-				} else {
-					$data[$colonne->name] = null;
+				if( $handle->uploaded ) {
+					if( isset( $colonne->params['extensions'] ) ) {
+						$extensions = $colonne->params['extensions'];
+					} else {
+						$extensions = $this->fileExtensions;
+					}
+					if( in_array( $extension, $extensions ) ) {
+						$handle->file_new_name_body = $nomFichier;
+						$handle->image_resize = true;
+						$handle->image_x = DFWIDTH;
+						$handle->image_ratio_y = true;
+						$handle->process( UPLDIR );
+						
+						if ($handle->processed) {
+							$data[$colonne->name] = $nomFichier.'.'.$extension;
+							$handle->clean();
+							echo $handle->log;
+						} else {
+							$this->manager->setError( $handle->error );
+						}
+					} else {
+						$this->manager->setError( 'Fichier joint non enregistré car son extension ( '.$extension.' ) n\'est pas autorisée' );
+					}
 				}
 			}
 			
