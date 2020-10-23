@@ -65,8 +65,8 @@
 			if( $userCan->admin or !$adminInput ) {
 ?>
 								<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
-									<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-									<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
+									<div class="col-4 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+									<div class="col-8 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
 <?php
 				if( $readOnly && !$userCan->admin ) {
 					echo $object->displayField( $colonne->name, $valeur );
@@ -244,7 +244,7 @@
 												<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour</span>
 											</button>
 											<button type="submit" class="btn btn-success btn-sm">
-												<i class="fas fa-sm fa-caret-save"></i><span class="d-none d-xl-inline"> Sauvegarder</span>
+												<i class="fas fa-sm fa-save"></i><span class="d-none d-xl-inline"> Sauvegarder</span>
 											</button>
 										</div>
 									</form>
