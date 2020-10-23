@@ -70,7 +70,7 @@ th {
 
 @media all and (display-mode: standalone) {
   #install-message {
-	  display: none;
+	  display: none !important;
   }
 }
 
