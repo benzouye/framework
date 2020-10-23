@@ -427,7 +427,6 @@ class Model {
 						if ($handle->processed) {
 							$data[$colonne->name] = $nomFichier.'.'.$extension;
 							$handle->clean();
-							echo $handle->log;
 						} else {
 							$this->manager->setError( $handle->error );
 						}
