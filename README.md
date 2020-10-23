@@ -8,7 +8,7 @@ To ease display and ergonomy, this framework includes some open source librairie
 
 * [PHPSpreadSheet](https://github.com/PHPOffice/PhpSpreadsheet) PHP lib to generate XLS documents
 * [FPDF](http://www.fpdf.org/) PHP lib to generate PDF documents
-* [Telechargement](https://php.developpez.com/telecharger/detail/id/2944/Classe-Php-d-upload-de-fichiers-avec-options-de-redimensionnement-renommage-gestion-des-erreurs) PHP lib to manage uploads
+* [class.upload.php](https://github.com/verot/class.upload.php) PHP lib to manage uploads
 * [Bootstrap 4](https://getbootstrap.com/) as CSS framework
 * [Popper JS](https://popper.js.org/) for tooltip and popover management
 * [jQuery](https://jquery.com/) as JavaScript framework
