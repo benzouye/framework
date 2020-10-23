@@ -1,9 +1,6 @@
 {
 	"name": "PHP Framework",
-	"short_name": "PHP Framework",
-	"start_url": "./?utm_source=web_app_manifest",
 	"display": "standalone",
-	"description": "Home made PHP framekork",
 	"dir": "ltr",
 	"lang": "fr",
 	"orientation": "portrait",
