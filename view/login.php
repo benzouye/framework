@@ -20,3 +20,6 @@
 						</form>
 					</div>
 				</div>
+				<div id="install-message" class="m-2 fixed-bottom d-md-none d-block alert alert-primary" role="alert">
+					<i class="fas fa-info-circle"></i> Vous pouvez ajouter ce site sur votre écran d'accueil
+				</div>
