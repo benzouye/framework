@@ -9,6 +9,7 @@ class Model {
 	protected $single;
 	protected $plural;
 	protected $columns;
+	protected $fileExtensions = [ 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ];
 	protected $ignoredParams = ['item','columnKey','columnLabel','where','extensions', 'value'];
 	protected $disabledExceptions = ['select','checkbox','calculation'];
 	protected $defaultFilters;
