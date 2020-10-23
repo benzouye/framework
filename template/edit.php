@@ -144,7 +144,7 @@
 					} else {
 						$printLink = 'index.php?item='.$page->alias.'&action=print&id='.$id.'&type='.$print->alias;
 ?>
-										<a class="dropdown-item btnReload" href="<?php echo $printLink; ?>" target="_blank"><?php echo $print->nicename; ?></a>
+										<a class="dropdown-item" href="<?php echo $printLink; ?>" target="_blank"><?php echo $print->nicename; ?></a>
 <?php
 					}
 				}
