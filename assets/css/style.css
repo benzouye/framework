@@ -68,6 +68,12 @@ th {
 	margin-left: 10px;
 }
 
+@media all and (display-mode: standalone) {
+  #install-message {
+	  display: none;
+  }
+}
+
 @media print {  
 	.no-print, .no-print * {
 		display: none !important;
