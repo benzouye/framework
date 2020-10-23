@@ -419,9 +419,13 @@ class Model {
 					}
 					if( in_array( $extension, $extensions ) ) {
 						$handle->file_new_name_body = $nomFichier;
-						$handle->image_resize = true;
-						$handle->image_x = DFWIDTH;
-						$handle->image_ratio_y = true;
+						
+						if( $colonne->params['type'] == ['image'] ) {
+							$handle->image_resize = true;
+							$handle->image_x = DFWIDTH;
+							$handle->image_ratio_y = true;
+						}
+						
 						$handle->process( UPLDIR );
 						
 						if ($handle->processed) {
