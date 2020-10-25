@@ -10,8 +10,8 @@
 			$colGrid = $grille;
 ?>
 						<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
-							<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-							<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
+							<div class="col-4 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
+							<div class="col-8 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
 								<?php echo $object->displaySearchInput( $colonne->name, 'form-control form-control-sm' ); ?>
 							</div>
 						</div>
