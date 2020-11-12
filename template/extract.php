@@ -33,7 +33,7 @@
 				<i class="fas fa-sm fa-upload"></i> Télécharger ces données au format XLS
 			</a>
 		</p>
-		<table class="table table-sm table-striped table-hover table-bordered table-repsonsive">
+		<table class="table table-sm table-striped table-hover table-bordered table-responsive">
 			<thead>
 				<tr>
 <?php
