@@ -2,7 +2,7 @@
 	if( $userCan->admin ) {
 ?>
 							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
-								<table class="table table-striped table-hover table-responsive">
+								<table class="table table-sm table-striped table-hover table-bordered table-repsonsive">
 									<thead>
 										<tr>
 											<th width="200">Item</th>
