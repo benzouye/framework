@@ -269,7 +269,7 @@
 <?php
 			if( $nbHistoriques > 0 ) {
 ?>
-									<table class="table table-sm table-striped table-hover table-bordered table-repsonsive">
+									<table class="table table-sm table-striped table-hover table-bordered table-responsive">
 										<thead>
 											<tr>
 												<th>Date</th>
