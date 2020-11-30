@@ -53,7 +53,7 @@ class groupe extends Model {
 	public function get_access_group() {
 		try {
 			$requete = $this->bdd->query('
-				SELECT I.alias, I.nom, GI.create, GI.read, GI.update, GI.delete
+				SELECT I.alias, I.nom, GI.create, GI.read, GI.update, GI.delete, GI.all
 				FROM
 					'.DBPREF.'groupe_item GI
 						INNER JOIN '.DBPREF.'item I
@@ -96,12 +96,13 @@ class groupe extends Model {
 						.( isset( $access['create'] )	? 1 : 0 ).','
 						.( isset( $access['read'] )		? 1 : 0 ).','
 						.( isset( $access['update'] )	? 1 : 0 ).','
-						.( isset( $access['delete'] )	? 1 : 0 ).'),';
+						.( isset( $access['delete'] )	? 1 : 0 ).','
+						.( isset( $access['all'] )		? 1 : 0 ).'),';
 				}
 				$values = rtrim( $values, ',' );
 				
 				$requete = $this->bdd->query('
-					INSERT INTO '.DBPREF.'groupe_item ( `id_groupe`, `alias`, `create`, `read`, `update`, `delete` )
+					INSERT INTO '.DBPREF.'groupe_item ( `id_groupe`, `alias`, `create`, `read`, `update`, `delete`, `all` )
 					VALUES '.$values.';'
 				);
 				$requete->closeCursor();
