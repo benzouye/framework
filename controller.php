@@ -229,9 +229,9 @@
 		
 		if( count($search) > 0 ) {
 			$items = $object->getItems( $search, $paginate, $p, $orderby, $ownerLimit );
-			$criteres = '<div class="search">';
+			$criteres = '<span id="search-criteria" class="form-text">';
 			$criteres .= $object->getSearchCriteria( $search );
-			$criteres .= '</div>';
+			$criteres .= '</span>';
 		} else {
 			$items = $object->getItems( null, $paginate, $p, $orderby, $ownerLimit );
 		}
