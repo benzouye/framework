@@ -21,7 +21,7 @@
 			),
 			(object) array(
 				'name' => 'libelle',
-				'nicename' => 'Libellé',
+				'nicename' => 'LibellĂ©',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -29,9 +29,8 @@
 				),
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
-				'editable' => true,
+				'editable' => false,
 				'required' => true
 			),
 		)
 	);
-?>
