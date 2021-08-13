@@ -732,7 +732,7 @@ class Model {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
 				} else {
-					$html .= '<div class="input-group"><div class="input-group-text"><input class="form-check-input form-check-sm mt-0 update-password" type="checkbox" id="'.$name.'" data-name="'.$name.'"></div></div>';
+					$html .= '<div class="input-group"><div class="input-group-text" title="Chocher pour changer de mot de passe" data-bs-toggle="tooltip" data-bs-placement="top"><input class="form-check-input form-check-sm mt-0 update-password" type="checkbox" id="'.$name.'" data-name="'.$name.'"></div></div>';
 				}
 				break;
 			case 'textarea' :
