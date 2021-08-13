@@ -21,7 +21,7 @@
 			),
 			(object) array(
 				'name' => 'libelle',
-				'nicename' => 'LibellĂ©',
+				'nicename' => 'Libellé',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
