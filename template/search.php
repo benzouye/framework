@@ -1,7 +1,7 @@
 			<form class="form-horizontal" method="POST" action="index.php?item=<?=$page->alias;?>">
 				<div class="card">
 					<div class="card-header">
-						<span class="card-title">CritÃ¨res de recherche</span>
+						<span class="card-title">Critères de recherche</span>
 					</div>
 					<div class="card-body row">
 <?php
