@@ -1,4 +1,4 @@
-		<h2>Export XLS de la liste de résultats : <?php echo count( $items ); ?> <?php echo count( $items ) > 1 ? $object->getPlural() : $object->getSingle(); ?></h2>
+		<h2>Export XLS de la liste de résultats : <?=count( $items ); ?> <?=count( $items ) > 1 ? $object->getPlural() : $object->getSingle(); ?></h2>
 <?php
 	$csv = '';
 	$entetes = array();
@@ -35,21 +35,20 @@
 		$writer->save($chemin);
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="bi bi-caret-left"></i> Retour liste <?=$object->getPlural(); ?>
 			</a>
-			<a href="<?php echo $lien; ?>" download="<?php echo $nom; ?>" class="btn btn-success btn-sm">
-				<i class="fas fa-sm fa-upload"></i> Télécharger ces données au format XLS
+			<a href="<?=$lien; ?>" download="<?=$nom; ?>" class="btn btn-success btn-sm">
+				<i class="bi bi-upload"></i> Télécharger ces données au format XLS
 			</a>
 		</p>
 <?php
 	} else {
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="bi bi-caret-left"></i> Retour liste <?=$object->getPlural(); ?>
 			</a>
 		</p>
 <?php
 	}
-?>
