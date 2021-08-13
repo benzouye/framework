@@ -1,6 +1,29 @@
 <?php
 class Exemple extends Model {
 	protected $docs = array();
+	protected $events = array();
+	
+	public function get_scheduler() {
+		try {
+			$requete = $this->bdd->query('
+				SELECT
+					E.id_exemple AS id,
+					E.libelle AS title,
+					E.date_cre AS start,
+					E.date_maj AS end,
+					CONCAT( "'.SITEURL.'index.php?item=exemple&action=edit&id=", E.id_exemple ) AS url
+				FROM '.DBPREF.'exemple E
+				ORDER BY E.date_cre ASC;'
+			);
+			$this->events = $requete->fetchAll();
+		}
+		catch( Exception $e ) {
+			$this->events = [ "message" => $e->getMessage() ];
+		}
+		finally {
+			return $this->events;
+		}
+	}
 	
 	public function get_document() {
 		try {
@@ -28,4 +51,3 @@ class Exemple extends Model {
 		}
 	}
 }
-?>
