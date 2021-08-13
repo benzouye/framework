@@ -11,12 +11,11 @@
 		
 		<link rel="manifest" href="<?=SITEURL; ?>manifest.webmanifest">
 		<link rel="icon" href="<?=SITEURL; ?>assets/img/favicon.ico" />
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-		<link rel='stylesheet' href="<?=SITEURL; ?>assets/css/fullcalendar.min.css" />
-		<link rel='stylesheet' href="<?=SITEURL; ?>assets/css/scheduler.min.css" />
-		<link rel="stylesheet" href="<?=SITEURL; ?>assets/css/leaflet.css">
+		<link rel='stylesheet' href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.9.0/main.min.css" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 		<link rel="stylesheet" href="<?=SITEURL; ?>assets/css/style.css">
 	</head>
 	<body>
@@ -62,7 +61,7 @@
 		if( $readOnly ) {
 			$badgeAction = 'Consultation';
 		} else {
-			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
+			$badgeAction = ( $new && $action == 'edit' ) ? 'CrĂ©ation' : $actions[$action];
 		}
 		$description = ' <span class="badge bg-dark">'.$badgeAction.'</span>';
 	}
