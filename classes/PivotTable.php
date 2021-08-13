@@ -129,4 +129,3 @@ class PivotTable {
 		return $this->html;
 	}
 }
-?>
