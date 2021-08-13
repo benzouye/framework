@@ -1,5 +1,4 @@
 <?php
-	
 	/*
 	*	Configuration BDD et PDO
 	*/
@@ -37,6 +36,3 @@
 		echo M_DBCON;
 		exit();
 	}
-  
-  ?>
-  
