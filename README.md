@@ -13,8 +13,7 @@ To ease display and ergonomy, this framework includes some open source librairie
 * [jQuery](https://jquery.com/) as JavaScript framework
 * [moment.js](https://momentjs.com/) JS lib to ease JS date management
 * [Chart.js](https://www.chartjs.org/) JS lib to display various charts
-* [Full Calendar](https://fullcalendar.io/) JS lib to management planning
-* Full Calendar Scheduler, a Full Calendar plugin to manage timeline view
+* [Full Calendar](https://fullcalendar.io/) JS lib to management planning (for non commercial use)
 
 # Installation
 
