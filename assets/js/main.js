@@ -4,7 +4,7 @@ $( document ).ready( function(){
 	// Affichage du formulaire de changement de mot de passe
 	$( ".update-password" ).change( function(e){
 		let cible = $(this).parent().parent();
-		let templateInput = '<input id="new-pass-input" required type="password" placeholder="Nouveau mot de passe" name="'+$(this).data('name')+'" class="form-control form-control-sm">';
+		let templateInput = '<input id="new-pass-input" required type="password" placeholder="Saisir le nouveau mot de passe" name="'+$(this).data('name')+'" class="form-control form-control-sm">';
 		if( $(this).prop('checked') == true ) {
 			cible.append( templateInput );
 		} else {
@@ -101,6 +101,7 @@ $( document ).ready( function(){
 		$(".homepage-calendar").each( function(e) {
 			
 			var canvas = $(this);
+			var canvasElement = this;
 			
 			$.ajax({
 				method: "GET",
@@ -115,9 +116,9 @@ $( document ).ready( function(){
 					console.log( response );
 				},
 				success: function( response ) {
-					console.log( response.message );
 					let calendarOptions = JSON.parse( response.options );
-					canvas.fullCalendar( calendarOptions );
+					let calendar = new FullCalendar.Calendar( canvasElement, calendarOptions );
+					calendar.render();
 				}
 			});
 		});
