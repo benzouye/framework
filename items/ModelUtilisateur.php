@@ -5,6 +5,15 @@
 		'single' => 'utilisateur',
 		'plural' => 'utilisateurs',
 		'orderby' => 'identifiant',
+		'relations' => array(
+			(object) array(
+				'item' => 'affectation',
+				'name' => 'Affectations associées',
+				'grid' => 6,
+				'static' => false,
+				'many' => true
+			),
+		),
 		'columns' => array(
 			(object) array(
 				'name' => 'id_utilisateur',
@@ -125,4 +134,3 @@
 			),
 		),
 	);
-?>
