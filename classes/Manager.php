@@ -10,6 +10,7 @@ class Manager {
 	protected $items = array();
 	protected $menuIds = array();
 	protected $user = false;
+	protected $affectations = array();
 	protected $users = array();
 	protected $userCan;
 
@@ -63,6 +64,31 @@ class Manager {
 		}
 	}
 	
+	public function setAffectations( $idUser ) {
+		try {
+			$requete = $this->bdd->prepare( '
+				SELECT id_affectation
+				FROM '.DBPREF.'utilisateur_affectation
+				WHERE id_utilisateur = ?;'
+			);
+			$requete->execute( [ $idUser ] );
+			$this->affectations = $requete->fetchAll();
+			$requete->closeCursor();
+		}
+		catch( Exception $e ) {
+			if( $this->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = M_USERSERR;
+			}
+			$this->errors[] = $msg;
+		}
+	}
+	
+	public function getAffectations() {
+		return $this->affectations;
+	}
+	
 	public function setItemAndMenus() {
 		try {
 			$requete = $this->bdd->query( '
@@ -101,6 +127,7 @@ class Manager {
 				if( $_SESSION[DBPREF.'_userId'] === $user->id_utilisateur ) {
 					$good_session = true;
 					$this->user = $user;
+					$this->setAffectations( $user->id_utilisateur );
 					break;
 				} else {
 					$good_session = false;
@@ -119,6 +146,7 @@ class Manager {
 							$good_mdp = true;
 							$this->setMessage( M_LOGIN );
 							$this->user = $user;
+							$this->setAffectations( $user->id_utilisateur );
 							$_SESSION[DBPREF.'_userId'] = $user->id_utilisateur;
 							break;
 						}
@@ -332,8 +360,8 @@ class Manager {
 			foreach( $this->errors as $erreur ) {
 ?>
 				<div style="display: none;" class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-					<i class="fas fa-exclamation-triangle"></i> <?php echo $erreur; ?>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+					<span class="bi bi-exclamation-triangle-fill"></span> <?=$erreur; ?>
 				</div>
 <?php			
 			}
@@ -345,12 +373,11 @@ class Manager {
 			foreach( $this->messages as $message ) {
 ?>
 				<div style="display: none;" class="alert alert-info alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-					<i class="fas fa-check"></i> <?php echo $message; ?>
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+					<span class="bi bi-check-circle-fill"></span> <?=$message; ?>
 				</div>
 <?php			
 			}
 		}
 	}
 }
-?>
