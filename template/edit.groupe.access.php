@@ -1,7 +1,7 @@
 <?php
 	if( $userCan->admin ) {
 ?>
-							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
+							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
 								<table class="table table-sm table-striped table-hover table-bordered table-responsive">
 									<thead>
 										<tr>
@@ -35,24 +35,23 @@
 			}
 ?>
 										<tr>
-											<td><?php echo $element->nom; ?></td>
-											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][create]" <?php echo $gCreate ? 'checked="checked"' : ''; ?> /></td>
-											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][read]" <?php echo $gRead ? 'checked="checked"' : ''; ?> /></td>
-											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][update]" <?php echo $gUpdate ? 'checked="checked"' : ''; ?> /></td>
-											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][delete]" <?php echo $gDelete ? 'checked="checked"' : ''; ?> /></td>
-											<td class="text-center"><input type="checkbox" name="access[<?php echo $element->alias; ?>][all]" <?php echo $gAll ? 'checked="checked"' : ''; ?> /></td>
+											<td><?=$element->nom; ?></td>
+											<td class="text-center"><input type="checkbox" name="access[<?=$element->alias; ?>][create]" <?=$gCreate ? 'checked="checked"' : ''; ?> /></td>
+											<td class="text-center"><input type="checkbox" name="access[<?=$element->alias; ?>][read]" <?=$gRead ? 'checked="checked"' : ''; ?> /></td>
+											<td class="text-center"><input type="checkbox" name="access[<?=$element->alias; ?>][update]" <?=$gUpdate ? 'checked="checked"' : ''; ?> /></td>
+											<td class="text-center"><input type="checkbox" name="access[<?=$element->alias; ?>][delete]" <?=$gDelete ? 'checked="checked"' : ''; ?> /></td>
+											<td class="text-center"><input type="checkbox" name="access[<?=$element->alias; ?>][all]" <?=$gAll ? 'checked="checked"' : ''; ?> /></td>
 										</tr>
 <?php
 		}
 ?>
 									</tbody>
 								</table>
-								<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-sm fa-save"></i> Sauvegarder</button>
+								<button type="submit" class="btn btn-success btn-sm"><i class="bi bi-save"></i> Sauvegarder</button>
 								<input type="hidden" name="item" value="groupe"/>
-								<input type="hidden" name="id" value="<?php echo $id; ?>"/>
+								<input type="hidden" name="id" value="<?=$id; ?>"/>
 								<input type="hidden" name="relation" value="access"/>
 								<input type="hidden" name="action" value="rel-set"/>
 							</form>
 <?php
 	}
-?>

@@ -50,6 +50,24 @@
 				'required' => true
 			),
 			(object) array(
+				'name' => 'id_affectation',
+				'nicename' => 'Affectation',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 4,
+				),
+				'params' => array(
+					'type' => 'select',
+					'item' => 'affectation',
+					'columnKey' => 'id_affectation',
+					'columnLabel' => 'libelle'
+				),
+				'visible' => true,
+				'editable' => true,
+				'required' => true
+			),
+			(object) array(
 				'name' => 'montant',
 				'nicename' => 'Montant',
 				'align' => 'right',
@@ -146,4 +164,3 @@
 			),
 		),
 	);
-?>

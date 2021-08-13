@@ -3,7 +3,7 @@
 		foreach( $items as $utilisateur ) {
 ?>
 								<li class="list-group-item">
-									<?php echo $utilisateur->identifiant; ?>
+									<?=$utilisateur->identifiant; ?>
 								</li>
 <?php
 		}

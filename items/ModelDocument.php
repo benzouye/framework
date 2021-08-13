@@ -23,6 +23,7 @@
 			(object) array(
 				'name' => 'id_exemple',
 				'nicename' => 'Exemple',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -55,7 +56,8 @@
 			),
 			(object) array(
 				'name' => 'fichier',
-				'nicename' => 'Nom du fichier',
+				'nicename' => 'Fichier',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -68,4 +70,3 @@
 			),
 		)
 	);
-?>

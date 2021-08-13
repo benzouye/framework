@@ -3,10 +3,10 @@
 					<div class="col-12 col-lg-4">
 						<p>Veuillez vous connecter.</p>
 						<form method="POST" action="index.php">
-							<div class="form-group">
+							<div class="form-group mb-2">
 								<input type="text" class="form-control" id="identifiant" name="identifiant" placeholder="Nom d'utilisateur" autofocus>
 							</div>
-							<div class="form-group">
+							<div class="form-group mb-2">
 								<input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe">
 							</div>
 							<button type="submit" class="btn btn-success">Se connecter</button>
@@ -21,5 +21,5 @@
 					</div>
 				</div>
 				<div id="install-message" class="m-2 fixed-bottom d-md-none d-block alert alert-primary" role="alert">
-					<i class="fas fa-info-circle"></i> Vous pouvez ajouter ce site sur votre écran d'accueil
+					<i class="bi bi-info-circle"></i> Vous pouvez ajouter ce site sur votre écran d'accueil
 				</div>

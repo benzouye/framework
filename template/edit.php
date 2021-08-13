@@ -7,18 +7,18 @@
 		// Bouton suppression
 		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and ( !$readOnly or $userCan->admin ) ) {
 ?>
-							<form class="delete" method="post" action="index.php?item=<?php echo $page->alias;?>">
-								<input type="hidden" name="id" value="<?php echo $item->{'id_'.$page->alias}; ?>" />
-								<input type="hidden" name="item" value="<?php echo $page->alias; ?>" />
-								<button id="item-delete" type="submit" class="btn btn-danger btn-sm float-right"><i class="fas fa-sm fa-trash-alt"></i><span class="d-none d-xl-inline"> Supprimer</span></button>
+							<form class="delete" method="post" action="index.php?item=<?=$page->alias;?>">
+								<input type="hidden" name="id" value="<?=$item->{'id_'.$page->alias}; ?>" />
+								<input type="hidden" name="item" value="<?=$page->alias; ?>" />
+								<button title="Supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom" id="item-delete" type="submit" class="btn btn-danger btn-sm float-end"><i class="bi bi-trash"></i><span class="d-none d-xl-inline"> Supprimer</span></button>
 							</form>
 <?php
 		}
 		// Bouton création
 		if( ( $userCan->admin or $userCan->create ) and !$parentItem and !$new ) {
 ?>
-							<a href="index.php?item=<?php echo $page->alias; ?>&action=edit" class="btn btn-secondary btn-sm float-right">
-								<i class="fas fa-sm fa-plus"></i><span class="d-none d-xl-inline"> Nouveau</span>
+							<a title="Ajouter" data-bs-toggle="tooltip" data-bs-placement="bottom" href="index.php?item=<?=$page->alias; ?>&action=edit" class="btn btn-secondary btn-sm float-end">
+								<i class="bi bi-plus-lg"></i><span class="d-none d-xl-inline"> Nouveau</span>
 							</a>
 <?php
 		}
@@ -32,17 +32,14 @@
 ?>
 							<span class="card-title">Informations principales</span>
 						</div>
-						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?php echo $savelink; ?>">
+						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
 							<input type="hidden" name="action" value="set"/>
-							<input type="hidden" name="id" value="<?php echo $id; ?>"/>
-							<input type="hidden" name="item" value="<?php echo $page->alias; ?>"/>
+							<input type="hidden" name="id" value="<?=$id; ?>"/>
+							<input type="hidden" name="item" value="<?=$page->alias; ?>"/>
 							<div class="card-body row">
 <?php
 		// Affichage du formulaire
 		foreach( $colonnes as $colonne ) {
-			// Gestion de la grille CSS
-			$colGrid = property_exists( $colonne, 'grid' ) ? $colonne->grid : $grille;
-			
 			// Valeur par défaut
 			if( property_exists( $colonne , 'default' ) ) {
 				$default = $colonne->default;
@@ -63,20 +60,11 @@
 			}
 			
 			if( $userCan->admin or !$adminInput ) {
-?>
-								<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
-									<div class="col-4 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-									<div class="col-8 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
-<?php
 				if( $readOnly && !$userCan->admin ) {
 					echo $object->displayField( $colonne->name, $valeur );
 				} else {
-					echo $object->displayInput( $id, $colonne->name, $valeur, 'form-control form-control-sm' );
+					echo $object->displayInput( $id, $colonne->name, $valeur );
 				}
-?>
-									</div>
-								</div>
-<?php
 			}
 		}
 		// Affichage des boutons
@@ -86,35 +74,35 @@
 <?php
 		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
-								<button name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-									<i class="fas fa-sm fa-save"></i><span class="d-none d-xl-inline"> <?php echo $new ? 'Créer' : 'Sauvegarder'; ?></span>
+								<button title="<?=$new ? 'Créer' : 'Sauvegarder'; ?>" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
+									<i class="bi bi-save"></i><span class="d-none d-xl-inline"> <?=$new ? 'Créer' : 'Sauvegarder'; ?></span>
 								</button>
 <?php
 			if( !$new ) {
 ?>
-								<button name="form-submit" formaction="index.php?item=<?php echo $copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn float-right">
-									<i class="fas fa-sm fa-copy"></i><span class="d-none d-xl-inline"> Dupliquer</span>
+								<button title="Dupliquer" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" formaction="index.php?item=<?=$copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn float-end">
+									<i class="bi bi-clipboard-plus"></i><span class="d-none d-xl-inline"> Dupliquer</span>
 								</button>
 <?php
 			}
 		}
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
-								<a href="index.php" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour accueil</span>
+								<a title="Retour Accueil" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php" class="btn btn-secondary btn-sm">
+									<i class="bi bi-house"></i><span class="d-none d-xl-inline"> Retour accueil</span>
 								</a>
 <?php
 		} else {
 ?>
-								<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour liste <?php echo $object->getPlural(); ?></span>
+								<a title="Retour liste <?=$object->getPlural(); ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+									<i class="bi bi-list-task"></i><span class="d-none d-xl-inline"> Retour liste <?=$object->getPlural(); ?></span>
 								</a>
 <?php
 		}
 		if( $parentLink ) {
 ?>
-								<a href="index.php?item=<?php echo $parentLink; ?>" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-caret-left"></i> Retour <?php echo $parentItem; ?>
+								<a title="Retour <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$parentLink; ?>" class="btn btn-secondary btn-sm">
+									<i class="bi bi-caret-left-fill"></i><span class="d-none d-xl-inline">  Retour <?=$parentItem; ?></span>
 								</a>
 <?php
 		}
@@ -130,34 +118,34 @@
 		}
 		if( $nbPrints > 0 && !$new && $visiblePrints ) {
 ?>
-									<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										<i class="fas fa-sm fa-print"></i><span class="d-none d-xl-inline"> Imprimer</span>
-									</button>
-									<div class="dropdown-menu" aria-labelledby="menuPrint">
+								<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									<span title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-printer"></span><span class="d-none d-xl-inline"> Imprimer</span>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="menuPrint">
 <?php
 			foreach( $prints as $print ) {
 				if( $print->visible ) {
 					if( $print->separator ) {
 ?>
-										<div class="dropdown-divider"></div>
+									<div class="dropdown-divider"></div>
 <?php
 					} else {
 						$printLink = 'index.php?item='.$page->alias.'&action=print&id='.$id.'&type='.$print->alias;
 ?>
-										<a class="dropdown-item" href="<?php echo $printLink; ?>" target="_blank"><?php echo $print->nicename; ?></a>
+									<a class="dropdown-item" href="<?=$printLink; ?>" target="_blank"><?=$print->nicename; ?></a>
 <?php
 					}
 				}
 			}
 ?>
-									</div>
+								</div>
 <?php
 		}
 		
 		if( $parentLink && !$new && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
 ?>
-								<a href="index.php?item=<?php echo $page->alias; ?>&action=edit&parent=<?php echo $parentId; ?>" class="btn btn-secondary btn-sm">
-									<i class="fas fa-sm fa-plus"></i> Nouveau <?php echo $object->getSingle(); ?> pour cette <?php echo $parentItem; ?>
+								<a title="Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias; ?>&action=edit&parent=<?=$parentId; ?>" class="btn btn-secondary btn-sm">
+									<span class="bi bi-plus-square-dotted"></span><span class="d-none d-xl-inline">  Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?></span>
 								</a>
 <?php
 		}
@@ -178,19 +166,19 @@
 				if( $toDisplay ) {
 					if( method_exists( $object, 'get_'.$relation->item ) ) {
 						$items = $object->{'get_'.$relation->item}();
-						$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge badge-light">'.count( $items ).'</span>' : '';
+						$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge bg-light text-dark">'.count( $items ).'</span>' : '';
 						$classLink = 'btn btn-secondary btn-sm';
 						if( !property_exists( $relation, 'many' ) ) {
 							$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
 						} else {
-							$addLink = 'href="#" data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-toggle="modal" data-target="#relation-modal"';
+							$addLink = 'href="#" data-rel-item="'.$relation->item.'" data-parent-item="'.$page->alias.'" data-parent-id="'.$id.'" data-bs-toggle="modal" data-bs-target="#relation-modal"';
 							$classLink .= ' add-relation';
 						}
 ?>
-						<div class="col-12 col-md-<?php echo $relation->grid; ?>">
+						<div class="col-12 col-md-<?=$relation->grid; ?>">
 							<div class="card border-dark">
 								<div class="card-header">
-									<span class="panel-title"><?php echo $relation->name .$nbItems; ?></span>
+									<span class="panel-title"><?=$relation->name .$nbItems; ?></span>
 								</div>
 								<div class="card-body">
 <?php
@@ -210,8 +198,8 @@
 						if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 								<div class="card-footer">
-									<a <?php echo $addLink; ?> class="<?php echo $classLink; ?>">
-										<i class="fas fa-sm fa-plus"></i><span class="d-none d-xl-inline"> Ajouter</span>
+									<a data-bs-toggle="modal" <?=$addLink; ?> class="<?=$classLink; ?>">
+										<i title="Ajouter <?= $relation->name; ?>" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-plus-square-dotted"></i><span class="d-none d-xl-inline"> Ajouter</span>
 									</a>
 								</div>
 <?php
@@ -229,22 +217,20 @@
 						<div id="relation-modal" class="modal fade" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
-									<form method="POST" action="index.php?item=<?php echo $savelink; ?>">
+									<form method="POST" action="index.php?item=<?=$savelink; ?>">
 										<div class="modal-header">
 											<h5 class="modal-title">Choisissez les éléments à ajouter</h5>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
 										</div>
 										<div class="modal-body">
 											<ul id="relation-ul" class="list-group"></ul>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-												<i class="fas fa-sm fa-caret-left"></i><span class="d-none d-xl-inline"> Retour</span>
+											<button title="Retour" data-bs-toggle="tooltip" data-bs-placement="top" type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+												<i class="bi bi-caret-left"></i><span class="d-none d-xl-inline"> Retour</span>
 											</button>
-											<button type="submit" class="btn btn-success btn-sm">
-												<i class="fas fa-sm fa-save"></i><span class="d-none d-xl-inline"> Sauvegarder</span>
+											<button title="Sauvegarder" data-bs-toggle="tooltip" data-bs-placement="top" type="submit" class="btn btn-success btn-sm">
+												<i class="bi bi-save"></i><span class="d-none d-xl-inline"> Sauvegarder</span>
 											</button>
 										</div>
 									</form>
@@ -263,7 +249,9 @@
 							<div class="card border-dark">
 								<div class="card-header">
 									<span class="panel-title">Historique</span>
-									<a title="Afficher/Masquer l'historique" class="badge badge-light" data-toggle="collapse" href="#body-historique"><?php echo $nbHistoriques; ?></a>
+									<span title="Afficher/Masquer l'historique" data-bs-toggle="tooltip" data-bs-placement="right">
+										<a data-bs-toggle="collapse" href="#body-historique" class="badge bg-light text-dark" ><?=$nbHistoriques; ?></a>
+									</span>
 								</div>
 								<div class="card-body collapse" id="body-historique">
 <?php
@@ -282,8 +270,8 @@
 				foreach( $historiques as $historique ) {
 ?>
 											<tr>
-												<td><?php echo $historique->date_cre; ?></td>
-												<td><?php echo $historique->identifiant; ?></td>
+												<td><?=$historique->date_cre; ?></td>
+												<td><?=$historique->identifiant; ?></td>
 <?php
 					$actions = json_decode( $historique->action );
 					$details = '<ul>';
@@ -292,7 +280,7 @@
 					}
 					$details .= '</ul>';
 ?>
-												<td><?php echo $details; ?></td>
+												<td><?=$details; ?></td>
 											</tr>
 <?php
 				}
@@ -315,4 +303,3 @@
 					</div>
 <?php
 	}
-?>

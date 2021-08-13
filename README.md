@@ -9,14 +9,12 @@ To ease display and ergonomy, this framework includes some open source librairie
 * [PHPSpreadSheet](https://github.com/PHPOffice/PhpSpreadsheet) PHP lib to generate XLS documents
 * [FPDF](http://www.fpdf.org/) PHP lib to generate PDF documents
 * [class.upload.php](https://github.com/verot/class.upload.php) PHP lib to manage uploads
-* [Bootstrap 4](https://getbootstrap.com/) as CSS framework
-* [Popper JS](https://popper.js.org/) for tooltip and popover management
+* [Bootstrap 5](https://getbootstrap.com/) as CSS framework
 * [jQuery](https://jquery.com/) as JavaScript framework
 * [moment.js](https://momentjs.com/) JS lib to ease JS date management
 * [Chart.js](https://www.chartjs.org/) JS lib to display various charts
 * [Full Calendar](https://fullcalendar.io/) JS lib to management planning
 * Full Calendar Scheduler, a Full Calendar plugin to manage timeline view
-* [Font Awesome](https://fontawesome.com/) icon set
 
 # Installation
 
@@ -33,6 +31,7 @@ By default, there is a table name prefix (prefix_), if you want, before importin
 # Configuration
 
 Edit the _config.php_ file with your files server information (line 68 and 70) and the _database.php_ file with your database server information.
+In this file you can toggle debug mode line 5 (true / false ).
 
 You may change the favicon file located in _assets/img/_ directory to fit with your brand.
 
@@ -82,11 +81,12 @@ Basic existing and mandatory items are :
 * TypeDocument, to manage differents document types
 * Analyse, to manage extraction queries
 * TypeAnalyse, to manage differents analysis types
+* Affectation, to manage users right on items
 
 To create a new item you need at least to :
 
 1. create the database table corresponding to item description (cf. next chapters)
-2. add an item description file into the items/ directory (cf. next chapters)
+2. add an item description file into the _items_ directory (cf. next chapters)
 3. add the "require_once" line to this file in the config.php file
 4. configure it in the items configuration page
 
@@ -151,7 +151,7 @@ Here is the different types currently accepted :
 * date : display a datePicker control, need to be linked to a date column in the database table (stores yyyy-mm-dd values)
 * file : display a file input control, need to be linked to a string column in the database table (stores the filename) (you can combined this type with _extensions_ attribute as an array of strings to limit file extensions possibilities)
 * image : display a file input control, need to be linked to a string column in the database table (stores the filename) (you can combined this type with _extensions_ attribute as an array of strings to limit file extensions possibilities)
-* localisation : display an openstreetmap control and allow to store coordinates in database, need to be link to a text column in database table
+* localisation : display an openstreetmap control and allow to store coordinates and zoom level in database, need to be link to a text column in database table
 * number : display a number input control, need to be linked to a nueric column in the database table (stores a number)
 * password : display a password control, need to be linked to a 60 chars length string column in the database table (stores bcrypt values)
 * text : display a text input control, need to be linked to a string column in the database table (stores strings) (you can combined this type with _auto-complete_ attribute to enable AJAX autocomplete)

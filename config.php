@@ -9,7 +9,6 @@
 		error_reporting(0);
 	}
 	
-	
 	/*
 	*	Initialisation timezone
 	*/
@@ -125,16 +124,6 @@
 	);
 	
 	/*
-	*	Grille CSS responsive par défaut
-	*	Utilise la grille Boostrap sur 12 colonnes
-	*/
-	$grille = (object) array(
-		'div' => 6,		// Largeur totale de 6 colonnes (1/2)
-		'label' => 4,	// Etiquette sur 4 colonnes (1/6)
-		'value' => 8,	// Valeur sur 8 colonnes (1/3)
-	);
-	
-	/*
 	*	Variables de session par défaut
 	*/
 	if( !isset( $_SESSION[DBPREF.'_item'] ) ) $_SESSION[DBPREF.'_item'] = 'home';
@@ -161,12 +150,12 @@
 	require_once( ITEMDIR.'ModelTypeAnalyse.php' );
 	require_once( ITEMDIR.'ModelTypeDocument.php' );
 	require_once( ITEMDIR.'ModelDocument.php' );
+	require_once( ITEMDIR.'ModelAffectation.php' );
 	
 	/*
 	*	Mappings items personnalisés
 	*/
 	require_once( ITEMDIR.'ModelExemple.php' );
-	
 	
 	/*
 	*	Autoload de classes

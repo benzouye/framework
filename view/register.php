@@ -24,20 +24,10 @@
 			}
 			
 			if( !$adminInput and $colonne->name != 'id_utilisateur' ) {
-			
-				// Gestion de la grille CSS
-				$colGrid = property_exists( $colonne, 'grid' ) ? $colonne->grid : $grille;
-				
 				// Valeur par défaut
 				$valeur = property_exists( $colonne , 'default' ) ? $colonne->default : '';
-?>
-						<div class="form-group row col-12 col-md-<?php echo $colGrid->div; ?>">
-							<div class="col-6 col-md-<?php echo $colGrid->label; ?> col-form-label form-control-sm text-right"><?php echo $colonne->nicename; ?></div>
-							<div class="col-6 col-md-<?php echo $colGrid->value; ?> input-group input-group-sm">
-								<?php echo $object->displayInput( 0, $colonne->name, $valeur, 'form-control form-control-sm' ); ?>
-							</div>
-						</div>
-<?php
+				// Affichage du champ
+				echo $object->displayInput( 0, $colonne->name, $valeur );
 			}
 		}
 		// Affichage des boutons
@@ -45,10 +35,10 @@
 					</div>
 					<div class="card-footer">
 						<button type="submit" class="btn btn-success btn-sm navbar-btn">
-							<i class="fas fa-sm fa-step-forward"></i> Envoyer
+							<i class="bi bi-step-forward"></i> Envoyer
 						</button>
 						<a href="index.php" class="btn btn-danger btn-sm">
-							<i class="fas fa-sm fa-times"></i> Annuler
+							<i class="bi bi-x"></i> Annuler
 						</a>
 					</div>
 				</div>
@@ -114,11 +104,10 @@
 			}
 ?>
 			<a href="index.php" class="btn btn-primary btn-sm">
-				<i class="fas fa-sm fa-caret-left"></i> Retour accueil
+				<i class="bi bi-caret-left"></i> Retour accueil
 			</a>
 <?php
 		}
 	} else {
 		$manager->setError( M_VALOK );
 	}
-?>

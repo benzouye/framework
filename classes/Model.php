@@ -26,6 +26,7 @@ class Model {
 	protected $id;
 	protected $lastId;
 	protected $nextId;
+	protected $grille;
 	
 	public function __construct( PDO $bdd, Manager $manager, stdClass $model ) {
 		$this->bdd = $bdd;
@@ -36,6 +37,7 @@ class Model {
 		$this->plural = $model->plural;
 		$this->columns = $model->columns;
 		$this->orderby = $model->orderby;
+		$this->grille = (object) array( 'div' => 6, 'label' => 4, 'value' => 8 );
 		
 		// Clés étrangères
 		$this->foreignColumns = array();
@@ -166,24 +168,37 @@ class Model {
 		}
 	}
 	
-	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false ) {
+	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false, $ownerLimit ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
 		$page = $page-1;
 		
 		try {
 			$select = '';
-			$where = '';
+			$where = 'WHERE 1=1 ';
 			$join = '';
 			$groupby = '';
 			$limit = '';
 			$isCalculated = false;
 			
+			if( $ownerLimit ) {
+				$where .= ' AND T.user_cre = '.$ownerLimit;
+			}
+			
 			if( $paginate ) $limit = 'LIMIT '.$page*$nbparpage.', '.$nbparpage;
 			
-			if( $search ) $where = $this->getSearchCriteria( $search, true );
+			if( $search ) $where .= $this->getSearchCriteria( $search, true );
 			
 			foreach( $this->columns as $colonne ) {
+				if( $colonne->name == 'id_affectation' && !$this->manager->getUser()->admin ) {
+					$where .= ' AND T.id_affectation ';
+					$affectations = $this->manager->getAffectations();
+					$tabAffectations = array();
+					foreach( $affectations as $affectation ) {
+						array_push( $tabAffectations, $affectation->id_affectation );
+					}
+					$where .= count( $tabAffectations ) ? ' IN ( '.implode( ",", $tabAffectations ).' ) ' : ' = 0 ';
+				}
 				if( $colonne->params['type'] == 'calculation' ) {
 					$groupby = 'GROUP BY T.id_'.$this->itemName;
 					$join = $colonne->params['join'];
@@ -197,7 +212,7 @@ class Model {
 			
 			$requete = $this->bdd->query('
 				SELECT COUNT(*)
-				FROM '.$this->table.'
+				FROM '.$this->table.' T
 				'.$where.';'
 			);
 			$this->nbItems = $requete->fetchColumn();
@@ -370,11 +385,11 @@ class Model {
 		if( $requestedAction ) {
 			if( $action == 'edit' ) {
 				$actionLink = 'index.php?item='.$page.'&action=edit&id='.$id.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a class="btn btn-'.$requestedAction->color.' btn-sm float-right" href="'.$actionLink.'" ><i class="fas fa-sm fa-'.$requestedAction->icon.'"></i> '.$requestedAction->nicename.'</a>';
+				$display = '<a class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i> '.$requestedAction->nicename.'</a>';
 			}
 			if( $action == 'list' ) {
 				$actionLink = 'index.php?item='.$page.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="fas fa-sm fa-'.$requestedAction->icon.'"></i></a>';
+				$display = '<a title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
 			}
 		}
 		return $display;
@@ -404,7 +419,7 @@ class Model {
 		foreach( $this->columns as $colonne ) {
 			
 			// Traitement upload des fichiers
-			if( in_array( $colonne->params['type'], ['image','file'] ) ) {
+			if( in_array( $colonne->params['type'], ['image','file'] ) && isset( $_FILES[$colonne->name] ) ) {
 				
 				$handle = new Verot\Upload\Upload( $_FILES[$colonne->name] );
 				$data[$colonne->name] = null;
@@ -451,7 +466,7 @@ class Model {
 						$value = date( DBDATE, strtotime(str_replace('/','-',$value)) );
 					}
 					if( $colonne->params['type'] == 'password' ) {
-						$value = password_hash($value, PASSWORD_BCRYPT );
+						$value = password_hash( $value, PASSWORD_BCRYPT );
 					}
 					$columns .= $key.',';
 					$values .= $this->bdd->quote( $value ).',';
@@ -579,14 +594,14 @@ class Model {
 	}
 	
 	public function getSearchCriteria( $search, $sql = false ) {
-		$criteres = $sql ? 'WHERE 1=1 ' : '';
+		$criteres = '';
 		foreach( $search as $input => $valeur ) {
 			foreach( $this->columns as $colonne ) {
 				if( $colonne->name == $input ) {
 					switch( $colonne->params['type'] ) {
 						case 'select' :
 							if( $valeur > 0 ) {
-								$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+								$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 								foreach( $foreignItems as $foreignItem ) {
 									if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
 										$libelle = $foreignItem->{$colonne->params['columnLabel']};
@@ -594,7 +609,7 @@ class Model {
 									}
 								}
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' = '.$valeur.' '
+									? ' AND '.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' = '.$libelle.$this->searchSep;
 							}
 							break;
@@ -609,12 +624,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? ' AND '.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? ' AND '.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -625,12 +640,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? ' AND '.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.$search[$input][0];
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? ' AND '.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.$search[$input][1];
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -662,24 +677,23 @@ class Model {
 		return $criteres;
 	}
 	
-	public function displayInput( $id, $name, $valeur, $class = '' ) {
+	public function displayInput( $id, $name, $valeur ) {
 		$html = '';
+		$class = ' form-control form-control-sm ';
 		$colonne = $this->getColumn( $name );
 		$format = 'name ="'.$colonne->name.'" ';
+		$colGrid = property_exists( $colonne, 'grid' ) ? $colonne->grid : $this->grille;
+		
+		$html .= '<div class="row mb-2 col-12 col-md-'.$colGrid->div.'">';
+		$html .= '<label class="col-4 col-md-'.$colGrid->label.' col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
+		$html .= '<div class="col-8 col-md-'.$colGrid->value.'">';
 		
 		if( property_exists( $colonne, 'default' ) && $valeur == '' ) {
 			$valeur = $colonne->default;
 		}
 		
-		if( $colonne->params['type'] == 'date' && $colonne->editable ) {
-			$valeur = $valeur ? date( UIDATE, strtotime($valeur) ) : '';
-			$format .= 'type="text" ';
-			$class .= ' datepicker ';
-		}
-		
 		if( $colonne->params['type'] == 'color' && $colonne->editable ) {
-			$format .= 'type="text" ';
-			$class .= ' colorpicker-input ';
+			$format .= 'type="color" ';
 		}
 		
 		foreach( $colonne->params as $key=>$value ) {
@@ -704,8 +718,12 @@ class Model {
 			$format .= ' data-parent-item="'.$this->itemName.'" data-colonne="'.$colonne->name.'" ';
 		}
 		
-		if( $colonne->params['type'] != 'checkbox' ) {
+		if( !in_array ( $colonne->params['type'], [ 'checkbox', 'select' ] ) ) {
 			$format .= ' class="'.$class.'" ';
+		}
+		
+		if( property_exists( $colonne, 'unit' ) ) {
+			$html .= '<div class="input-group input-group-sm"><span class="input-group-text">'.$colonne->unit.'</span>';
 		}
 		
 		switch( $colonne->params['type'] ) {
@@ -714,7 +732,7 @@ class Model {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
 				} else {
-					$html .= '<div class="custom-control custom-checkbox"><input title="cocher pour changer le mot de passe" class="custom-control-input update-password" type="checkbox" id="'.$name.'" data-name="'.$name.'"><label class="custom-control-label" for="'.$name.'"></label></div>';
+					$html .= '<div class="input-group"><div class="input-group-text"><input class="form-check-input form-check-sm mt-0 update-password" type="checkbox" id="'.$name.'" data-name="'.$name.'"></div></div>';
 				}
 				break;
 			case 'textarea' :
@@ -722,8 +740,8 @@ class Model {
 				break;
 			case 'select' :
 				$where = isset( $colonne->params['where'] ) ? $colonne->params['where'] : null;
-				$html .= '<select '.$format.'><option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
-				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( $where );
+				$html .= '<select class="form-select form-select-sm" '.$format.'><option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( $where, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					$selected = $valeur == $foreignItem->{$colonne->params['columnKey']} ? 'selected="selected"' : '';
 					$html .= '<option '.$selected.' value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
@@ -731,22 +749,19 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$html .= '<div class="custom-control custom-checkbox">';
-				$html .= '<input type="checkbox" class="custom-control-input" '.$format.' value="1" id="'.$name.'" '.($valeur==1 ? 'checked="checked"':'').'>';
-				$html .= '<label class="custom-control-label" for="'.$name.'"></label>';
-				$html .= '</div>';
+				$html .= '<input class="form-check-input" type="checkbox" '.$format.' value="1" id="'.$name.'" '.($valeur==1 ? 'checked="checked"':'').'>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
-					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" />&nbsp;<button title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-sm"><i class="fas fa-sm fa-times"></i></button>';
+					$html .= '<div class="card"><img src="'.SITEURL.UPLDIR.$valeur.'" class="card-img" alt="Image"><div class="card-img-overlay"><button title="Supprimer cette image" data-name="'.$colonne->name.'" class="delete-image btn btn-danger btn-sm"><span class="bi bi-x-lg"></span></button></div></div>';
 				} else {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
 				}
 				break;
 			case 'file' :
-				if( strlen($valeur) > 4  ) {
-					$html .= '<a class="file-link btn btn-secondary btn-sm" href="'.SITEURL.UPLDIR.$valeur.'" target="_blank"><i class="fas fa-sm fa-search"></i> Consulter</a>&nbsp;<button title="Supprimer ce fichier" data-name="'.$colonne->name.'" class="delete-file btn btn-danger btn-sm"><i class="fas fa-sm fa-times"></i></button>';
+				if( strlen($valeur) > 4 ) {
+					$html .= '<a class="file-link btn btn-secondary btn-sm" href="'.SITEURL.UPLDIR.$valeur.'" target="_blank"><span class="bi bi-search"></span> Consulter</a><button title="Supprimer ce fichier" data-bs-toggle="tooltip" data-bs-placement="top" data-name="'.$colonne->name.'" class="ms-2 delete-file btn btn-danger btn-sm"><span class="bi bi-x-lg"></span></button>';
 				} else {
 					$format .= 'value="'.$valeur.'" ';
 					$html .= '<input '.$format.'>';
@@ -761,37 +776,43 @@ class Model {
 		}
 		
 		if( property_exists( $colonne, 'unit' ) ) {
-			$html .= '<div class="input-group-append"><span class="input-group-text">'.$colonne->unit.'</span></div>';
+			$html .= '</div>';
 		}
+		
+		$html .= '</div></div>';
 		
 		return $html;
 	}
 	
-	public function displaySearchInput( $name, $class = false ) {
+	public function displaySearchInput( $name ) {
 		$html = '';
 		$colonne = $this->getColumn( $name );
+		$colGrid = property_exists( $colonne, 'grid' ) ? $colonne->grid : $this->grille;
+		$class = ' form-control form-control-sm ';
+		
 		if( $colonne->params['type'] == 'date' or $colonne->params['type'] == 'number' ) {
 			$format = 'name ="'.$colonne->name.'[]" ';
 		} else {
 			$format = 'name ="'.$colonne->name.'" ';
 		}
 		
-		if( $colonne->params['type'] == 'date' ) {
-			$format .= 'type="text" ';
-			$class .= ' datepicker ';
+		if( !in_array ( $colonne->params['type'], [ 'checkbox', 'select' ] ) ) {
+			$format .= ' class="'.$class.'" ';
 		}
-		
-		if( $class ) $format .= 'class ="'.$class.'" ';
 		
 		foreach( $colonne->params as $key=>$value ) {
 			if( !in_array( $key , $this->ignoredParams ) && $key != 'disabled' )
 			$format .= $key.'="'.$value.'" ';
 		}
 		
+		$html .= '<div class="row mb-2 col-12 col-md-12">';
+		$html .= '<label class="col-4 col-md-2 col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
+		$html .= '<div class="col-8 col-md-6">';
+		
 		switch( $colonne->params['type'] ) {
 			case 'select' :
-				$html .= '<select '.$format.'>';
-				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				$html .= '<select class="form-select form-select-sm" '.$format.'>';
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				$html .= '<option selected="selected" value="0">-- Tout --</option>';
 				foreach( $foreignItems as $foreignItem ) {
 					$html .= '<option value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
@@ -799,17 +820,17 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$html .= '<select '.$format.'>';
+				$html .= '<select class="from-select form-select-sm" '.$format.'>';
 				$html .= '<option selected="selected" value>-- Tout --</option>';
 				$html .= '<option value="0">Non</option>';
 				$html .= '<option value="1">Oui</option>';
 				$html .= '</select>';
 				break;
 			case 'number' :
-				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et</span></div><input '.$format.'>';
+				$html .= '<div class="input-group input-group-sm"><span class="input-group-text">Entre</span><input '.$format.'><span class="input-group-text">et</span><input '.$format.'></div>';
 				break;
 			case 'date' :
-				$html .= '<div class="input-group-prepend"><span class="input-group-text form-control-sm">Entre le</span></div><input '.$format.'><div class="input-group-prepend"><span class="input-group-text form-control-sm">et le</span></div><input '.$format.'>';
+				$html .= '<div class="input-group input-group-sm"><span class="input-group-text">Entre le</span><input '.$format.'><span class="input-group-text">et le</span><input '.$format.'></div>';
 				break;
 			case 'image' :
 				break;
@@ -822,6 +843,8 @@ class Model {
 			default :
 				$html .= '<input '.$format.'>';
 		}
+		
+		$html .= '</div></div>';
 		
 		return $html;
 	}
@@ -852,7 +875,7 @@ class Model {
 				$html = substr( $valeur, 0, 5);
 				break;
 			case 'select' :
-				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
 						$html = $foreignItem->{$colonne->params['columnLabel']};
@@ -861,19 +884,19 @@ class Model {
 				}
 				break;
 			case 'checkbox' :
-				$html = '<span class="fas fa-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
+				$html = '<span class="bi bi-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
 				break;
 			case 'url' :
 				$html = '<a href="'.$valeur.'" title="Lien">'.$valeur.'</a>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
-					$html .= '<img alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" />';
+					$html .= '<img class="img-fluid" alt="Image" src="'.SITEURL.UPLDIR.$valeur.'" />';
 				}
 				break;
 			case 'file' :
 				if( strlen($valeur) > 4  ) {
-					$html = '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier"><i class="fas fa-sm fa-search"></i></a>';
+					$html = '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier" data-bs-toggle="tooltip" data-bs-placement="top"><i class="bi bi-search"></i></a>';
 				}
 				break;
 			case 'localisation' :
@@ -917,7 +940,7 @@ class Model {
 				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
 				break;
 			case 'select' :
-				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
 						$html = $foreignItem->{$colonne->params['columnLabel']};
@@ -972,7 +995,7 @@ class Model {
 				$texte = substr( $valeur, 0, 5);
 				break;
 			case 'select' :
-				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems();
+				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
 						$texte = $foreignItem->{$colonne->params['columnLabel']};
@@ -1005,12 +1028,12 @@ class Model {
 <?php
 			if($paged > 2 && $paged > $range+1 && $showitems < $pages) {
 ?>
-							<li class="page-item"><a class="page-link" title="Première page" href="<?php echo 'index.php?item='.$this->itemName.'&p=1'; ?>">&laquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Première page" href="<?='index.php?item='.$this->itemName.'&p=1'; ?>">&laquo;</a></li>
 <?php			
 			}
 			if($paged > 1 && $showitems < $pages) {
 ?>
-							<li class="page-item"><a class="page-link" title="Page précédente" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged-1); ?>">&lsaquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Page précédente" href="<?='index.php?item='.$this->itemName.'&p='.($paged-1); ?>">&lsaquo;</a></li>
 <?php			
 			}
 
@@ -1018,11 +1041,11 @@ class Model {
 				if (1 != $pages &&( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
 					if( $paged == $i ) {
 ?>
-							<li class="page-item active"><a class="page-link"><?php echo $i; ?></a></li>
+							<li class="page-item active"><a class="page-link"><?=$i; ?></a></li>
 <?php				
 					} else {
 ?>
-							<li class="page-item"><a class="page-link" href="<?php echo 'index.php?item='.$this->itemName.'&p='.$i; ?>" class="inactive"><?php echo $i; ?></a></li>
+							<li class="page-item"><a class="page-link" href="<?='index.php?item='.$this->itemName.'&p='.$i; ?>" class="inactive"><?=$i; ?></a></li>
 <?php				
 					}
 				}
@@ -1030,12 +1053,12 @@ class Model {
 
 			if ($paged < $pages && $showitems < $pages) {
 ?>
-							<li class="page-item"><a class="page-link" title="Page suivante" href="<?php echo 'index.php?item='.$this->itemName.'&p='.($paged+1); ?>">&rsaquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Page suivante" href="<?='index.php?item='.$this->itemName.'&p='.($paged+1); ?>">&rsaquo;</a></li>
 <?php			
 			}
 			if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages) {
 ?>
-							<li class="page-item"><a class="page-link" title="Dernière page" href="<?php echo 'index.php?item='.$this->itemName.'&p='.$pages; ?>">&raquo;</a></li>
+							<li class="page-item"><a class="page-link" title="Dernière page" href="<?='index.php?item='.$this->itemName.'&p='.$pages; ?>">&raquo;</a></li>
 <?php			
 			}
 ?>
@@ -1044,16 +1067,15 @@ class Model {
 <?php
 			if( !$bottom ) {
 ?>
-					<small><strong><?php echo $this->nbItems; ?></strong> <em>élément<?php echo $plural ? 's' : ''; ?> sur <?php echo $pages; ?> page(s)</em></small>
+					<small><strong><?=$this->nbItems; ?></strong> <em>élément<?=$plural ? 's' : ''; ?> sur <?=$pages; ?> page(s)</em></small>
 <?php
 			}
 		} else {
 			if( !$bottom ) {
 ?>
-					<small><strong><?php echo $this->nbItems; ?></strong> <em>élément<?php echo $plural ? 's' : ''; ?></em></small>
+					<small><strong><?=$this->nbItems; ?></strong> <em>élément<?=$plural ? 's' : ''; ?></em></small>
 <?php
 			}
 		}
 	}
 }
-?>

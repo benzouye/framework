@@ -29,9 +29,8 @@
 				),
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
-				'editable' => true,
+				'editable' => false,
 				'required' => true
 			),
 		)
 	);
-?>
