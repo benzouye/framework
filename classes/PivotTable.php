@@ -38,7 +38,7 @@ class PivotTable {
 		}
 		$this->rows[] = 'TOTAL';
 		
-		// Initialisation du rĂ©sultat
+		// Initialisation du résultat
 		foreach( $this->columns as $column ) {
 			foreach( $this->rows as $row ) {
 				$this->datas[$row][$column] = array( $this->indicator => 0, 'count' => 0 );
