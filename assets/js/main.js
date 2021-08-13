@@ -1,26 +1,6 @@
 // Après chargement de la page
 $( document ).ready( function(){
-	// Paramètres régionaux du sélecteur de date
-	$( ".datepicker" ).datepicker({
-		firstDay: 1,
-		changeMonth: true,
-		changeYear: true,
-		closeText: 'Fermer',
-		prevText: 'Précédent',
-		nextText: 'Suivant',
-		currentText: 'Aujourd\'hui',
-		monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-		monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-		dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-		dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-		dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
-		weekHeader: 'Sem.',
-		dateFormat: "yy-mm-dd"
-	});
-
-	// Sélecteur de couleur
-	$( ".colorpicker-input" ).colorpicker();
-
+	
 	// Affichage du formulaire de changement de mot de passe
 	$( ".update-password" ).change( function(e){
 		let cible = $(this).parent().parent();
@@ -33,7 +13,9 @@ $( document ).ready( function(){
 	});
 	
 	// Activation des tooltips
-	$( 'a,button' ).tooltip({boundary: 'window'});
+	$( '[data-bs-toggle="tooltip"],.dropdown-toggle' ).tooltip( {
+		trigger: 'hover'
+	});
 	
 	// Affichage des alertes dans le header
 	$('#helpers').insertAfter('#header');
@@ -55,14 +37,13 @@ $( document ).ready( function(){
 	
 	// Suppression d'une image unique liée
 	$('.delete-image').click( function(e) {
-		$(this).parent().append('<input class="form-control" type="file" name="'+$(this).data('name')+'" />');
-		$(this).parent().find('img').remove();
-		$(this).remove();
+		$(this).parent().parent().parent().append('<input class="form-control form-control-sm" type="file" name="'+$(this).data('name')+'" />');
+		$(this).parent().parent().remove();
 	});
 	
-	// Suppression d'une image unique liée
+	// Suppression d'un fichier unique liée
 	$('.delete-file').click( function(e) {
-		$(this).parent().append('<input class="form-control" type="file" name="'+$(this).data('name')+'" />');
+		$(this).parent().append('<input class="form-control form-control-sm" type="file" name="'+$(this).data('name')+'" />');
 		$(this).parent().find('a.file-link').remove();
 		$(this).remove();
 	});
@@ -102,7 +83,7 @@ $( document ).ready( function(){
 				$('#relation-ul').append('<input type="hidden" name="relation" value="'+relItem+'">');
 				if( response.data.length > 0 ) {
 					$.each( response.data, function( i, item ) {
-						$('#relation-ul').append('<li class="list-group-item"><input type="checkbox" name="'+relItem+'[]" value="'+item.id+'" /> '+item.nom+'</li>');
+						$('#relation-ul').append('<li class="list-group-item"><input '+( item.active == 1 ? 'checked="checked"' : "" )+' type="checkbox" name="'+relItem+'[]" value="'+item.id+'" /> '+item.nom+'</li>');
 					});
 				} else {
 					$('#relation-ul').append('<p>Aucun élément disponible ...</p>');
