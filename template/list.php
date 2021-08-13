@@ -116,7 +116,7 @@
 ?>
 						<td class="text-center align-middle">
 							<a title="Résultat" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&action=extract&id=<?=$element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
-								<i class="bi bi-chart-bar"></i>
+								<i class="bi bi-bar-chart"></i>
 							</a>
 						</td>
 <?php
