@@ -1,4 +1,4 @@
-		<h2><?php echo $item->description; ?></h2>
+		<h2><?=$item->description; ?></h2>
 <?php
 	$lignes = $object->getDatas();
 	$csv = '';
@@ -26,11 +26,11 @@
 		$writer->save($chemin);
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="bi bi-caret-left"></i> Retour liste <?=$object->getPlural(); ?>
 			</a>
-			<a href="<?php echo $lien; ?>" download="<?php echo $nom; ?>" class="btn btn-success btn-sm">
-				<i class="fas fa-sm fa-upload"></i> Télécharger ces données au format XLS
+			<a href="<?=$lien; ?>" download="<?=$nom; ?>" class="btn btn-success btn-sm">
+				<i class="bi bi-upload"></i> Télécharger ces données au format XLS
 			</a>
 		</p>
 		<table class="table table-sm table-striped table-hover table-bordered table-responsive">
@@ -39,7 +39,7 @@
 <?php
 		foreach( $entetes as $entete ) {
 ?>
-					<th><?php echo $entete; ?></th>
+					<th><?=$entete; ?></th>
 <?php
 		}
 ?>
@@ -53,7 +53,7 @@
 <?php
 			foreach( $entetes as $entete ) {
 ?>
-					<td class="text-center"><?php echo $ligne->{$entete}; ?></td>
+					<td class="text-center"><?=$ligne->{$entete}; ?></td>
 <?php
 			}
 ?>
@@ -71,7 +71,7 @@
 	}
 ?>
 		<p>
-			<a href="index.php?item=<?php echo $backlink; ?>" class="btn btn-secondary btn-sm">
-				<i class="fas fa-sm fa-caret-left"></i> Retour liste <?php echo $object->getPlural(); ?>
+			<a href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+				<i class="bi bi-caret-left"></i> Retour liste <?=$object->getPlural(); ?>
 			</a>
 		</p>
