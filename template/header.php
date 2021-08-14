@@ -39,8 +39,8 @@
 			if( $flagUserCan ) {
 				$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
-								<li class="nav-item <?= $liClass; ?>">
-									<a title="<?= $menu->nom; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
+								<li class="nav-item">
+									<a title="<?= $menu->nom; ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>">
 										<i class="bi bi-<?= $menu->icon; ?>"></i> <span class="d-none d-xl-inline"><?= $menu->nom; ?></span>
 									</a>
 								</li>
