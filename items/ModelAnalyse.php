@@ -12,13 +12,6 @@
 				'grid' => 6,
 				'static' => true,
 			),
-			(object) array(
-				'item' => 'affectation',
-				'name' => 'Comptes associés',
-				'grid' => 6,
-				'static' => false,
-				'many' => true
-			),
 		),
 		'columns' => array(
 			(object) array(
