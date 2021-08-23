@@ -167,6 +167,7 @@ INSERT INTO `prefix_groupe_item` (`id_groupe`, `alias`, `create`, `read`, `updat
 (1,	'exemple',	0,	1,	0,	0,	0),
 (1,	'home',	0,	1,	0,	0,	0),
 (1,	'logout',	0,	1,	0,	0,	0),
+(1,	'analyse',	1,	1,	1,	1,	0),
 (2,	'analyse',	1,	1,	1,	1,	1),
 (2,	'document',	1,	1,	1,	1,	1),
 (2,	'exemple',	1,	1,	1,	1,	1),
