@@ -820,7 +820,7 @@ class Model {
 				$html .= '</select>';
 				break;
 			case 'checkbox' :
-				$html .= '<select class="from-select form-select-sm" '.$format.'>';
+				$html .= '<select class="form-select form-select-sm" '.$format.'>';
 				$html .= '<option selected="selected" value>-- Tout --</option>';
 				$html .= '<option value="0">Non</option>';
 				$html .= '<option value="1">Oui</option>';
