@@ -1,6 +1,4 @@
-<?php
-	if( $userCan->admin ) {
-?>
+
 							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
 								<ul class="list-group">
 <?php
@@ -23,5 +21,3 @@
 								<input type="hidden" name="relation" value="item"/>
 								<input type="hidden" name="action" value="rel-set"/>
 							</form>
-<?php
-	}
