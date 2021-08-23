@@ -1,3 +1,5 @@
+SET foreign_key_checks = 0;
+
 DROP TABLE IF EXISTS `prefix_affectation`;
 CREATE TABLE `prefix_affectation` (
   `id_affectation` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -331,3 +333,16 @@ CREATE TABLE `prefix_utilisateur_affectation` (
   CONSTRAINT `prefix_utilisateur_affectation_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
   CONSTRAINT `prefix_utilisateur_affectation_ibfk_2` FOREIGN KEY (`id_affectation`) REFERENCES `prefix_affectation` (`id_affectation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `prefix_analyse_affectation`;
+CREATE TABLE `prefix_analyse_affectation` (
+  `id_analyse` int(11) unsigned NOT NULL,
+  `id_affectation` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_analyse`,`id_affectation`),
+  KEY `id_affectation` (`id_affectation`),
+  KEY `id_analyse` (`id_analyse`),
+  CONSTRAINT `prefix_analyse_affectation_ibfk_1` FOREIGN KEY (`id_analyse`) REFERENCES `prefix_analyse` (`id_analyse`),
+  CONSTRAINT `prefix_analyse_affectation_ibfk_2` FOREIGN KEY (`id_affectation`) REFERENCES `prefix_affectation` (`id_affectation`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+SET foreign_key_checks = 1;
