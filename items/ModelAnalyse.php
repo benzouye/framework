@@ -9,8 +9,15 @@
 			(object) array(
 				'item' => 'item',
 				'name' => 'Visibilité',
-				'grid' => 3,
+				'grid' => 6,
 				'static' => true,
+			),
+			(object) array(
+				'item' => 'affectation',
+				'name' => 'Comptes associés',
+				'grid' => 6,
+				'static' => false,
+				'many' => true
 			),
 		),
 		'columns' => array(
@@ -76,7 +83,7 @@
 			(object) array(
 				'name' => 'options',
 				'nicename' => 'Paramètres JSON',
-				'default' => '{ "type": "bar", "backgroundColor" : [ "#aaaaaa" ], "options": { "legend": { "display": false } } }',
+				'default' => '{ "schedulerLicenseKey": "CC-Attribution-NonCommercial-NoDerivatives", "type": "bar", "backgroundColor" : [ "#aaaaaa" ], "options": { "legend": { "display": false } } }',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -183,4 +190,3 @@
 			),
 		)
 	);
-?>
