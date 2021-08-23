@@ -31,6 +31,106 @@ class analyse extends Model {
 		}
 	}
 	
+	public function get_affectation() {
+		try {
+			$requete = $this->bdd->query('
+				SELECT A.*
+				FROM '.DBPREF.'analyse_affectation UA
+					INNER JOIN '.DBPREF.'affectation A
+						ON UA.id_affectation = A.id_affectation
+				WHERE UA.id_analyse = '.intval( $this->id ).'
+				ORDER BY A.libelle ASC;'
+			);
+			$this->users = $requete->fetchAll();
+		}
+		catch( Exception $e ) {
+			if( $this->manager->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = 'affectation';
+			}
+			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+		}
+		finally {
+			return $this->users;	
+		}
+	}
+	
+	public function get_affectation_dispo() {
+		try {
+			$requete = $this->bdd->query('
+				SELECT
+					A.id_affectation AS id,
+					A.libelle AS nom,
+					IF( UA.id_affectation IS NULL, 0, 1 ) AS active
+				FROM
+					'.DBPREF.'affectation A
+						LEFT JOIN '.DBPREF.'analyse_affectation UA
+							ON UA.id_affectation = A.id_affectation
+							AND UA.id_analyse = '.intval( $_GET['parent_id'] ).'
+				ORDER BY A.libelle ASC;'
+			);
+			$this->users = $requete->fetchAll();
+		}
+		catch( Exception $e ) {
+			if( $this->manager->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = 'affectation';
+			}
+			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+		}
+		finally {
+			return $this->users;	
+		}
+	}
+	
+	public function set_affectation( $data ) {
+		try {	
+			$analyse = $data['id'];
+			
+			$this->bdd->query( '
+				DELETE FROM '.DBPREF.'analyse_affectation
+				WHERE id_analyse = '.intval($analyse).';'
+			);
+			
+			if( isset( $data['affectation'] ) ) {
+				$requete = $this->bdd->prepare('
+					INSERT INTO '.DBPREF.'analyse_affectation ( id_analyse, id_affectation )
+					VALUES ( ?, ? );'
+				);
+				foreach( $data['affectation'] as $affectation ) {
+					$requete->execute( [ $analyse, $affectation ] );
+					$requete->closeCursor();
+				}
+			}
+			$this->manager->setMessage( 'Les affectations ont bien été mis à jour pour cette analyse' );
+		}
+		catch( Exception $e ) {
+			if( $this->manager->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = 'groupe';
+			}
+			$this->manager->setError( sprintf( M_RELNEWERR, $msg, 'accès' ) );
+		}
+	}
+	
+	public function del_affectation( $data ) {
+		try {
+			$requete = $this->bdd->prepare('
+				DELETE FROM '.DBPREF.'analyse_affectation
+				WHERE id_analyse = ?
+				AND id_affectation = ?;'
+			);
+			$requete->execute( array( $data['id'], $data['rel_id'] ) );
+			$requete->closeCursor();
+		}
+		catch( Exception $e ) {
+			$this->manager->setError( sprintf( M_RELDELERR, 'analyse', 'affectation' ) );
+		}
+	}
+	
 	public function set_item( $data ) {
 		try {	
 			$analyse = $data['id'];
