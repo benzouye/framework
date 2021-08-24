@@ -8,7 +8,7 @@
 		echo $manager->getOption('homeText');
 		
 		$analyse = new Analyse( $bdd, $manager, $model_analyse );
-		$analyses = $analyse->getItems( ['flag_accueil' => 1 ], false, 1, false, $user->id_utilisateur );
+		$analyses = $analyse->getItems( ['flag_accueil' => 1 ], false, 1, false, false );
 		
 		foreach( $analyses as $element ) {
 			echo $analyse->getDashboardHTML( $element );
