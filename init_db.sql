@@ -30,6 +30,8 @@ CREATE TABLE `prefix_analyse` (
   `colonne` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ligne` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `flag_accueil` tinyint(3) unsigned NOT NULL DEFAULT 1,
+  `flag_affect` tinyint(3) unsigned NOT NULL,
+  `alias_affect` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `ordre` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `grid` tinyint(3) unsigned NOT NULL DEFAULT 6,
   `date_cre` datetime NOT NULL,
