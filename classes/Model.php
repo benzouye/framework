@@ -745,7 +745,7 @@ class Model {
 				$nbForeignItems = count( $foreignItems );
 				
 				if( $nbForeignItems == 1 ) {
-					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
+					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$foreignItems[0]->{$colonne->params['columnKey']}.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
 				} else {
 					$html .= '<select class="form-select form-select-sm" '.$format.'>';
 					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
