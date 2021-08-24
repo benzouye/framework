@@ -92,6 +92,10 @@ class analyse extends Model {
 			
 			$sql = $select.$from.$where.$endSql;
 			
+			if( strpos( $sql, '$$affectation$$' ) ) {
+				$sql = str_replace( '$$affectation$$', $where, $sql );
+			}
+			
 			$requete = $this->bdd->query( $sql );
 			$datas = $requete->fetchAll();
 			$requete->closeCursor();
