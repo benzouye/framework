@@ -114,6 +114,32 @@
 				'required' => false
 			),
 			(object) array(
+				'name' => 'flag_affect',
+				'nicename' => 'Gestion affectation',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'checkbox' ),
+				'visible' => false,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
+				'name' => 'alias_affect',
+				'nicename' => 'Alias table affectation',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'text' ),
+				'visible' => false,
+				'editable' => true,
+				'required' => false
+			),
+			(object) array(
 				'name' => 'colonne',
 				'nicename' => 'Champ Colonne (si croisé)',
 				'grid' => (object) array(
