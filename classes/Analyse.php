@@ -68,7 +68,31 @@ class analyse extends Model {
 	public function getDatas() {
 		$datas = array();
 		try {
-			$requete = $this->bdd->query( $this->currentItem->requete );
+			$sql = $this->currentItem->requete;
+			$where = '';
+			$endFrom = min(
+				strpos( $sql, 'GROUP BY' ) ? strpos( $sql, 'GROUP BY' ) : 9999,
+				strpos( $sql, 'ORDER BY' ) ? strpos( $sql, 'ORDER BY' ) : 9999
+			);
+			
+			$select = substr( $sql, 0, strpos( $sql, 'FROM' )-1 );
+			$from = substr( $sql, strpos( $sql, 'FROM' ), $endFrom-strpos( $sql, 'FROM' )-1 );
+			$endSql = substr( $sql, $endFrom );
+			
+			if( $this->currentItem->flag_affect ) {
+				$where = strpos( $sql, 'WHERE' ) ? ' AND ' : ' WHERE ';
+				$where .= ( $this->currentItem->alias_affect ? $this->currentItem->alias_affect.'.' : '' ).'id_affectation';
+				$affectations = $this->manager->getAffectations();
+				$tabAffectations = array();
+				foreach( $affectations as $affectation ) {
+					array_push( $tabAffectations, $affectation->id_affectation );
+				}
+				$where .= count( $tabAffectations ) ? ' IN ( '.implode( ",", $tabAffectations ).' ) ' : ' = 0 ';
+			}
+			
+			$sql = $select.$from.$where.$endSql;
+			
+			$requete = $this->bdd->query( $sql );
 			$datas = $requete->fetchAll();
 			$requete->closeCursor();
 		}
