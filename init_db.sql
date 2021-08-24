@@ -16,7 +16,8 @@ CREATE TABLE `prefix_affectation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `prefix_affectation` (`id_affectation`, `libelle`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'Compte principal',	1,	'2021-06-25 13:54:25',	NULL,	NULL);
+(1,	'Affectation principale',	1,	'2021-06-25 13:54:25',	NULL,	NULL),
+(2,	'Affectation Secondaire',	1,	'2021-06-25 13:54:25',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_analyse`;
 CREATE TABLE `prefix_analyse` (
@@ -166,7 +167,7 @@ CREATE TABLE `prefix_groupe_item` (
 
 INSERT INTO `prefix_groupe_item` (`id_groupe`, `alias`, `create`, `read`, `update`, `delete`, `all`) VALUES
 (1,	'document',	0,	1,	0,	0,	0),
-(1,	'exemple',	0,	1,	0,	0,	0),
+(1,	'exemple',	1,	1,	1,	1,	0),
 (1,	'home',	0,	1,	0,	0,	0),
 (1,	'logout',	0,	1,	0,	0,	0),
 (1,	'analyse',	1,	1,	1,	1,	0),
@@ -226,8 +227,8 @@ INSERT INTO `prefix_item` (`id_item`, `alias`, `nom`, `description`, `static`, `
 (10,	'register',	'Enregistrement',	'Formulaire de création de compte',	1,	0,	1,	1,	0,	0,	'box-arrow-in-right',	1,	'2017-10-25 14:02:39',	1,	'2021-08-09 16:44:00'),
 (11,	'type_document',	'Types de document',	'Les différents type de document possibles',	0,	0,	1,	0,	5,	20,	'file-earmark-code',	1,	'2018-11-19 10:01:11',	1,	'2021-08-11 18:10:34'),
 (12,	'utilisateur',	'Utilisateurs',	'Les utilisateurs de l\'application',	0,	1,	1,	1,	10,	40,	'person',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 18:11:12'),
-(13,	'affectation',	'Affectations',	'Les affecations de l\'application',	0,	0,	1,	1,	10,	50,	'building',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 18:11:33'),
-(14,	'type_analyse',	'Type d\'analyse',	'Les types de tableau d\'analyse possibles',	0,	0,	1,	0,	10,	60,	'file-bar-graph',	1,	'2021-08-11 18:21:27',	NULL,	NULL);
+(13,	'affectation',	'Affectations',	'Les affectations de l\'application',	0,	0,	1,	1,	10,	50,	'building',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 18:11:33'),
+(14,	'type_analyse',	'Type d\'analyse',	'Les types de tableau d\'analyse possibles',	0,	0,	1,	1,	10,	60,	'file-bar-graph',	1,	'2021-08-11 18:21:27',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_option`;
 CREATE TABLE `prefix_option` (
