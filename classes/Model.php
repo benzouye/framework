@@ -740,13 +740,21 @@ class Model {
 				break;
 			case 'select' :
 				$where = isset( $colonne->params['where'] ) ? $colonne->params['where'] : null;
-				$html .= '<select class="form-select form-select-sm" '.$format.'><option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
 				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( $where, false, 1, false, false );
-				foreach( $foreignItems as $foreignItem ) {
-					$selected = $valeur == $foreignItem->{$colonne->params['columnKey']} ? 'selected="selected"' : '';
-					$html .= '<option '.$selected.' value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
+				
+				$nbForeignItems = count( $foreignItems );
+				
+				if( $nbForeignItems == 1 ) {
+					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
+				} else {
+					$html .= '<select class="form-select form-select-sm" '.$format.'>';
+					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
+					foreach( $foreignItems as $foreignItem ) {
+						$selected = $valeur == $foreignItem->{$colonne->params['columnKey']} ? 'selected="selected"' : '';
+						$html .= '<option '.$selected.' value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
+					}
+					$html .= '</select>';
 				}
-				$html .= '</select>';
 				break;
 			case 'checkbox' :
 				$html .= '<input class="form-check-input" type="checkbox" '.$format.' value="1" id="'.$name.'" '.($valeur==1 ? 'checked="checked"':'').'>';
