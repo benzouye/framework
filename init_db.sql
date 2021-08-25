@@ -251,7 +251,7 @@ INSERT INTO `prefix_option` (`id_option`, `alias`, `valeur`, `description`, `use
 (1,	'keywords',	'',	'Liste des mots clé de la balise meta',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:22'),
 (2,	'sitedesc',	'',	'Description du site',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:04'),
 (3,	'sitetitle',	'Framework',	'Titre du site',	1,	'2017-10-24 07:47:06',	1,	'2018-11-05 10:26:15'),
-(4,	'hometext',	' ',	'Contenu de la page d\'accueil',	1,	'2017-10-24 07:47:06',	1,	'2018-10-29 18:10:20'),
+(4,	'homeText',	' ',	'Contenu de la page d\'accueil',	1,	'2017-10-24 07:47:06',	1,	'2018-10-29 18:10:20'),
 (5,	'nbparpage',	'20',	'Nombre d\'éléments à afficher par page (0 = tous)',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 11:53:23'),
 (6,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47'),
 (7,	'leafletOptions',	'{ \"center_lat\": 45.438705905866,\"center_lng\": 4.371288760839, \"zoom\": 14,\"min_zoom\": 2,\"max_zoom\": 18,\"lat\": 0,\"lng\": 0}',	'Configuration Leaflet par défaut JSON',	1,	'2018-11-20 10:49:13',	1,	'2018-11-20 11:01:46'),
