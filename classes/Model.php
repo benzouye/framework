@@ -190,7 +190,7 @@ class Model {
 			if( $search ) $where .= $this->getSearchCriteria( $search, true );
 			
 			foreach( $this->columns as $colonne ) {
-				if( $colonne->name == 'id_affectation' && !$this->manager->getUser()->admin ) {
+				if( $colonne->name == 'id_affectation' ) {
 					$where .= ' AND T.id_affectation ';
 					$affectations = $this->manager->getAffectations();
 					$tabAffectations = array();
