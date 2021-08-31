@@ -208,6 +208,13 @@ To define each print behavior, you will need to :
 
 * create a PHP file in the template directory named like this print.{item\_name}.{print\_alias}.php
 
+### Select Label
+
+In each item description file, you can add a "selectLabel" element, as a string with CONCAT SQL syntax.
+For example, with an item named "product" with two attributes title and amount.
+If you want to use this item in a select HTML markup, you can define selectLabel as "CONCAT( title, ' ( ', amount, ' )' ) AS titlePrice".
+Though in other item description file, you can define the columnLabel with "titlePrice" to display concat columns instead of one.
+
 ### ReadOnly States
 
 In each item description file, you can add a "readOnlyStates" element, as an array containing PHP objects composed like this :
