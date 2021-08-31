@@ -256,7 +256,6 @@
 		// Chargement des impressions et actions
 		$visiblePrints = false;
 		$prints = array();
-		$visibleObjectActions = false;
 		$objectActions = array();
 		if( $variant ) {
 			if( method_exists( $object, 'getPrints' ) ) {
@@ -268,10 +267,6 @@
 			}
 			if( method_exists( $object, 'getObjectActions' ) ) {
 				$objectActions = $object->getObjectActions();
-				foreach( $objectActions as $objectAction ) {
-					if( $objectAction->visible )
-						$visibleObjectActions = true;
-				}
 			}
 		}
 		
