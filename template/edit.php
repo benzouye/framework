@@ -61,9 +61,15 @@
 			
 			if( $userCan->admin or !$adminInput ) {
 				if( $readOnly && !$userCan->admin ) {
-					echo $object->displayField( $colonne->name, $valeur );
+?>
+								<?= $object->displayField( $colonne->name, $valeur, true ); ?>
+
+<?php
 				} else {
-					echo $object->displayInput( $id, $colonne->name, $valeur );
+?>
+								<?= $object->displayInput( $id, $colonne->name, $valeur ); ?>
+
+<?php
 				}
 			}
 		}
