@@ -181,7 +181,7 @@ To do so, you need to add :
 
 ### Actions
 
-In each item description file, you can add a "objectAction" element, as an array containing PHP objects composed like this :
+In each item description file, you can add a "objectActions" element, as an array containing PHP objects composed like this :
 
 * alias : string, name to be used in code (ie no accent or uppercase or special character)
 * nicename: string, action display name
