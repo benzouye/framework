@@ -870,45 +870,51 @@ class Model {
 		return $html;
 	}
 	
-	public function displayField( $name, $valeur ) {
+	public function displayField( $name, $valeur, $edit = false ) {
 		$html = '';
 		$colonne = $this->getColumn( $name );
 		
+		if( $edit ) {
+			$html .= '<div class="row mb-2 col-12 col-md-12">';
+			$html .= '<label class="col-4 col-md-2 col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
+			$html .= '<div class="col-8 col-md-6">';
+		}
+		
 		switch( $colonne->params['type'] ) {
 			case 'number' :
-				$html = $valeur;
+				$html .= $valeur;
 				if( property_exists( $colonne, 'unit' ) ) {
 					$html .= ' '.$colonne->unit;
 				}
 				break;
 			case 'color' :
-				$html = '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+				$html .= '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 				break;
 			case 'date' :
 				if( $valeur != null ) {
-					$html = date( UIDATE, strtotime($valeur));
+					$html .= date( UIDATE, strtotime($valeur));
 				}
 				break;
 			case 'textarea' :
-				$html = nl2br( strip_tags( $valeur ) );
+				$html .= nl2br( strip_tags( $valeur ) );
 				break;
 			case 'time' :
-				$html = substr( $valeur, 0, 5);
+				$html .= substr( $valeur, 0, 5);
 				break;
 			case 'select' :
 				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
-						$html = $foreignItem->{$colonne->params['columnLabel']};
+						$html .= $foreignItem->{$colonne->params['columnLabel']};
 						break;
 					}
 				}
 				break;
 			case 'checkbox' :
-				$html = '<span class="bi bi-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
+				$html .= '<span class="bi bi-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
 				break;
 			case 'url' :
-				$html = '<a href="'.$valeur.'" title="Lien">'.$valeur.'</a>';
+				$html .= '<a href="'.$valeur.'" title="Lien">'.$valeur.'</a>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
@@ -917,17 +923,21 @@ class Model {
 				break;
 			case 'file' :
 				if( strlen($valeur) > 4  ) {
-					$html = '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier" data-bs-toggle="tooltip" data-bs-placement="top"><i class="bi bi-search"></i></a>';
+					$html .= '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier" data-bs-toggle="tooltip" data-bs-placement="top"><i class="bi bi-search"></i></a>';
 				}
 				break;
 			case 'localisation' :
 				$valeur = json_decode( $valeur );
 				if( is_object( $valeur ) ) {
-					$html = $valeur->lat.'<br />'.$valeur->lng ;
+					$html .= $valeur->lat.'<br />'.$valeur->lng ;
 				}
 				break;
 			default :
-				$html = $valeur;
+				$html .= $valeur;
+		}
+		
+		if( $edit ) {
+			$html .= '</div></div>';
 		}
 		
 		return $html;
