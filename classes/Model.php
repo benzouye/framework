@@ -692,6 +692,10 @@ class Model {
 			$valeur = $colonne->default;
 		}
 		
+		if( $colonne->params['type'] == 'datetime-local' ) {
+			$valeur = str_replace( ' ', 'T', $valeur );
+		}
+		
 		if( $colonne->params['type'] == 'color' && $colonne->editable ) {
 			$format .= 'type="color" ';
 		}
@@ -744,8 +748,9 @@ class Model {
 				
 				$nbForeignItems = count( $foreignItems );
 				
-				if( $nbForeignItems == 1 ) {
-					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$foreignItems[0]->{$colonne->params['columnKey']}.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
+				if( $nbForeignItems == 1 or !$colonne->editable ) {
+					$valeur = $nbForeignItems == 1 ? $foreignItems[0]->{$colonne->params['columnKey']} : $valeur;
+					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
 				} else {
 					$html .= '<select class="form-select form-select-sm" '.$format.'>';
 					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
