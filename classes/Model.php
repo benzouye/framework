@@ -877,7 +877,7 @@ class Model {
 		if( $edit ) {
 			$html .= '<div class="row mb-2 col-12 col-md-12">';
 			$html .= '<label class="col-4 col-md-2 col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
-			$html .= '<div class="col-8 col-md-6">';
+			$html .= '<div class="col-8 col-md-6"><p class="col-form-label col-form-label-sm">';
 		}
 		
 		switch( $colonne->params['type'] ) {
@@ -937,7 +937,7 @@ class Model {
 		}
 		
 		if( $edit ) {
-			$html .= '</div></div>';
+			$html .= '</p></div></div>';
 		}
 		
 		return $html;
