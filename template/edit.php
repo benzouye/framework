@@ -24,9 +24,13 @@
 		}
 		
 		// Boutons d'action
-		if( count( $objectActions ) > 0 && !$new && $visibleObjectActions and ( !$readOnly or $userCan->admin ) ) {
+		if( !$new ) {
 			foreach( $objectActions as $objectAction ) {
-				echo $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' );
+				if( $objectAction->editable and ( ( !$readOnly && !$objectAction->admin ) or $userCan->admin ) ) {
+?>
+							<?= $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' ); ?>
+<?php
+				}
 			}
 		}
 ?>
@@ -114,15 +118,7 @@
 		}
 		
 		// Boutons d'impression
-		$nbPrints = 0;
-		foreach( $prints as $print ) {
-			if( property_exists( $print, 'visible' ) ) {
-				if( $print->visible ) {
-					$nbPrints++;
-				}
-			}
-		}
-		if( $nbPrints > 0 && !$new && $visiblePrints ) {
+		if( !$new && $visiblePrints ) {
 ?>
 								<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 									<span title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-printer"></span><span class="d-none d-xl-inline"> Imprimer</span>
