@@ -384,20 +384,20 @@ class Model {
 		$requestedAction = false;
 		
 		foreach( $this->objectActions as $objectAction ) {
-			if( $objectAction->alias == $alias && $objectAction->visible ) {
+			if( $objectAction->alias == $alias ) {
 				$requestedAction = $objectAction;
 				break;
 			}
 		}
 		
 		if( $requestedAction ) {
-			if( $action == 'edit' ) {
+			if( $action == 'edit' && $requestedAction->editable ) {
 				$actionLink = 'index.php?item='.$page.'&action=edit&id='.$id.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i> '.$requestedAction->nicename.'</a>';
+				$display = '<a data-bs-toggle="tooltip" class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i> '.$requestedAction->nicename.'</a>';
 			}
-			if( $action == 'list' ) {
+			if( $action == 'list' && $requestedAction->listable ) {
 				$actionLink = 'index.php?item='.$page.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
+				$display = '<a data-bs-toggle="tooltip" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
 			}
 		}
 		return $display;
@@ -758,7 +758,16 @@ class Model {
 				
 				if( $nbForeignItems == 1 or !$colonne->editable ) {
 					$valeur = $nbForeignItems == 1 ? $foreignItems[0]->{$colonne->params['columnKey']} : $valeur;
-					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$foreignItems[0]->{$colonne->params['columnLabel']}.'</p>';
+					
+					$libelle = $foreignItems[0]->{$colonne->params['columnLabel']};
+					foreach( $foreignItems as $foreignItem ) {
+						if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
+							$libelle = $foreignItem->{$colonne->params['columnLabel']};
+							break;
+						}
+					}
+					
+					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$libelle.'</p>';
 				} else {
 					$html .= '<select class="form-select form-select-sm" '.$format.'>';
 					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
@@ -914,7 +923,7 @@ class Model {
 				$html .= '<span class="bi bi-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
 				break;
 			case 'url' :
-				$html .= '<a href="'.$valeur.'" title="Lien">'.$valeur.'</a>';
+				$html .= '<a data-bs-toggle="tooltip" target="_blank" href="'.$valeur.'" title="Ouvrir le lien">'.$valeur.'</a>';
 				break;
 			case 'image' :
 				if( strlen($valeur) > 4  ) {
@@ -923,7 +932,7 @@ class Model {
 				break;
 			case 'file' :
 				if( strlen($valeur) > 4  ) {
-					$html .= '<a class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier" data-bs-toggle="tooltip" data-bs-placement="top"><i class="bi bi-search"></i></a>';
+					$html .= '<a data-bs-toggle="tooltip" class="btn btn-sm btn-secondary" target="_blank" href="'.SITEURL.UPLDIR.$valeur.'" title="Voir le fichier" data-bs-toggle="tooltip" data-bs-placement="top"><i class="bi bi-search"></i></a>';
 				}
 				break;
 			case 'localisation' :
@@ -931,6 +940,14 @@ class Model {
 				if( is_object( $valeur ) ) {
 					$html .= $valeur->lat.'<br />'.$valeur->lng ;
 				}
+				break;
+			case 'date' :
+				$dateObject = date_create_from_format( 'Y-m-d', $valeur );
+				$html .= date_format( $dateObject, 'd/m/Y' );
+				break;
+			case 'datetime-local' :
+				$dateObject = date_create_from_format( 'Y-m-d H:i:s', $valeur );
+				$html .= date_format( $dateObject, 'd/m/Y à H:i' );
 				break;
 			default :
 				$html .= $valeur;
