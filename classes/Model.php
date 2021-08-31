@@ -3,6 +3,7 @@ class Model {
 	protected $bdd;
 	protected $manager;
 	protected $table;
+	protected $selectLabel;
 	protected $itemName;
 	protected $parentItem;
 	protected $parentId = false;
@@ -67,6 +68,12 @@ class Model {
 				$msg = $this->single;
 			}
 			$this->manager->setError( sprintf( M_IDERR, $msg ) );
+		}
+		
+		// Select Label
+		$this->selectLabel = false;
+		if( property_exists( $model, 'selectLabel' ) ) {
+			$this->selectLabel = $model->selectLabel;
 		}
 		
 		// ReadOnly
@@ -220,6 +227,7 @@ class Model {
 			
 			$requete = $this->bdd->query('
 				SELECT '.$select.'
+				'.( $this->selectLabel ? ','.$this->selectLabel : '' ).'
 				FROM '.$this->table.' T
 				'.$join.'
 				'.$where.'
