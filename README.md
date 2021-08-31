@@ -185,7 +185,9 @@ In each item description file, you can add a "objectActions" element, as an arra
 
 * alias : string, name to be used in code (ie no accent or uppercase or special character)
 * nicename: string, action display name
-* visible : boolean, determine wether a button is displayed or not on list and edit page
+* listable : boolean, determine wether a button is displayed or not on list page
+* editable : boolean, determine wether a button is displayed or not on edit page
+* admin : boolean, determine if action is reserved to admin users
 * icon : string, fontawesome icon alias to display on buttons
 * color : string, bootstrap colorscheme to display (primary, secondary, dark, light, success, warning, danger )
 
