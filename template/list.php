@@ -75,7 +75,7 @@
 				}
 			}
 			foreach( $objectActions as $objectAction ) {
-				if( $objectAction->visible ) {
+				if( $objectAction->listable ) {
 ?>
 						<th><?=$objectAction->nicename; ?></th>
 <?php
@@ -130,7 +130,7 @@
 					}
 				}
 				foreach( $objectActions as $objectAction ) {
-					if( $objectAction->visible && ( !$readOnly or $userCan->admin ) ) {
+					if( $objectAction->listable && ( !$readOnly or $userCan->admin ) ) {
 ?>
 						<td class="text-center align-middle"><?=$object->displayObjectAction( $page->alias, $objectAction->alias, $element->{'id_'.$page->alias}, 'list' ); ?></td>
 <?php
