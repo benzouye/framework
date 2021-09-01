@@ -18,8 +18,7 @@ $( document ).ready( function(){
 	});
 	
 	// Affichage des alertes dans le header
-	$('#helpers').insertAfter('#header');
-	$('.alert').show('slow');
+	$('.alert').show('slow').delay(5000).hide('slow');
 	
 	// Alerte à la suppression
 	$('form.delete').on("submit",function(e) {
