@@ -69,9 +69,9 @@
 	if( $user ) {
 ?>
 
-				<nav id="topmenu" class="ps-3 sticky-top navbar navbar-expand navbar-light bg-light no-print">
-					<span class="navbar-brand"><i class="me-2 bi bi-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
-					<div class="nav navbar-nav ms-auto pe-2 fs-5">
+					<nav id="topmenu" class="ps-3 sticky-top navbar navbar-expand navbar-light bg-light no-print">
+						<span class="navbar-brand"><i class="me-2 bi bi-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
+						<div class="nav navbar-nav ms-auto pe-2 fs-5">
 <?php
 		$menuCount = 0;
 		$menuIds = $manager->getMenuIds();
@@ -81,9 +81,9 @@
 		}
 		if( $menuCount > 0 ) {
 ?>
-						<div class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Menu configuration" data-bs-placement="bottom" href="#" id="parametersMenu" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear"></i></a>
-							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="parametersMenu">
+							<div class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Menu configuration" data-bs-placement="bottom" href="#" id="parametersMenu" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear"></i></a>
+								<div class="dropdown-menu dropdown-menu-end" aria-labelledby="parametersMenu">
 <?php
 			$premierMenu = true;
 			foreach( $menuIds as $menuId ) {
@@ -91,7 +91,7 @@
 				if( count( $menus ) > 0 ) {
 					if( !$premierMenu ) {
 ?>
-								<div class="dropdown-divider"></div>
+									<div class="dropdown-divider"></div>
 <?php
 					}
 					foreach( $menus as $menu ) {
@@ -102,7 +102,7 @@
 						if( $flagUserCan ) {
 							$liClass = $page->alias == $menu->alias ? 'active' : '';
 ?>
-								<a class="dropdown-item <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>"><i class="bi bi-<?= $menu->icon; ?>"></i> <?= $menu->nom; ?></a>
+										<a class="dropdown-item <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>"><i class="bi bi-<?= $menu->icon; ?>"></i> <?= $menu->nom; ?></a>
 <?php
 						}
 					}
@@ -110,20 +110,20 @@
 				$premierMenu = false;
 			}
 ?>
+								</div>
 							</div>
-						</div>
 <?php
 		}
 ?>
-						<div class="nav-item">
-							<a title="Mon profil" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link" href="<?= SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="bi bi-person-circle"></span></a>
+							<div class="nav-item">
+								<a title="Mon profil" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link" href="<?= SITEURL.'index.php?item=utilisateur&action=edit&id='.$user->id_utilisateur; ?>"><span class="bi bi-person-circle"></span></a>
+							</div>
+							<div class="nav-item me-3">
+								<a title="Quitter" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link" href="<?= SITEURL.'index.php?item=logout'; ?>"><span class="bi bi-power"></span></a>
+							</div>
 						</div>
-						<div class="nav-item me-3">
-							<a title="Quitter" data-bs-toggle="tooltip" data-bs-placement="bottom" class="nav-link" href="<?= SITEURL.'index.php?item=logout'; ?>"><span class="bi bi-power"></span></a>
-						</div>
-					</div>
-				</nav>
+					</nav>
 <?php
 	}
 ?>
-				<section class="container-fluid">
+					<section class="container-fluid">
