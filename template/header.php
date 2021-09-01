@@ -73,41 +73,37 @@
 						<span class="navbar-brand"><i class="me-2 bi bi-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
 						<div class="nav navbar-nav ms-auto pe-2 fs-5">
 <?php
-		$menuCount = 0;
-		$menuIds = $manager->getMenuIds();
-		foreach( $menuIds as $menuId ) {
-			$menus = $manager->getMenu($menuId);
-			$menuCount += count( $menus );
+		$menusList = array();
+		$menus = $manager->getItems();
+		foreach( $menus as $menu ) {
+			foreach( $userCaps as $cap ) {
+				if( $cap->alias == $menu->alias && $cap->access > 0 && $menu->menu > 1 ) {
+					$menusList[] = $menu;
+					break;
+				}
+			}
 		}
-		if( $menuCount > 0 ) {
+		
+		if( count( $menusList ) ) {
 ?>
 							<div class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" title="Menu configuration" data-bs-placement="bottom" href="#" id="parametersMenu" aria-haspopup="true" aria-expanded="false"><i class="bi bi-gear"></i></a>
 								<div class="dropdown-menu dropdown-menu-end" aria-labelledby="parametersMenu">
 <?php
 			$premierMenu = true;
-			foreach( $menuIds as $menuId ) {
-				$menus = $manager->getMenu($menuId);
-				if( count( $menus ) > 0 ) {
-					if( !$premierMenu ) {
+			$menuPrecedent = 0;
+			foreach( $menusList as $menuItem ) {
+				if( $menuPrecedent != $menuItem->menu && !$premierMenu ) {
 ?>
 									<div class="dropdown-divider"></div>
 <?php
-					}
-					foreach( $menus as $menu ) {
-						$flagUserCan = false;
-						foreach( $userCaps as $cap ) {
-							if( $cap->alias == $menu->alias && $cap->access > 0 ) $flagUserCan = true;
-						}
-						if( $flagUserCan ) {
-							$liClass = $page->alias == $menu->alias ? 'active' : '';
-?>
-										<a class="dropdown-item <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menu->alias; ?>"><i class="bi bi-<?= $menu->icon; ?>"></i> <?= $menu->nom; ?></a>
-<?php
-						}
-					}
 				}
+				$liClass = $page->alias == $menuItem->alias ? 'active' : '';
+?>
+										<a class="dropdown-item <?= $liClass; ?>" href="<?= SITEURL.'index.php?item='.$menuItem->alias; ?>"><i class="bi bi-<?= $menuItem->icon; ?>"></i> <?= $menuItem->nom; ?></a>
+<?php
 				$premierMenu = false;
+				$menuPrecedent = $menuItem->menu;
 			}
 ?>
 								</div>
