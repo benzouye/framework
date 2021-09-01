@@ -8,7 +8,6 @@ class Manager {
 	protected $options = array();
 	protected $analyses = array();
 	protected $items = array();
-	protected $menuIds = array();
 	protected $user = false;
 	protected $affectations = array();
 	protected $users = array();
@@ -107,13 +106,6 @@ class Manager {
 			}
 			$this->errors[] = $msg;
 		}
-		
-		foreach( $this->items as $item ) {
-			if( !in_array( $item->menu, $this->menuIds ) && $item->menu > 1 ) {
-				$this->menuIds[] = $item->menu;
-			}
-		}
-		sort( $this->menuIds );
 	}
 	
 	public function setUser() {
@@ -272,10 +264,6 @@ class Manager {
 			}
 		}
 		return $flag;
-	}
-	
-	public function getMenuIds() {
-		return $this->menuIds;
 	}
 	
 	public function getMenu( $menuId ) {
