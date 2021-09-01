@@ -172,6 +172,7 @@ To describe a relation between two items, add a "relation" object to the parent 
 * grid (integer) : display width grid (12 = full width)
 * static (boolean) : wether the relation use the standard display or not.
   True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
+* standard (boolean) : wether the relation display use standard template or not
 * displayCondition (boolean) : wether the relation should diplay among condition.
   If true, you need to create a specific class for the item and define a public get_display_condition method returning true or false depending on wished condition
 * many (boolean) : wether the relation is many to many or not
