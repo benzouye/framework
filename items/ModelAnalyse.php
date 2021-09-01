@@ -11,6 +11,7 @@
 				'name' => 'Visibilité',
 				'grid' => 6,
 				'static' => true,
+				'standard' => true,
 			),
 		),
 		'columns' => array(
