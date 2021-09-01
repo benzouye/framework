@@ -1,6 +1,7 @@
 
-				</section>
-			</main>
+					</section>
+				</main>
+			</div>
 		</div>
 		<div id="helpers">
 <?php
