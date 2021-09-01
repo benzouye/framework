@@ -372,7 +372,7 @@ class Manager {
 		if( count( $this->messages ) > 0 ) {
 			foreach( $this->messages as $message ) {
 ?>
-				<div style="display: none;" class="alert alert-info alert-dismissible" role="alert">
+				<div style="display: none;" class="alert alert-primary alert-dismissible" role="alert">
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
 					<span class="bi bi-check-circle-fill"></span> <?=$message; ?>
 				</div>
