@@ -11,6 +11,7 @@
 				'name' => 'Affectations associées',
 				'grid' => 6,
 				'static' => false,
+				'standard' => true,
 				'many' => true
 			),
 		),
