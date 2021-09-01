@@ -61,7 +61,7 @@
 		if( $readOnly ) {
 			$badgeAction = 'Consultation';
 		} else {
-			$badgeAction = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
+			$badgeAction = ( $new && $action == 'edit' ) ? 'CrĂ©ation' : $actions[$action];
 		}
 		$description = ' <span class="badge bg-dark">'.$badgeAction.'</span>';
 	}
@@ -127,5 +127,3 @@
 	}
 ?>
 				<section class="container-fluid">
-					<div id="header" class="no-print">
-					</div>
