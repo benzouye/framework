@@ -160,9 +160,15 @@
 		// Affichage des relations pour les variants en modification
 		if( !$new && count($relations) > 0 ) {
 			foreach( $relations as $relation ) {
+				
 				$toDisplay = true;
 				if( property_exists( $relation, 'displayCondition' ) && method_exists( $object, 'get_display_condition' ) ) {
 					$toDisplay = $object->get_display_condition();
+				}
+				
+				$standardRelation = true;
+				if( property_exists( $relation, 'standard' ) ) {
+					$standardRelation = $relation->standard;
 				}
 				
 				if( $toDisplay ) {
@@ -184,7 +190,7 @@
 								</div>
 								<div class="card-body">
 <?php
-						if( count( $items ) > 0 ) {
+						if( count( $items ) > 0 or !$standardRelation ) {
 							if( file_exists( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' ) )
 								require_once( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' );
 							else
@@ -194,18 +200,23 @@
 									<p>Aucun élément ...</p>
 <?php
 						}
+						
+						if( $standardRelation ) {
 ?>
 								</div>
 <?php
+						}
+						
 						if( !$relation->static && ( $userCan->admin or $userCan->create or $userCan->update ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
 								<div class="card-footer">
-									<a data-bs-toggle="modal" <?=$addLink; ?> class="<?=$classLink; ?>">
-										<i title="Ajouter <?= $relation->name; ?>" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-plus-square-dotted"></i><span class="d-none d-xl-inline"> Ajouter</span>
+									<a <?=$addLink; ?> class="<?=$classLink; ?>">
+										<span class="bi bi-plus-square-dotted"></span>
+										<span class="d-none d-xl-inline"> Ajouter</span>
 									</a>
 								</div>
 <?php
-					}
+						}
 ?>
 							</div>
 						</div>
