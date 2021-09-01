@@ -6,8 +6,8 @@
 		'plural' => 'groupes',
 		'orderby' => 'nom_groupe',
 		'relations' => array(
-			(object) array( 'item' => 'access', 'name' => 'Accès', 'grid' => 8, 'static' => true ),
-			(object) array( 'item' => 'utilisateur', 'name' => 'Utilisateurs associés', 'grid' => 4, 'static' => true ),
+			(object) array( 'item' => 'access', 'name' => 'Accès', 'grid' => 8, 'static' => true, 'standard' => true ),
+			(object) array( 'item' => 'utilisateur', 'name' => 'Utilisateurs associés', 'grid' => 4, 'static' => true, 'standard' => true ),
 		),
 		'columns' => array(
 			(object) array(
