@@ -164,30 +164,28 @@ Here is the different types currently accepted :
   1.function (string) : the SQL syntax for the calculation
   2.join (string) : optional SQL JOIN syntax to get the data
 
-### Parent/Child Relations
+### Relations
 
-If an item exists only by its parent item (eg. : an order line exists only by its parent order). You have to set a relation.
+To describe a relation between two items, add a "relation" object to the parent item description file _relations_ property, composed like this :
+* item (string) : child item name
+* name (string) : nice name to display on screen
+* grid (integer) : display width grid (12 = full width)
+* static (boolean) : wether the relation use the standard display or not.
+  True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
+* displayCondition (boolean) : wether the relation should diplay among condition.
+  If true, you need to create a specific class for the item and define a public get_display_condition method returning true or false depending on wished condition
+* many (boolean) : wether the relation is many to many or not
+  If true, a "Add" button is displayed on the main item relation card element allowing add element via standard modal window
 
-To do so, you need to add :
-
-* a "parentItem" attribute to the item object as a string containing the parent item name
-* a "relation" object to the parent item description file _relations_ property, composed like this :
-  * item (string) : child item name
-  * name (string) : nice name to display on screen
-  * grid (integer) : display width grid (12 = full width)
-  * static (boolean) : wether the relation use the standard display or not.
-    True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
-  * displayCondition (boolean) : wether the relation should diplay among condition. If true, you need to create a specific class for the item and define a public get_display_condition method returning true or false depending on wished condition
+If an item exists only by its parent item (eg. : an order line exists only by its parent order), you need to add a "parentItem" attribute to the item object as a string containing the parent item name
 
 ### Actions
 
-In each item description file, you can add a "objectActions" element, as an array containing PHP objects composed like this :
+In each item description file, you can add a "objectAction" element, as an array containing PHP objects composed like this :
 
 * alias : string, name to be used in code (ie no accent or uppercase or special character)
 * nicename: string, action display name
-* listable : boolean, determine wether a button is displayed or not on list page
-* editable : boolean, determine wether a button is displayed or not on edit page
-* admin : boolean, determine if action is reserved to admin users
+* visible : boolean, determine wether a button is displayed or not on list and edit page
 * icon : string, fontawesome icon alias to display on buttons
 * color : string, bootstrap colorscheme to display (primary, secondary, dark, light, success, warning, danger )
 
@@ -209,13 +207,6 @@ In each item description file, you can add a "print" object to the item descript
 To define each print behavior, you will need to :
 
 * create a PHP file in the template directory named like this print.{item\_name}.{print\_alias}.php
-
-### Select Label
-
-In each item description file, you can add a "selectLabel" element, as a string with CONCAT SQL syntax.
-For example, with an item named "product" with two attributes title and amount.
-If you want to use this item in a select HTML markup, you can define selectLabel as "CONCAT( title, ' ( ', amount, ' )' ) AS titlePrice".
-Though in other item description file, you can define the columnLabel with "titlePrice" to display concat columns instead of one.
 
 ### ReadOnly States
 
