@@ -20,6 +20,7 @@
 				'name' => 'Document',
 				'grid' => 6,
 				'static' => false,
+				'standard' => true,
 			),
 		),
 		'columns' => array(
