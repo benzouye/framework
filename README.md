@@ -140,6 +140,7 @@ It has to be composed at least like this ( M = mandatory, O = Optional ) :
 * (M) required (boolean) : wether the field is required or not on edit page
 * (O) default (mixed) : the default value for field in new item
 * (O) unit (string) : the unit of the field (such as $ or km or kW ...)
+* (M) admin (boolean) : wether the column is only display for admin user or not
 
 ### Column type parameter
 
