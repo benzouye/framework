@@ -116,13 +116,6 @@
 		'export' => 'Export',
 	);
 	
-	// Classes CSS des états
-	$stateBgClasses = array(
-		1 => 'bg-warning',
-		2 => 'bg-primary',
-		3 => 'bg-success'
-	);
-	
 	/*
 	*	Variables de session par défaut
 	*/
@@ -151,6 +144,7 @@
 	require_once( ITEMDIR.'ModelTypeDocument.php' );
 	require_once( ITEMDIR.'ModelDocument.php' );
 	require_once( ITEMDIR.'ModelAffectation.php' );
+	require_once( ITEMDIR.'ModelColorscheme.php' );
 	
 	/*
 	*	Mappings items personnalisés
