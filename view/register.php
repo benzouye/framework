@@ -92,10 +92,10 @@
 					if( mail($destinataire, $sujet, $message, $headers) ) {
 						$manager->setMessage( sprintf( M_EMAILOK, $_POST['email'] ) );
 					} else {
-						$manager->setError( sprintf( M_EMAILERR, $_POST['email'], $email, $email ) );
+						$manager->setMessage( sprintf( M_EMAILERR, $_POST['email'], $email, $email ) ,true);
 					}
 				} else {
-					$manager->setError( sprintf( M_ITEMSETERR, $_POST['email'] ) );
+					$manager->setMessage( sprintf( M_ITEMSETERR, $_POST['email'] ) ,true);
 				}
 			}
 			if( isset( $_GET['validation'], $_GET['identifiant'], $_GET['token'] ) ) {
@@ -109,5 +109,5 @@
 <?php
 		}
 	} else {
-		$manager->setError( M_VALOK );
+		$manager->setMessage( M_VALOK ,true);
 	}
