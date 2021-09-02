@@ -35,7 +35,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'libelle',
@@ -48,7 +49,8 @@
 				'params' => array( 'auto-complete' => true, 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'id_affectation',
@@ -66,7 +68,8 @@
 				),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'montant',
@@ -81,7 +84,8 @@
 				'params' => array( 'type' => 'number', 'step' => 0.01 ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'image',
@@ -95,7 +99,8 @@
 				'params' => array( 'type' => 'image', 'extensions' => array( 'jpg', 'jpeg', 'png', 'gif', 'svg' ) ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'fichier',
@@ -109,7 +114,8 @@
 				'params' => array( 'type' => 'file', 'extensions' => array( 'pdf', 'doc', 'xls', 'ppt', 'odt', 'ods', 'odp' ) ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'localisation',
@@ -123,7 +129,8 @@
 				'params' => array( 'type' => 'localisation' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'id_etat',
@@ -143,7 +150,8 @@
 				),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'doc_count',
@@ -161,7 +169,8 @@
 				),
 				'visible' => true,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 		),
 	);
