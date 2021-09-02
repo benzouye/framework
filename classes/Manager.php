@@ -346,7 +346,6 @@ class Manager {
 	}
 	
 	public function showMessages() {
-		//echo '<pre>'.print_r( $this->messages, true ).'</pre>';
 		$html = '';
 		if( count( $this->messages ) ) {
 			$html .= '<div class="toast-container position-absolute bottom-0 end-0 p-3">';
@@ -361,7 +360,7 @@ class Manager {
 				$html .= '<small class="ms-auto">'.date("d/m/Y à H:i").'</small>';
 				$html .= '<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>';
 				$html .= '</div>';
-				$html .= '<div class="toast-body text-'.$texte.' bg-'.$classe.'">';
+				$html .= '<div class="toast-body text-'.$texte.' bg-'.$classe.' fw-bold">';
 				$html .= $message['message'];
 				$html .= '</div>';
 				$html .= '</div>';
