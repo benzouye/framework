@@ -82,11 +82,37 @@ CREATE TABLE `prefix_document` (
   CONSTRAINT `prefix_document_ibfk_4` FOREIGN KEY (`id_type_document`) REFERENCES `prefix_type_document` (`id_type_document`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `prefix_colorscheme`;
+CREATE TABLE `prefix_colorscheme` (
+  `id_colorscheme` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dark` tinyint(3) unsigned NOT NULL,
+  `user_cre` int(11) NOT NULL,
+  `date_cre` datetime NOT NULL,
+  `user_maj` int(11) DEFAULT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_colorscheme`),
+  KEY `user_cre` (`user_cre`),
+  KEY `user_maj` (`user_maj`),
+  CONSTRAINT `prefix_colorscheme_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_colorscheme_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `prefix_colorscheme` (`id_colorscheme`, `libelle`, `dark`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1,	'primary',	0,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(2,	'secondary',	0,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(3,	'success',	0,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(4,	'danger',	0,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(5,	'warning',	1,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(6,	'info',	1,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(7,	'light',	1,	1,	'2021-09-02 14:10:20',	NULL,	NULL),
+(8,	'dark',	0,	1,	'2021-09-02 14:10:20',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_etat`;
 CREATE TABLE `prefix_etat` (
   `id_etat` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_colorscheme` int(10) unsigned DEFAULT NULL,
   `user_cre` int(11) NOT NULL,
   `date_cre` datetime NOT NULL,
   `user_maj` int(11) DEFAULT NULL,
@@ -95,14 +121,16 @@ CREATE TABLE `prefix_etat` (
   UNIQUE KEY `libelle` (`libelle`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
+  KEY `id_colorscheme` (`id_colorscheme`),
   CONSTRAINT `prefix_etat_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `prefix_etat_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
+  CONSTRAINT `prefix_etat_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_etat_ibfk_3` FOREIGN KEY (`id_colorscheme`) REFERENCES `prefix_colorscheme` (`id_colorscheme`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `prefix_etat` (`id_etat`, `libelle`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'En attente',	1,	'2017-11-06 12:49:15',	NULL,	NULL),
-(2,	'En cours',	1,	'2017-11-22 13:37:33',	NULL,	NULL),
-(3,	'Terminé',	1,	'2017-11-22 13:37:41',	NULL,	NULL);
+INSERT INTO `prefix_etat` (`id_etat`, `libelle`, `id_colorscheme`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1,	'En attente',	5,	1,	'2017-11-06 12:49:15',	1,	'2021-09-02 14:12:10'),
+(2,	'En cours',	1,	1,	'2017-11-22 13:37:33',	1,	'2021-09-02 14:12:27'),
+(3,	'Terminé',	3,	1,	'2017-11-22 13:37:41',	1,	'2021-09-02 14:12:33');
 
 DROP TABLE IF EXISTS `prefix_exemple`;
 CREATE TABLE `prefix_exemple` (
