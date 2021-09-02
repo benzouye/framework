@@ -14,11 +14,8 @@ aside {
 	box-shadow: 0 0 5px grey;
 }
 
-#helpers {
-	position: fixed;
-	bottom: 10px;
-	right: 10px;
-	z-index: 3000;
+.homepage-chart {
+	max-height: 50vh;
 }
 
 section {
