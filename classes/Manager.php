@@ -3,7 +3,6 @@ class Manager {
 
 	protected $bdd = null;
 	protected $debug = false;
-	protected $errors = array();
 	protected $messages = array();
 	protected $options = array();
 	protected $analyses = array();
@@ -149,10 +148,10 @@ class Manager {
 			$this->user = false;
 		}
 		
-		if( !$good_session ) $this->setError( M_SESSERR );
-		if( !$good_ident ) $this->setError( M_IDENTERR );
-		if( $good_ident && !$good_valide ) $this->setError( M_VALIDERR );
-		if( !$good_mdp && $good_valide ) $this->setError( M_PASSERR );
+		if( !$good_session ) $this->setMessage( M_SESSERR ,true);
+		if( !$good_ident ) $this->setMessage( M_IDENTERR ,true);
+		if( $good_ident && !$good_valide ) $this->setMessage( M_VALIDERR ,true);
+		if( !$good_mdp && $good_valide ) $this->setMessage( M_PASSERR ,true);
 	}
 	
 	public function getUser() {
@@ -196,7 +195,7 @@ class Manager {
 				} else {
 					$msg = 'droits utilisateur';
 				}
-				$this->setError( sprintf( M_ITEMSERR, $msg ) );
+				$this->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 			}
 		} else {
 			$this->userCap = (object) array(
@@ -331,41 +330,44 @@ class Manager {
 		}
 	}
 	
-	public function setError( $message ) {
-		$this->errors[] = $message;
+	public function setMessage( $message, $erreur = false ) {
+		$this->messages[] = [
+			'message' => $message,
+			'error' => $erreur
+		];
 	}
 	
 	public function getNbErrors() {
-		return count($this->errors);
-	}
-	
-	public function setMessage( $message ) {
-		$this->messages[] = $message;
-	}
-	
-	public function showErrors() {
-		if( count( $this->errors ) > 0 ) {
-			foreach( $this->errors as $erreur ) {
-?>
-				<div style="display: none;" class="alert alert-danger alert-dismissible" role="alert">
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-					<span class="bi bi-exclamation-triangle-fill"></span> <?=$erreur; ?>
-				</div>
-<?php			
-			}
+		$nbErrors = 0;
+		foreach( $this->messages as $message ) {
+			if( $message['error'] ) $nbErrors++;
 		}
+		return $nbErrors;
 	}
 	
 	public function showMessages() {
-		if( count( $this->messages ) > 0 ) {
+		//echo '<pre>'.print_r( $this->messages, true ).'</pre>';
+		$html = '';
+		if( count( $this->messages ) ) {
+			$html .= '<div class="toast-container position-absolute bottom-0 end-0 p-3">';
 			foreach( $this->messages as $message ) {
-?>
-				<div style="display: none;" class="alert alert-primary alert-dismissible" role="alert">
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-					<span class="bi bi-check-circle-fill"></span> <?=$message; ?>
-				</div>
-<?php			
+				$classe = $message['error'] ? 'danger' : 'info';
+				$texte  = $message['error'] ? 'white' : 'dark';
+				$icone  = $message['error'] ? 'exclamation-triangle-fill' : 'check-circle-fill';
+				
+				$html .= '<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">';
+				$html .= '<div class="toast-header">';
+				$html .= '<span class="bi bi-'.$icone.'"></span>';
+				$html .= '<small class="ms-auto">'.date("d/m/Y à H:i").'</small>';
+				$html .= '<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>';
+				$html .= '</div>';
+				$html .= '<div class="toast-body text-'.$texte.' bg-'.$classe.'">';
+				$html .= $message['message'];
+				$html .= '</div>';
+				$html .= '</div>';
 			}
+			$html .= '</div>';
 		}
+		return $html;
 	}
 }
