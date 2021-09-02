@@ -18,7 +18,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'id_exemple',
@@ -32,7 +33,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => true,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'id_type_document',
@@ -52,7 +54,8 @@
 				),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'fichier',
@@ -66,7 +69,8 @@
 				'params' => array( 'type' => 'file' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 		)
 	);
