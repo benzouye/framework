@@ -17,8 +17,11 @@ $( document ).ready( function(){
 		trigger: 'hover'
 	});
 	
-	// Affichage des alertes dans le header
-	$('.alert').show('slow').delay(5000).hide('slow');
+	// Affichage des messages et alertes
+	$('.toast').each( function( liveToast ) {
+		let toast = new bootstrap.Toast( this );
+		toast.show();
+	});
 	
 	// Alerte à la suppression
 	$('form.delete').on("submit",function(e) {
