@@ -18,7 +18,7 @@ class utilisateur extends Model {
 			} else {
 				$msg = 'accès utilisateur';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->access;	
@@ -43,7 +43,7 @@ class utilisateur extends Model {
 			} else {
 				$msg = 'affectation';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->users;	
@@ -72,7 +72,7 @@ class utilisateur extends Model {
 			} else {
 				$msg = 'affectation';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->users;	
@@ -106,7 +106,7 @@ class utilisateur extends Model {
 			} else {
 				$msg = 'groupe';
 			}
-			$this->manager->setError( sprintf( M_RELNEWERR, $msg, 'accès' ) );
+			$this->manager->setMessage( sprintf( M_RELNEWERR, $msg, 'accès' ) ,true);
 		}
 	}
 	
@@ -121,7 +121,7 @@ class utilisateur extends Model {
 			$requete->closeCursor();
 		}
 		catch( Exception $e ) {
-			$this->manager->setError( sprintf( M_RELDELERR, 'utilisateur', 'affectation' ) );
+			$this->manager->setMessage( sprintf( M_RELDELERR, 'utilisateur', 'affectation' ) ,true);
 		}
 	}
 	
@@ -146,7 +146,7 @@ class utilisateur extends Model {
 			if( $valide ) {
 				$this->manager->setMessage( M_VALEMAILOK );
 			} else {
-				$this->manager->setError( M_TOKENERR );
+				$this->manager->setMessage( M_TOKENERR ,true);
 			}
 		}
 		catch( Exception $e ) {
@@ -155,7 +155,7 @@ class utilisateur extends Model {
 			} else {
 				$msg = $manager->getOption('sitemail');
 			}
-			$this->manager->setError( sprintf( M_VALEMAILERR, $manager->getOption('sitemail'), $msg ) );
+			$this->manager->setMessage( sprintf( M_VALEMAILERR, $manager->getOption('sitemail'), $msg ) ,true);
 		}
 	}
 }
