@@ -67,7 +67,7 @@ class Model {
 			} else {
 				$msg = $this->single;
 			}
-			$this->manager->setError( sprintf( M_IDERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_IDERR, $msg ) ,true);
 		}
 		
 		// Select Label
@@ -168,7 +168,7 @@ class Model {
 			} else {
 				$msg = $this->plural;
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $retour;
@@ -244,7 +244,7 @@ class Model {
 			} else {
 				$msg = $this->plural;
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 			$this->items = array();
 			$this->nbItems = 0;
 		}
@@ -278,7 +278,7 @@ class Model {
 			} else {
 				$msg = $this->plural;
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 			$this->items = array();
 		}
 		finally {
@@ -319,7 +319,7 @@ class Model {
 				} else {
 					$msg = $this->single;
 				}
-				$this->manager->setError( sprintf( M_UPIDERR, $msg ) );
+				$this->manager->setMessage( sprintf( M_UPIDERR, $msg ) ,true);
 			}
 		}
 		
@@ -354,7 +354,7 @@ class Model {
 			} else {
 				$msg = $this->single;
 			}
-			$this->manager->setError( sprintf( M_ITEMERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMERR, $msg ) ,true);
 			$this->currentItem = new stdClass();
 		}
 		finally {
@@ -455,10 +455,10 @@ class Model {
 							$data[$colonne->name] = $nomFichier.'.'.$extension;
 							$handle->clean();
 						} else {
-							$this->manager->setError( $handle->error );
+							$this->manager->setMessage( $handle->error ,true);
 						}
 					} else {
-						$this->manager->setError( 'Fichier joint non enregistré car son extension ( '.$extension.' ) n\'est pas autorisée' );
+						$this->manager->setMessage( 'Fichier joint non enregistré car son extension ( '.$extension.' ) n\'est pas autorisée' ,true);
 					}
 				}
 			}
@@ -515,9 +515,9 @@ class Model {
 		}
 		catch( Exception $e ) {
 			if( $e->getCode() == 23000 ) {
-				$this->manager->setError( sprintf( M_ITEMSETKEYERR, $this->single, $data['identifiant'] ) );
+				$this->manager->setMessage( sprintf( M_ITEMSETKEYERR, $this->single, $data['identifiant'] ) ,true);
 			} else {
-				$this->manager->setError( sprintf( M_ITEMSETERR, $this->single, $id ) );
+				$this->manager->setMessage( sprintf( M_ITEMSETERR, $this->single, $id ) ,true);
 			}
 		}
 	}
@@ -545,9 +545,9 @@ class Model {
 				$msg = $this->single;
 			}
 			if( $e->getCode() == 23000 ) {
-				$this->manager->setError( sprintf( M_ITEMDELKEYERR, $msg, $id ) );
+				$this->manager->setMessage( sprintf( M_ITEMDELKEYERR, $msg, $id ) ,true);
 			} else {
-				$this->manager->setError( sprintf( M_ITEMDELERR, $msg, $id ) );
+				$this->manager->setMessage( sprintf( M_ITEMDELERR, $msg, $id ) ,true);
 			}
 			
 			return false;
@@ -568,7 +568,7 @@ class Model {
 			));
 		}
 		catch( Exception $e ) {
-			$this->manager->setError( 'Erreur lors de la création de l\'historique' );
+			$this->manager->setMessage( 'Erreur lors de la création de l\'historique' ,true);
 		}
 		$requete->closeCursor();
 	}
@@ -597,7 +597,7 @@ class Model {
 			return $historique;
 		}
 		catch( Exception $e ) {
-			$this->manager->setError( 'Erreur lors de la récupération de l\'historique' );
+			$this->manager->setMessage( 'Erreur lors de la récupération de l\'historique' ,true);
 		}
 	}
 	
