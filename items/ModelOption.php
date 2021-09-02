@@ -12,7 +12,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'alias',
@@ -20,7 +21,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'description',
@@ -28,7 +30,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'valeur',
@@ -41,7 +44,8 @@
 				'params' => array( 'type' => 'textarea', 'rows' => 10 ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 		),
 	);
