@@ -26,7 +26,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'description',
@@ -39,7 +40,8 @@
 				'params' => array( 'type' => 'textarea' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'requete',
@@ -52,7 +54,8 @@
 				'params' => array( 'type' => 'textarea', 'rows' => 10 ),
 				'visible' => false,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'id_type_analyse',
@@ -72,7 +75,8 @@
 				),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'options',
@@ -86,7 +90,8 @@
 				'params' => array( 'type' => 'textarea', 'rows' => 2 ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'indicator',
@@ -99,7 +104,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'percent',
@@ -112,7 +118,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'flag_affect',
@@ -125,7 +132,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'alias_affect',
@@ -138,7 +146,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'colonne',
@@ -151,7 +160,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'ligne',
@@ -164,7 +174,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'flag_accueil',
@@ -178,7 +189,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'ordre',
@@ -192,7 +204,8 @@
 				'params' => array( 'type' => 'number' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'grid',
@@ -206,7 +219,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 		)
 	);
