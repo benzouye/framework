@@ -4,6 +4,7 @@ class Model {
 	protected $manager;
 	protected $table;
 	protected $selectLabel;
+	protected $etatsColors;
 	protected $itemName;
 	protected $parentItem;
 	protected $parentId = false;
@@ -66,6 +67,26 @@ class Model {
 				$msg = $e->getMessage();
 			} else {
 				$msg = $this->single;
+			}
+			$this->manager->setMessage( sprintf( M_IDERR, $msg ) ,true);
+		}
+		
+		// Color schemes
+		try {
+			$requete = $this->bdd->query('
+				SELECT E.id_etat, S.libelle, S.dark
+				FROM '.DBPREF.'etat E
+					INNER JOIN '.DBPREF.'colorscheme S
+						ON E.id_colorscheme = S.id_colorscheme;'
+			);
+			$this->etatsColors = $requete->fetchAll();
+			$requete->closeCursor();
+		}
+		catch( Exception $e ) {
+			if( $this->manager->getDebug() ) {
+				$msg = $e->getMessage();
+			} else {
+				$msg = 'etats colorschemes';
 			}
 			$this->manager->setMessage( sprintf( M_IDERR, $msg ) ,true);
 		}
@@ -883,6 +904,18 @@ class Model {
 		$html = '';
 		$colonne = $this->getColumn( $name );
 		
+		if( $colonne->name == 'id_etat' ) {
+			$colorScheme = '';
+			$colorText = '';
+			foreach( $this->etatsColors as $couleur ) {
+				if( $couleur->id_etat == $valeur ) {
+					$colorScheme = $couleur->libelle;
+					$colorText = $couleur->dark ? 'text-dark' : '';
+					break;
+				}
+			}
+		}
+		
 		if( $edit ) {
 			$html .= '<div class="row mb-2 col-12 col-md-12">';
 			$html .= '<label class="col-4 col-md-2 col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
@@ -897,7 +930,7 @@ class Model {
 				}
 				break;
 			case 'color' :
-				$html .= '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+				$html .= '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 				break;
 			case 'date' :
 				if( $valeur != null ) {
@@ -914,7 +947,11 @@ class Model {
 				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 				foreach( $foreignItems as $foreignItem ) {
 					if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
-						$html .= $foreignItem->{$colonne->params['columnLabel']};
+						if( $colonne->name == 'id_etat' ) {
+							$html .= '<span class="badge bg-'.$colorScheme.' '.$colorText.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</span>';
+						} else {
+							$html .= $foreignItem->{$colonne->params['columnLabel']};
+						}
 						break;
 					}
 				}
