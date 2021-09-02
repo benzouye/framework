@@ -21,7 +21,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'nom_groupe',
@@ -34,7 +35,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			)
 		)
 	);
