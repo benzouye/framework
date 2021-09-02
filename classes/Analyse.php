@@ -24,7 +24,7 @@ class analyse extends Model {
 			} else {
 				$msg = 'item analyse';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $retour;	
@@ -61,7 +61,7 @@ class analyse extends Model {
 			} else {
 				$msg = 'analyse';
 			}
-			$this->manager->setError( sprintf( M_RELNEWERR, $msg, 'item' ) );
+			$this->manager->setMessage( sprintf( M_RELNEWERR, $msg, 'item' ) ,true);
 		}
 	}
 	
@@ -106,7 +106,7 @@ class analyse extends Model {
 			} else {
 				$msg = 'extraction analyse';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $datas;	
