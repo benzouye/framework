@@ -165,5 +165,5 @@
 <?php
 		}
 	} else {
-		$manager->setError( M_ACCESSERR );
+		$manager->setMessage( M_ACCESSERR ,true);
 	}
