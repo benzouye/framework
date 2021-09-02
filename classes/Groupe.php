@@ -20,7 +20,7 @@ class groupe extends Model {
 			} else {
 				$msg = 'items';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->access;	
@@ -43,7 +43,7 @@ class groupe extends Model {
 			} else {
 				$msg = 'utilisateurs';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->users;	
@@ -71,7 +71,7 @@ class groupe extends Model {
 			} else {
 				$msg = 'items accessibles';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->accessGroup;	
@@ -115,8 +115,7 @@ class groupe extends Model {
 			} else {
 				$msg = 'groupe';
 			}
-			$this->manager->setError( sprintf( M_RELNEWERR, $msg, 'accès' ) );
+			$this->manager->setMessage( sprintf( M_RELNEWERR, $msg, 'accès' ) ,true);
 		}
 	}
 }
-?>
