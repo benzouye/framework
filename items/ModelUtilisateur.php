@@ -27,7 +27,8 @@
 				'params' => array( 'type' => 'number', 'step' => 1 ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'identifiant',
@@ -40,7 +41,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'password',
@@ -53,7 +55,8 @@
 				'params' => array( 'type' => 'password' ),
 				'visible' => false,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'email',
@@ -66,7 +69,8 @@
 				'params' => array( 'type' => 'email' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'admin',
