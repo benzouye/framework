@@ -9,9 +9,8 @@ class document extends Model {
 		if( unlink( UPLDIR.$this->currentItem->fichier ) ) {
 			$this->manager->setMessage('Le fichier physique a bien été supprimé');
 		} else {
-			$this->manager->setError('Le fichier physique n\'a pas pu être supprimé');
+			$this->manager->setMessage('Le fichier physique n\'a pas pu être supprimé',true);
 		}
 	}
 	
 }
-?>
