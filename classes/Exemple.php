@@ -44,7 +44,7 @@ class Exemple extends Model {
 			} else {
 				$msg = 'documents';
 			}
-			$this->manager->setError( sprintf( M_ITEMSERR, $msg ) );
+			$this->manager->setMessage( sprintf( M_ITEMSERR, $msg ) ,true);
 		}
 		finally {
 			return $this->docs;	
