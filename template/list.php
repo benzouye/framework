@@ -92,8 +92,6 @@
 				<tbody>
 <?php
 			foreach( $items as $element ) {
-				$tdClass = '';
-				$trClass = property_exists( $element, 'id_etat' ) ? $stateBgClasses[$element->id_etat] : '';
 				
 				// Gestion readonly state
 				$readOnly = false;
@@ -105,7 +103,7 @@
 					}
 				}
 ?>
-					<tr class="<?=$trClass; ?>">
+					<tr>
 						<td class="text-center align-middle">
 							<a title="Ouvrir" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&action=edit&id=<?=$element->{'id_'.$page->alias}; ?>" class="btn btn-secondary btn-sm">
 								<i class="bi bi-search"></i>
