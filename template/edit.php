@@ -194,7 +194,7 @@
 							if( file_exists( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' ) )
 								require_once( TEMPLDIR.$action.'.'.$page->alias.'.'.$relation->item.'.php' );
 							else
-								$manager->setError( sprintf( M_TMPLERR, $action.'.'.$page->alias.'.'.$relation->item ) );
+								$manager->setMessage( sprintf( M_TMPLERR, $action.'.'.$page->alias.'.'.$relation->item ) ,true);
 						} else {
 ?>
 									<p>Aucun élément ...</p>
@@ -222,7 +222,7 @@
 						</div>
 <?php
 					} else {
-						$manager->setError( sprintf( M_CLASSERR, $relation->name ) );
+						$manager->setMessage( sprintf( M_CLASSERR, $relation->name ) ,true);
 					}
 				}
 			}
