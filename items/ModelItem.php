@@ -17,7 +17,8 @@
 				'params' => array( 'type' => 'number' ),
 				'visible' => false,
 				'editable' => false,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'alias',
@@ -31,7 +32,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'nom',
@@ -44,7 +46,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'description',
@@ -57,7 +60,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => true
+				'required' => true,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'static',
@@ -71,7 +75,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'variant',
@@ -85,7 +90,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'active',
@@ -99,7 +105,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'admin',
@@ -113,7 +120,8 @@
 				'params' => array( 'type' => 'checkbox' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'menu',
@@ -127,7 +135,8 @@
 				'params' => array( 'type' => 'number' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'menu_order',
@@ -141,7 +150,8 @@
 				'params' => array( 'type' => 'number' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			),
 			(object) array(
 				'name' => 'icon',
@@ -155,7 +165,8 @@
 				'params' => array( 'type' => 'text' ),
 				'visible' => true,
 				'editable' => true,
-				'required' => false
+				'required' => false,
+				'admin' => false
 			)
 		),
 	);
