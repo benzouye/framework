@@ -45,17 +45,17 @@
 					if( $user->admin or $_GET['id'] == $user->id_utilisateur ) {
 						$page = $manager->getItem( $_GET['item'] );
 					} else {
-						$manager->setError( M_ACCESSERR );
+						$manager->setMessage( M_ACCESSERR ,true);
 						$page = $manager->getItem( HOMEPAGE );
 					}
 				} elseif ( $userCan->access > 0 or $register ) {
 					$page = $manager->getItem( $_GET['item'] );
 				} else {
-					$manager->setError( M_ACCESSERR );
+					$manager->setMessage( M_ACCESSERR ,true);
 					$page = $manager->getItem( HOMEPAGE );
 				}
 			} else {
-				$manager->setError( M_DBITEMERR );
+				$manager->setMessage( M_DBITEMERR ,true);
 				$page = $manager->getItem( HOMEPAGE );
 			}
 		}
@@ -77,7 +77,7 @@
 		if( file_exists( VIEWDIR.$page->alias.'.php' ) ) {
 			$template = VIEWDIR.$page->alias.'.php';
 		} else {
-			$manager->setError( sprintf( M_VIEWERR, $page->alias ) );
+			$manager->setMessage( sprintf( M_VIEWERR, $page->alias ) ,true);
 		}
 	} else {
 		// Traitement des actions propre à l'objet
@@ -88,10 +88,10 @@
 				if( method_exists( $cibleAction, $_GET['oa'] ) ) {
 					$cibleAction->{$_GET['oa']}();
 				} else {
-					$manager->setError( sprintf( M_CLASSERR, htmlspecialchars($_GET['oa']) ) );
+					$manager->setMessage( sprintf( M_CLASSERR, htmlspecialchars($_GET['oa']) ) ,true);
 				}
 			} else {
-				$manager->setError( M_ACCESSERR );
+				$manager->setMessage( M_ACCESSERR ,true);
 			}
 		}
 		
@@ -112,32 +112,32 @@
 						if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $_POST['id'] == $user->id_utilisateur ) ) {
 							$cible->setItem( $_POST );
 						} else {
-							$manager->setError( M_ACCESSERR );
+							$manager->setMessage( M_ACCESSERR ,true);
 						}
 						break;
 					case 'delete':
 						if( $userCan->admin or $userCan->delete ) {
 							$cible->deleteItem( intval( $_POST['id'] ) );
 						} else {
-							$manager->setError( M_ACCESSERR );
+							$manager->setMessage( M_ACCESSERR ,true);
 						}
 						break;
 					case 'rel-set':
 						if( $userCan->admin or $userCan->create or $userCan->update ) {
 							$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
 							if( isset( $_POST['relation'] ) ) $cible->{'set_'.$_POST['relation']}( $_POST );
-							else $manager->setError( sprintf( M_RELSETERR, $_POST['item'], $_POST['relation'] ) );
+							else $manager->setMessage( sprintf( M_RELSETERR, $_POST['item'], $_POST['relation'] ) ,true);
 						} else {
-							$manager->setError( M_ACCESSERR );
+							$manager->setMessage( M_ACCESSERR ,true);
 						}
 						break;
 					case 'rel-del':
 						if( $userCan->admin or $userCan->delete ) {
 							$cible = new $nomClasse( $bdd, $manager, ${'model_'.$_POST['item']} );
 							if( isset( $_POST['relation'], $_POST['rel_id'] ) ) $cible->{'del_'.$_POST['relation']}( $_POST );
-							else $manager->setError( sprintf( M_RELDELERR, $_POST['item'], $_POST['relation'] ) );
+							else $manager->setMessage( sprintf( M_RELDELERR, $_POST['item'], $_POST['relation'] ) ,true);
 						} else {
-							$manager->setError( M_ACCESSERR );
+							$manager->setMessage( M_ACCESSERR ,true);
 						}
 						break;
 				}
@@ -153,7 +153,7 @@
 					// On affiche la copie
 					header( 'Location: index.php?item='.$cible->getItemName().'&action=edit&id='.$_POST['id_'.$cible->getItemName()] ); 
 				} else {
-					$manager->setError( M_ACCESSERR );
+					$manager->setMessage( M_ACCESSERR ,true);
 				}
 			}
 			$manager->setOptions();
@@ -189,7 +189,7 @@
 				}
 			} else {
 				$action = 'list';
-				$manager->setError( M_DBITEMERR );
+				$manager->setMessage( M_DBITEMERR ,true);
 			}
 		} else {
 			$action = 'list';
@@ -287,9 +287,8 @@
 			$template = VIEWDIR.HOMEPAGE.'.php';
 		} else {
 			$template = false;
-			$manager->setError( sprintf( M_TMPLERR, $page->alias.'.'.$action ) );
+			$manager->setMessage( sprintf( M_TMPLERR, $page->alias.'.'.$action ) ,true);
 		}
 		$subTitle = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
 		$title .= ' | '.$subTitle;
 	}
-?>
