@@ -393,11 +393,11 @@ class Model {
 		if( $requestedAction ) {
 			if( $action == 'edit' && $requestedAction->editable ) {
 				$actionLink = 'index.php?item='.$page.'&action=edit&id='.$id.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a data-bs-toggle="tooltip" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i><span class="d-none d-xl-inline"> '.$requestedAction->nicename.'</span></a>';
+				$display = '<a data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i><span class="d-none d-xl-inline"> '.$requestedAction->nicename.'</span></a>';
 			}
 			if( $action == 'list' && $requestedAction->listable ) {
 				$actionLink = 'index.php?item='.$page.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a data-bs-toggle="tooltip" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
+				$display = '<a data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
 			}
 		}
 		return $display;
