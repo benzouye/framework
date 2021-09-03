@@ -504,6 +504,11 @@ class Model {
 					break;
 				}
 			}
+			if( $colonne->params['type'] == 'select' && $colonne->required == false && !$value ) {
+				$columns .= $colonne->name.',';
+				$values .= 'NULL,';
+				$update .= $colonne->name.' = NULL,';
+			}
 			if( $colonne->params['type'] == 'checkbox' && !$flag && $colonne->editable ) {
 				$columns .= $colonne->name.',';
 				$values .= '0,';
@@ -536,7 +541,7 @@ class Model {
 		}
 		catch( Exception $e ) {
 			if( $e->getCode() == 23000 ) {
-				$this->manager->setMessage( sprintf( M_ITEMSETKEYERR, $this->single, $data['identifiant'] ) ,true);
+				$this->manager->setMessage( sprintf( M_ITEMSETKEYERR, $this->single, 'identifiant unique' ) ,true);
 			} else {
 				$this->manager->setMessage( sprintf( M_ITEMSETERR, $this->single, $id ) ,true);
 			}
@@ -791,7 +796,7 @@ class Model {
 					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$libelle.'</p>';
 				} else {
 					$html .= '<select class="form-select form-select-sm" '.$format.'>';
-					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' disabled="disabled" value>-- Aucun --</option>';
+					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' '.( $colonne->required ? 'disabled="disabled"':'' ).' value="0">-- Aucun --</option>';
 					foreach( $foreignItems as $foreignItem ) {
 						$selected = $valeur == $foreignItem->{$colonne->params['columnKey']} ? 'selected="selected"' : '';
 						$html .= '<option '.$selected.' value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
