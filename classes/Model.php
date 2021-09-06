@@ -718,7 +718,7 @@ class Model {
 		$format = 'name ="'.$colonne->name.'" ';
 		$colGrid = property_exists( $colonne, 'grid' ) ? $colonne->grid : $this->grille;
 		
-		$html .= '<div class="row mb-2 col-12 col-md-'.$colGrid->div.'">';
+		$html .= '<div class="row mb-2 col-12 col-md-'.$colGrid->div.( $colonne->params['type'] != 'textarea' ? ' d-flex align-items-center' : '' ).'">';
 		$html .= '<label class="col-4 col-md-'.$colGrid->label.' col-form-label col-form-label-sm text-end">'.$colonne->nicename.'</label>';
 		$html .= '<div class="col-8 col-md-'.$colGrid->value.'">';
 		
