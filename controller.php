@@ -254,15 +254,16 @@
 		}
 		
 		// Chargement des impressions et actions
-		$visiblePrints = false;
 		$prints = array();
+		$availablePrints = array();
 		$objectActions = array();
 		if( $variant ) {
 			if( method_exists( $object, 'getPrints' ) ) {
 				$prints = $object->getPrints();
 				foreach( $prints as $print ) {
-					if( $print->visible )
-						$visiblePrints = true;
+					if( $print->visible && ( $user->admin or !$print->admin ) ) {
+						$availablePrints[] = $print;
+					}
 				}
 			}
 			if( method_exists( $object, 'getObjectActions' ) ) {
@@ -292,3 +293,4 @@
 		$subTitle = ( $new && $action == 'edit' ) ? 'Création' : $actions[$action];
 		$title .= ' | '.$subTitle;
 	}
+	
