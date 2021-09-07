@@ -140,7 +140,6 @@ It has to be composed at least like this ( M = mandatory, O = Optional ) :
 * (M) required (boolean) : wether the field is required or not on edit page
 * (O) default (mixed) : the default value for field in new item
 * (O) unit (string) : the unit of the field (such as $ or km or kW ...)
-* (M) admin (boolean) : wether the column is only display for admin user or not
 
 ### Column type parameter
 
@@ -173,7 +172,6 @@ To describe a relation between two items, add a "relation" object to the parent 
 * grid (integer) : display width grid (12 = full width)
 * static (boolean) : wether the relation use the standard display or not.
   True value implies to create a specific template to display relation, created in template directory and named as edit.{parent\_item\_name}.{child\_item\_name}.php
-* standard (boolean) : wether the relation display use standard template or not
 * displayCondition (boolean) : wether the relation should diplay among condition.
   If true, you need to create a specific class for the item and define a public get_display_condition method returning true or false depending on wished condition
 * many (boolean) : wether the relation is many to many or not
@@ -205,6 +203,7 @@ In each item description file, you can add a "print" object to the item descript
 * visible : boolean, determine wether a link is displayed or not on edit page
 * separator : boolean, determine if the link is just a separator in prints list
 * pagination : boolean, determine if the print needs to be paginate
+* admin : boolean, determine if the print should only be displayed to admin users
 
 To define each print behavior, you will need to :
 
