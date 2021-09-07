@@ -154,7 +154,7 @@ class analyse extends Model {
 			<div class="col-12 col-md-6 col-xl-'.$requete->grid.'">
 				<div class="card card-dark border-dark">
 					<div class="card-header">
-						<span class="card-title">'.$requete->description.'</span> <a title="Voir les données ('.$nbElements.')" data-bs-toggle="Voir les données" data-bs-placement="top" href="index.php?item=analyse&action=extract&id='.$element->id_analyse.'" class="btn btn-light btn-sm float-end"><span class="bi bi-search"></span></a>
+						<span class="card-title">'.$requete->description.'</span> <a title="Voir les données ('.$nbElements.')" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=analyse&action=extract&id='.$element->id_analyse.'" class="btn btn-light btn-sm float-end"><span class="bi bi-search"></span></a>
 					</div>
 					<div class="card-body">
 						'.$html.'
