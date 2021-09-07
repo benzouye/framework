@@ -40,7 +40,7 @@
 							<input type="hidden" name="action" value="set"/>
 							<input type="hidden" name="id" value="<?=$id; ?>"/>
 							<input type="hidden" name="item" value="<?=$page->alias; ?>"/>
-							<div class="card-body row">
+							<div class="card-body row" data-masonry='{"percentPosition": true }'>
 <?php
 		// Affichage du formulaire
 		foreach( $colonnes as $colonne ) {
@@ -118,14 +118,14 @@
 		}
 		
 		// Boutons d'impression
-		if( !$new && $visiblePrints ) {
+		if( !$new && count( $availablePrints ) ) {
 ?>
 								<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 									<span title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-printer"></span><span class="d-none d-xl-inline"> Imprimer</span>
 								</button>
 								<div class="dropdown-menu" aria-labelledby="menuPrint">
 <?php
-			foreach( $prints as $print ) {
+			foreach( $availablePrints as $print ) {
 				if( $print->visible ) {
 					if( $print->separator ) {
 ?>
@@ -134,7 +134,7 @@
 					} else {
 						$printLink = 'index.php?item='.$page->alias.'&action=print&id='.$id.'&type='.$print->alias;
 ?>
-									<a class="dropdown-item" href="<?=$printLink; ?>" target="_blank"><?=$print->nicename; ?></a>
+									<a class="dropdown-item btnReload" href="<?=$printLink; ?>" target="_blank"><?=$print->nicename; ?></a>
 <?php
 					}
 				}
