@@ -83,8 +83,6 @@
 	/*
 	*	Constantes
 	*/
-	// Symbole € pour FPDF
-	define( 'EURO'		, utf8_encode( chr(128) ) );
 	// Largeur de redimensionnement des images uploadées
 	define( 'DFWIDTH'	, 50 );
 	// Hauteur de redimensionnement des images uploadées
@@ -129,7 +127,7 @@
 	*/
 	require_once( CLASSDIR.'vendor/autoload.php' );
 	require_once( CLASSDIR.'Upload.php' );
-	require_once( CLASSDIR.'fpdf/fpdf.php' );
+	require_once( CLASSDIR.'tfpdf/tfpdf.php' );
 	
 	/*
 	*	Mappings items obligatoires
