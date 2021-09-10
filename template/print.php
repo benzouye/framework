@@ -16,12 +16,12 @@
 		function printHeaderList( $pdf, $object, $nb ) {
 			$pdf->SetFont( 'Arial','B', 16 );
 			$pdf->SetXY( 10, 10 );
-			$pdf->Cell(277,7, utf8_decode( 'Liste de résultats : '.$nb.' '.( $nb > 1 ? $object->getPlural() : $object->getSingle() ) ),1,1,'C');
+			$pdf->Cell(277,7, 'Liste de résultats : '.$nb.' '.( $nb > 1 ? $object->getPlural() : $object->getSingle() ),1,1,'C');
 			$pdf->ln(3);
 		}
 		
 		if( $pagination ) {
-			class PDF extends FPDF {
+			class PDF extends tFPDF {
 				
 				protected $NewPageGroup;
 				protected $PageGroups = [];
@@ -32,7 +32,7 @@
 					$this->SetXY(10, -15);
 					// Numéro de page
 					$this->SetFont( 'Arial', '', 8 );
-					$this->Cell(0,5,utf8_decode( $this->GroupPageNo().'/'.$this->PageGroupAlias() ),0,0,'C');
+					$this->Cell(0,5,$this->GroupPageNo().'/'.$this->PageGroupAlias(),0,0,'C');
 				}
 				
 				function StartPageGroup()
@@ -85,8 +85,12 @@
 			}
 			$pdf = new PDF();
 		} else {
-			$pdf = new FPDF();
+			$pdf = new tFPDF();
 		}
+		$pdf->AddFont( 'Arial','','arial.ttf',true);
+		$pdf->AddFont( 'Arial','B','arialbd.ttf',true);
+		$pdf->AddFont( 'Arial','I','ariali.ttf',true);
+		$pdf->AddFont( 'Arial','BI','arialbi.ttf',true);
 		$pdf->AliasNbPages();
 		$pdf->SetTitle( $title );
 		$pdf->SetFont( 'Arial', '', 10 );
@@ -112,7 +116,7 @@
 		else {
 			$fichier = $action.'.'.$page->alias.'.'.$type;
 			$pdf->AddPage('P');
-			$pdf->MultiCell(190,5,utf8_decode('Le fichier template d\'impression '.$fichier.' n\'existe pas. Contactez l\'administrateur pour faire corriger ce problème. '), 1 );
+			$pdf->MultiCell(190,5,'Le fichier template d\'impression '.$fichier.' n\'existe pas. Contactez l\'administrateur pour faire corriger ce problème.', 1 );
 		}
 		$pdf->Output();
 	}
@@ -124,4 +128,3 @@
 		}
 		echo $msg;
 	}
-?>
