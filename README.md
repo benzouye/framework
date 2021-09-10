@@ -7,7 +7,7 @@ This code is just another PHP framework to quickly developp data management apps
 To ease display and ergonomy, this framework includes some open source librairies for PHP and JavaScript :
 
 * [PHPSpreadSheet](https://github.com/PHPOffice/PhpSpreadsheet) PHP lib to generate XLS documents
-* [FPDF](http://www.fpdf.org/) PHP lib to generate PDF documents
+* [tFPDF](http://www.fpdf.org/en/script/script92.php) PHP lib to generate PDF documents with UTF8 encoding
 * [class.upload.php](https://github.com/verot/class.upload.php) PHP lib to manage uploads
 * [Bootstrap 5](https://getbootstrap.com/) as CSS framework
 * [jQuery](https://jquery.com/) as JavaScript framework
