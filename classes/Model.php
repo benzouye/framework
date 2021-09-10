@@ -1005,29 +1005,28 @@ class Model {
 	public function displayFieldPDF( $name, $valeur, $pdf, $largeur = 277, $hauteur = 7 ) {
 		$html = '';
 		$colonne = $this->getColumn( $name );
-		$valeur = str_replace( '€', utf8_encode( chr(128) ), $valeur );
 		
 		switch( $colonne->params['type'] ) {
 			case 'number' :
 				$html = $valeur;
 				if( property_exists( $colonne, 'unit' ) ) {
-					$html .= ' '.str_replace( '€', utf8_encode( chr(128) ), $colonne->unit );
+					$html .= ' '.$colonne->unit;
 				}
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 				break;
 			case 'date' :
 				if( $valeur != null ) {
 					$html = date( UIDATE, strtotime($valeur));
-					$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+					$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 				}
 				break;
 			case 'textarea' :
 				$html = strip_tags( $valeur );
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			case 'time' :
 				$html = substr( $valeur, 0, 5);
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 				break;
 			case 'select' :
 				$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
@@ -1037,28 +1036,28 @@ class Model {
 						break;
 					}
 				}
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			case 'checkbox' :
 				$html = ($valeur == 1 ? 'X' : '');
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 				break;
 			case 'image' :
 				$html = $valeur;
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			case 'file' :
 				$html = $valeur;
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			case 'localisation' :
 				$valeur = json_decode( $valeur );
 				$html = $valeur->lat.'/'.$valeur->lng;
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'L', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			default :
 				$html = $valeur;
-				$pdf->Cell( $largeur, $hauteur, utf8_decode( $html ), 1, 0, 'C', 1 );
+				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 		}
 	}
 	
