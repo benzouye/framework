@@ -25,7 +25,7 @@
 		$pdf->SetFont( 'Arial','B', 12 );
 		foreach( $printColonnes as $colonne ) {
 			$pdf->setXY( 10 + ( $largeur*$cpt ), 20 );
-			$pdf->MultiCell( $largeur, $hauteur, utf8_decode( $colonne->nicename ), 0, 'C' );
+			$pdf->MultiCell( $largeur, $hauteur, $colonne->nicename, 0, 'C' );
 			$maxHauteur = $pdf->getY() > $maxHauteur ? $pdf->getY() : $maxHauteur;
 			$cpt++;
 		}
@@ -46,4 +46,3 @@
 			$pdf->ln();
 		}
 	}
-?>
