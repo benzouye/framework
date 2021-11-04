@@ -1,12 +1,58 @@
 SET foreign_key_checks = 0;
 
+DROP TABLE IF EXISTS `prefix_groupe`;
+CREATE TABLE `prefix_groupe` (
+  `id_groupe` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `nom_groupe` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_cre` int(11) unsigned DEFAULT 1,
+  `date_cre` datetime DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_groupe`),
+  KEY `user_cre` (`user_cre`),
+  KEY `user_maj` (`user_maj`),
+  CONSTRAINT `prefix_groupe_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_groupe_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `prefix_groupe` (`id_groupe`, `nom_groupe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1,	'Utilisateur',	1,	'2017-10-24 17:13:53',	NULL,	NULL),
+(2,	'Gestionnaire',	1,	'2017-10-24 17:13:53',	NULL,	NULL);
+
+DROP TABLE IF EXISTS `prefix_utilisateur`;
+CREATE TABLE `prefix_utilisateur` (
+  `id_utilisateur` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `identifiant` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `id_groupe` tinyint(3) unsigned DEFAULT 1,
+  `token` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `valide` tinyint(3) unsigned DEFAULT 0,
+  `user_cre` int(11) unsigned DEFAULT 1,
+  `date_cre` datetime DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
+  `date_maj` datetime DEFAULT NULL,
+  PRIMARY KEY (`id_utilisateur`),
+  UNIQUE KEY `login` (`identifiant`),
+  KEY `id_groupe` (`id_groupe`),
+  KEY `user_cre` (`user_cre`),
+  KEY `user_maj` (`user_maj`),
+  CONSTRAINT `utilisateur_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `utilisateur_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `prefix_groupe` (`id_groupe`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `prefix_utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
+(1,	'admin',	'$2y$10$2CrYdHmPrL1wqiWsGCNoguvVTra.ALW5/6vjH3ofodG7JW1QBEXrK',	'admin@mydomain.com',	1,	2,	'',	1,	1,	'2017-10-24 07:47:06',	1,	'2018-11-08 13:37:37');
+
 DROP TABLE IF EXISTS `prefix_affectation`;
 CREATE TABLE `prefix_affectation` (
   `id_affectation` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) UNSIGNED NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) UNSIGNED DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_affectation`),
   KEY `user_cre` (`user_cre`),
@@ -18,6 +64,17 @@ CREATE TABLE `prefix_affectation` (
 INSERT INTO `prefix_affectation` (`id_affectation`, `libelle`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
 (1,	'Affectation principale',	1,	'2021-06-25 13:54:25',	NULL,	NULL),
 (2,	'Affectation Secondaire',	1,	'2021-06-25 13:54:25',	NULL,	NULL);
+
+DROP TABLE IF EXISTS `prefix_utilisateur_affectation`;
+CREATE TABLE `prefix_utilisateur_affectation` (
+  `id_utilisateur` int(11) unsigned NOT NULL,
+  `id_affectation` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_utilisateur`,`id_affectation`),
+  KEY `id_affectation` (`id_affectation`),
+  KEY `id_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_utilisateur_affectation_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `prefix_utilisateur_affectation_ibfk_2` FOREIGN KEY (`id_affectation`) REFERENCES `prefix_affectation` (`id_affectation`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `prefix_analyse`;
 CREATE TABLE `prefix_analyse` (
@@ -36,9 +93,9 @@ CREATE TABLE `prefix_analyse` (
   `ordre` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `grid` tinyint(3) unsigned NOT NULL DEFAULT 6,
   `date_cre` datetime NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_maj` datetime DEFAULT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_analyse`),
   KEY `user_cre` (`user_cre`),
   KEY `user_maj` (`user_maj`),
@@ -67,9 +124,9 @@ CREATE TABLE `prefix_document` (
   `fichier` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_type_document` int(11) unsigned NOT NULL,
   `id_exemple` int(10) unsigned NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_document`),
   KEY `FK_document_id_type_document` (`id_type_document`),
@@ -87,9 +144,9 @@ CREATE TABLE `prefix_colorscheme` (
   `id_colorscheme` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dark` tinyint(3) unsigned NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_colorscheme`),
   KEY `user_cre` (`user_cre`),
@@ -113,9 +170,9 @@ CREATE TABLE `prefix_etat` (
   `id_etat` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_colorscheme` int(10) unsigned DEFAULT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_etat`),
   UNIQUE KEY `libelle` (`libelle`),
@@ -142,9 +199,9 @@ CREATE TABLE `prefix_exemple` (
   `fichier` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `localisation` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_etat` int(11) unsigned NOT NULL DEFAULT 1,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_exemple`),
   KEY `id_etat` (`id_etat`),
@@ -156,26 +213,6 @@ CREATE TABLE `prefix_exemple` (
   CONSTRAINT `prefix_exemple_ibfk_3` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
   CONSTRAINT `prefix_exemple_ibfk_4` FOREIGN KEY (`id_affectation`) REFERENCES `prefix_affectation` (`id_affectation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-DROP TABLE IF EXISTS `prefix_groupe`;
-CREATE TABLE `prefix_groupe` (
-  `id_groupe` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `nom_groupe` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_cre` int(11) DEFAULT 1,
-  `date_cre` datetime DEFAULT NULL,
-  `user_maj` int(11) DEFAULT NULL,
-  `date_maj` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_groupe`),
-  KEY `user_cre` (`user_cre`),
-  KEY `user_maj` (`user_maj`),
-  CONSTRAINT `prefix_groupe_ibfk_1` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `prefix_groupe_ibfk_2` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `prefix_groupe` (`id_groupe`, `nom_groupe`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'Utilisateur',	1,	'2017-10-24 17:13:53',	NULL,	NULL),
-(2,	'Gestionnaire',	1,	'2017-10-24 17:13:53',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_groupe_item`;
 CREATE TABLE `prefix_groupe_item` (
@@ -230,9 +267,9 @@ CREATE TABLE `prefix_item` (
   `menu` tinyint(3) unsigned DEFAULT 0,
   `menu_order` tinyint(3) unsigned DEFAULT 0,
   `icon` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT 'star',
-  `user_cre` int(11) DEFAULT 1,
+  `user_cre` int(11) unsigned DEFAULT 1,
   `date_cre` datetime DEFAULT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`alias`),
   UNIQUE KEY `id` (`id_item`),
@@ -264,9 +301,9 @@ CREATE TABLE `prefix_option` (
   `alias` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
   `valeur` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_cre` int(11) DEFAULT 1,
+  `user_cre` int(11) unsigned DEFAULT 1,
   `date_cre` datetime DEFAULT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_option`),
   KEY `user_cre` (`user_cre`),
@@ -290,9 +327,9 @@ DROP TABLE IF EXISTS `prefix_type_analyse`;
 CREATE TABLE `prefix_type_analyse` (
   `id_type_analyse` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_type_analyse`),
   KEY `user_cre` (`user_cre`),
@@ -313,9 +350,9 @@ DROP TABLE IF EXISTS `prefix_type_document`;
 CREATE TABLE `prefix_type_document` (
   `id_type_document` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `libelle` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_cre` int(11) NOT NULL,
+  `user_cre` int(11) unsigned NOT NULL,
   `date_cre` datetime NOT NULL,
-  `user_maj` int(11) DEFAULT NULL,
+  `user_maj` int(11) unsigned DEFAULT NULL,
   `date_maj` datetime DEFAULT NULL,
   PRIMARY KEY (`id_type_document`),
   UNIQUE KEY `libelle` (`libelle`),
@@ -326,44 +363,6 @@ CREATE TABLE `prefix_type_document` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `prefix_type_document` (`id_type_document`, `libelle`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'Type1',	1,	'2021-06-25 13:51:03',	NULL,	NULL);
-
-DROP TABLE IF EXISTS `prefix_utilisateur`;
-CREATE TABLE `prefix_utilisateur` (
-  `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT,
-  `identifiant` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `admin` tinyint(3) unsigned NOT NULL DEFAULT 0,
-  `id_groupe` tinyint(3) unsigned DEFAULT 1,
-  `token` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `valide` tinyint(3) unsigned DEFAULT 0,
-  `user_cre` int(11) DEFAULT 1,
-  `date_cre` datetime DEFAULT NULL,
-  `user_maj` int(11) DEFAULT NULL,
-  `date_maj` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`),
-  UNIQUE KEY `login` (`identifiant`),
-  KEY `id_groupe` (`id_groupe`),
-  KEY `user_cre` (`user_cre`),
-  KEY `user_maj` (`user_maj`),
-  CONSTRAINT `utilisateur_createur_fk` FOREIGN KEY (`user_cre`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `utilisateur_editeur_fk` FOREIGN KEY (`user_maj`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `utilisateur_groupe_fk` FOREIGN KEY (`id_groupe`) REFERENCES `prefix_groupe` (`id_groupe`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `prefix_utilisateur` (`id_utilisateur`, `identifiant`, `password`, `email`, `admin`, `id_groupe`, `token`, `valide`, `user_cre`, `date_cre`, `user_maj`, `date_maj`) VALUES
-(1,	'admin',	'$2y$10$2CrYdHmPrL1wqiWsGCNoguvVTra.ALW5/6vjH3ofodG7JW1QBEXrK',	'admin@mydomain.com',	1,	2,	'',	1,	1,	'2017-10-24 07:47:06',	1,	'2018-11-08 13:37:37');
-
-DROP TABLE IF EXISTS `prefix_utilisateur_affectation`;
-CREATE TABLE `prefix_utilisateur_affectation` (
-  `id_utilisateur` int(11) NOT NULL,
-  `id_affectation` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id_utilisateur`,`id_affectation`),
-  KEY `id_affectation` (`id_affectation`),
-  KEY `id_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `prefix_utilisateur_affectation_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `prefix_utilisateur` (`id_utilisateur`),
-  CONSTRAINT `prefix_utilisateur_affectation_ibfk_2` FOREIGN KEY (`id_affectation`) REFERENCES `prefix_affectation` (`id_affectation`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(1,	'Type exemple',	1,	'2021-06-25 13:51:03',	NULL,	NULL);
 
 SET foreign_key_checks = 1;
