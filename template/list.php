@@ -65,8 +65,8 @@
 <?php
 					if( !in_array( $colonne->params['type'] , [ 'image', 'file', 'localisation' ] ) ) {
 ?>
-						&nbsp;<a class="text-secondary" title="Trier par <?=$colonne->nicename; ?> croissant" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&orderby=<?=$colonne->name; ?>&orderway=asc"><span class="col-sort bi bi-sort-amount-up"></span></a>
-						&nbsp;<a class="text-secondary" title="Trier par <?=$colonne->nicename; ?> décroissant" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&orderby=<?=$colonne->name; ?>&orderway=desc"><span class="bi bi-sort-amount-down"></span></a>
+						&nbsp;<a class="text-secondary" title="Trier par <?=$colonne->nicename; ?> croissant" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&orderby=<?=$colonne->name; ?>&orderway=asc"><span class="col-sort bi bi-sort-up"></span></a>
+						&nbsp;<a class="text-secondary" title="Trier par <?=$colonne->nicename; ?> décroissant" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias;?>&orderby=<?=$colonne->name; ?>&orderway=desc"><span class="bi bi-sort-down"></span></a>
 <?php
 					}
 ?>
