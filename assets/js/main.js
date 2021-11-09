@@ -13,7 +13,7 @@ $( document ).ready( function(){
 	});
 	
 	// Activation des tooltips
-	$( '[data-bs-toggle="tooltip"],.dropdown-toggle' ).tooltip( {
+	$( '[data-bs-toggle="tooltip"]' ).tooltip( {
 		trigger: 'hover'
 	});
 	
