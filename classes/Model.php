@@ -938,8 +938,13 @@ class Model {
 				$html .= '<span style="background: '.$valeur.'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
 				break;
 			case 'date' :
-				if( $valeur != null ) {
+				if( $valeur ) {
 					$html .= date( UIDATE, strtotime($valeur));
+				}
+				break;
+			case 'datetime-local' :
+				if( $valeur ) {
+					$html .= date( UIDATETIME, strtotime($valeur));
 				}
 				break;
 			case 'textarea' :
