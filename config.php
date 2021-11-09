@@ -96,8 +96,10 @@
 	*/
 	// En BDD
 	define( 'DBDATE' , 'Y-m-d' );
-	// A l'affichage
+	// Affichage DATE
 	define( 'UIDATE' , 'd/m/Y' );
+	// Affichage DATETIME
+	define( 'UIDATETIME' , 'd/m/Y H:i' );
 	
 	// Item page d'accueil par défaut
 	define( 'HOMEPAGE', 'home' );
