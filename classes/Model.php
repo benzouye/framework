@@ -967,7 +967,7 @@ class Model {
 				}
 				break;
 			case 'checkbox' :
-				$html .= '<span class="bi bi-'.($valeur == 1 ? 'check' : 'times').'-circle"></span>';
+				$html .= '<span class="bi bi-'.($valeur == 1 ? 'check' : 'x').'-circle"></span>';
 				break;
 			case 'url' :
 				$html .= '<a data-bs-toggle="tooltip" target="_blank" href="'.$valeur.'" title="Ouvrir le lien">'.$valeur.'</a>';
@@ -1044,7 +1044,7 @@ class Model {
 				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'L', 1 );
 				break;
 			case 'checkbox' :
-				$html = ($valeur == 1 ? 'X' : '');
+				$html = ($valeur == 1 ? 'Oui' : 'Non');
 				$pdf->Cell( $largeur, $hauteur, $html, 1, 0, 'C', 1 );
 				break;
 			case 'image' :
