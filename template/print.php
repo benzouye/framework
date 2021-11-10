@@ -76,7 +76,11 @@
 						{
 							for ($n = 1; $n <= $nb; $n++)
 							{
-								$this->pages[$n] = str_replace($k, $v, $this->pages[$n]);
+								$this->pages[$n] = str_replace(
+									$this->UTF8ToUTF16BE( $k, false),
+									$this->UTF8ToUTF16BE( $v, false),
+									$this->pages[$n]
+								);
 							}
 						}
 					}
