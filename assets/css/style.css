@@ -72,6 +72,10 @@ th {
 	margin-left: 10px;
 }
 
+.toast-container {
+	z-index: 3000;
+}
+
 @media all and (display-mode: standalone) {
   #install-message {
 	  display: none !important;
