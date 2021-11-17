@@ -348,7 +348,7 @@ class Manager {
 	public function showMessages() {
 		$html = '';
 		if( count( $this->messages ) ) {
-			$html .= '<div class="toast-container position-absolute bottom-0 end-0 p-3">';
+			$html .= '<div class="toast-container position-absolute top-0 end-0 p-3">';
 			foreach( $this->messages as $message ) {
 				$classe = $message['error'] ? 'danger' : 'info';
 				$texte  = $message['error'] ? 'white' : 'dark';
