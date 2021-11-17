@@ -121,6 +121,7 @@ This variable has to be a PHP object composed like this ( M = mandatory, O = Opt
 * (O) objectActions (array) : an array of objectAction objects (cf. next chapter)
 * (O) prints (array) : an array of print objects (cf. next chapter)
 * (O) readOnlyStates (array) : an array of PHP object describing data conditions to avoid item edit (cf. next chapters)
+* (O) selectLabel (string) : a string representing specific SQL SELECT for select tag options label (eg: concatenate columns)
 
 ## Column object structure
 
