@@ -121,7 +121,7 @@ This variable has to be a PHP object composed like this ( M = mandatory, O = Opt
 * (O) objectActions (array) : an array of objectAction objects (cf. next chapter)
 * (O) prints (array) : an array of print objects (cf. next chapter)
 * (O) readOnlyStates (array) : an array of PHP object describing data conditions to avoid item edit (cf. next chapters)
-* (O) selectLabel (string) : a string representing specific SQL SELECT for select tag options label (eg: concatenate columns)
+* (O) selectLabel (string) : a string representing specific SQL SELECT for select tag options label (eg: CONCAT( columnA, " - ", columnB ) AS concatAlias )
 
 ## Column object structure
 
@@ -160,7 +160,7 @@ Here is the different types currently accepted :
   Select input implies a link with another item (i.e. foreign key). So you have to define this link with 3 attributes :
   1. item (string) : name of the linked item
   2. columnKey (string) : column name for select option value (mainly id_{item\_name})
-  3. columnLabel (string) : column name for select option label
+  3. columnLabel (string) : column name for select option label, here you can specify _selectLabel_ alias
 * calculation : display the result of a calculation (SUM, AVG, COUNT, etc.) used with GROUP BY SQL clause. You have to define this with 2 attributes :
   1.function (string) : the SQL syntax for the calculation
   2.join (string) : optional SQL JOIN syntax to get the data
