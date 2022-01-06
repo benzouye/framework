@@ -222,4 +222,4 @@ In each item description file, you can add a "readOnlyStates" element, as an arr
 In each item description file, you can add a "defaultFilter" object to the item description file _defaultFilters_ property, as an associative array formed like this :
 
 * key : string, db column name for filter
-* value : mixed, value filtered
+* value : array, values filtered
