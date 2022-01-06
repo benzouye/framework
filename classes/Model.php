@@ -634,17 +634,43 @@ class Model {
 				if( $colonne->name == $input ) {
 					switch( $colonne->params['type'] ) {
 						case 'select' :
-							if( $valeur > 0 ) {
+							if( !empty( $valeur ) ) {
+								$libelle = '';
 								$foreignItems = $this->foreignColumns[$colonne->params['item']]->getItems( null, false, 1, false, false );
 								foreach( $foreignItems as $foreignItem ) {
-									if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
-										$libelle = $foreignItem->{$colonne->params['columnLabel']};
-										break;
+									if( is_array( $valeur ) ) {
+										foreach( $valeur as $valeurUnique ) {
+											if( $foreignItem->{$colonne->params['columnKey']} == $valeurUnique ) {
+												$libelle .= $foreignItem->{$colonne->params['columnLabel']}.',';
+												break;
+											}
+										}
+									} else {
+										if( $foreignItem->{$colonne->params['columnKey']} == $valeur ) {
+											$libelle = $foreignItem->{$colonne->params['columnLabel']};
+											break;
+										}
 									}
 								}
+								$libelle = rtrim( $libelle, ',' );
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' = '.$valeur.' '
+									? ' AND '.$colonne->name
 									: $colonne->nicename.' = '.$libelle.$this->searchSep;
+								
+								if( $sql ) {
+									if( is_array( $valeur ) ) {
+										if( count( $valeur ) ) {
+											$clauseIn = '';
+											foreach( $valeur as $valeurUnique ) {
+												$clauseIn .= '"'.$valeurUnique.'",';
+											}
+											$clauseIn = rtrim( $clauseIn, ',' );
+											$criteres .= ' IN ( '.$clauseIn.' ) ';
+										}
+									} else {
+										$criteres .= ' = '.$valeur.' ';
+									}
+								}
 							}
 							break;
 						case 'checkbox' :
