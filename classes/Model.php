@@ -822,7 +822,7 @@ class Model {
 					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.$valeur.'"><p class="col-form-label col-form-label-sm">'.$libelle.'</p>';
 				} else {
 					$html .= '<select class="form-select form-select-sm" '.$format.'>';
-					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' '.( $colonne->required ? 'disabled="disabled"':'' ).' value="0">-- Aucun --</option>';
+					$html .= '<option '.($valeur=='' ? 'selected="selected"':'').' '.( $colonne->required ? 'disabled="disabled"':'' ).' value="">'.( $colonne->required ? '-- Choix obligatoire --':'-- Aucun --' ).'</option>';
 					foreach( $foreignItems as $foreignItem ) {
 						$selected = $valeur == $foreignItem->{$colonne->params['columnKey']} ? 'selected="selected"' : '';
 						$html .= '<option '.$selected.' value="'.$foreignItem->{$colonne->params['columnKey']}.'">'.$foreignItem->{$colonne->params['columnLabel']}.'</option>';
