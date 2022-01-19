@@ -196,7 +196,7 @@ class Model {
 		}
 	}
 	
-	public function getItems( array $search = null, $paginate = false, $page = 1, $orderby = false, $ownerLimit ) {
+	public function getItems( $search, $paginate, $page, $orderby, $ownerLimit ) {
 		$nbparpage = $this->manager->getOption('nbparpage');
 		$nbparpage = $nbparpage < 1 ? 140000000 : $nbparpage;
 		$page = $page-1;
