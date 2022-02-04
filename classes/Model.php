@@ -969,7 +969,7 @@ class Model {
 				}
 				break;
 			case 'datetime-local' :
-				if( $valeur ) {
+				if( $valeur && $valeur != '0000-00-00 00:00:00' ) {
 					$html .= date( UIDATETIME, strtotime($valeur));
 				}
 				break;
