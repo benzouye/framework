@@ -974,7 +974,7 @@ class Model {
 				}
 				break;
 			case 'textarea' :
-				$html .= nl2br( strip_tags( $valeur ) );
+				$html .= $valeur ? nl2br( strip_tags( $valeur ) ) : "";
 				break;
 			case 'time' :
 				$html .= substr( $valeur, 0, 5);
