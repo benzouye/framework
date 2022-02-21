@@ -229,7 +229,7 @@ class Model {
 				}
 				if( $colonne->params['type'] == 'calculation' ) {
 					$groupby = 'GROUP BY T.id_'.$this->itemName;
-					$join = $colonne->params['join'];
+					$join .= $colonne->params['join'];
 					$select .= $colonne->params['function'].' AS '.$colonne->name.',';
 					$isCalculated = true;
 				} else {
@@ -319,9 +319,8 @@ class Model {
 		foreach( $this->columns as $colonne ) {
 			if( $colonne->params['type'] == 'calculation' ) {
 				$groupby = 'GROUP BY T.id_'.$this->itemName;
-				$join = $colonne->params['join'];
+				$join .= $colonne->params['join'];
 				$select .= ', '.$colonne->params['function'].' AS '.$colonne->name;
-				break;
 			}
 		}
 		
