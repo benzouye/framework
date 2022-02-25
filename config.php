@@ -130,6 +130,7 @@
 	require_once( CLASSDIR.'vendor/autoload.php' );
 	require_once( CLASSDIR.'Upload.php' );
 	require_once( CLASSDIR.'tfpdf/tfpdf.php' );
+	require_once( CLASSDIR.'Phpqrcode.php' );
 	
 	/*
 	*	Mappings items obligatoires
