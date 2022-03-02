@@ -29,8 +29,20 @@ section {
 	background: #343a40!important;
 	color: #fff;
 }
-.card-title {
+.card-header.tab-card-header {
+	background: rgba(0,0,0,.03) !important;
+	color: #495057;
+}
+.nav-link {
+	color: #495057;
+}
+.card-title, .nav-link.active {
 	font-weight: bold;
+}
+.tab-pane>.card {
+    border-top: none;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
 }
 
 th {
@@ -48,10 +60,6 @@ th {
     color: #fff;
 	border: 1px solid #dee2e6;
     background-color: #343a40;
-}
-
-.card-header>a.btn, #item-delete {
-	margin-left: 5px;
 }
 
 .leaflet-input {
