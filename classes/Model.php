@@ -413,11 +413,11 @@ class Model {
 		if( $requestedAction ) {
 			if( $action == 'edit' && $requestedAction->editable ) {
 				$actionLink = 'index.php?item='.$page.'&action=edit&id='.$id.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm float-end" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i><span class="d-none d-xl-inline"> '.$requestedAction->nicename.'</span></a>';
+				$display = '<button data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="me-1 btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i><span class="d-none d-xl-inline"> '.$requestedAction->nicename.'</span></button>';
 			}
 			if( $action == 'list' && $requestedAction->listable ) {
 				$actionLink = 'index.php?item='.$page.'&oa='.$requestedAction->alias.'&oai='.$id;
-				$display = '<a data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></a>';
+				$display = '<button data-bs-toggle="tooltip" data-bs-placement="bottom" title="'.$requestedAction->nicename.'" class="me-1 btn btn-'.$requestedAction->color.' btn-sm" href="'.$actionLink.'" ><i class="bi bi-'.$requestedAction->icon.'"></i></button>';
 			}
 		}
 		return $display;
@@ -786,7 +786,7 @@ class Model {
 		}
 		
 		if( property_exists( $colonne, 'unit' ) ) {
-			$html .= '<div class="input-group input-group-sm"><span class="input-group-text">'.$colonne->unit.'</span>';
+			$html .= '<div class="input-group input-group-sm">';
 		}
 		
 		switch( $colonne->params['type'] ) {
@@ -849,7 +849,12 @@ class Model {
 				}
 				break;
 			case 'localisation' :
-					$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.htmlspecialchars($valeur).'"><div class="leaflet-input" id="'.$colonne->name.'"></div>';
+				$html .= '<input type="hidden" name="'.$colonne->name.'" value="'.htmlspecialchars($valeur).'"><div class="leaflet-input" id="'.$colonne->name.'"></div>';
+				break;
+			case 'applink' :
+            	if( $valeur > 0 ) {
+					$html .= '<a data-bs-toggle="tooltip" title="'.$colonne->params['title'].'" href="index.php?item='.$colonne->params['item'].'&action=edit&id='.$valeur.'" class="btn btn-sm btn-'.$colonne->params['color'].'"><span class="bi bi-'.$colonne->params['icon'].'"></span></a>';
+                }
 				break;
 			default :
 				$format .= 'value="'.$valeur.'" ';
@@ -857,7 +862,7 @@ class Model {
 		}
 		
 		if( property_exists( $colonne, 'unit' ) ) {
-			$html .= '</div>';
+			$html .= '<span class="input-group-text">'.$colonne->unit.'</span></div>';
 		}
 		
 		$html .= '</div></div>';
