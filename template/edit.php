@@ -1,46 +1,83 @@
 <?php
 	if( $userCan->admin or $userCan->create or $userCan->read or $userCan->update or $userCan->delete or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) {
+		// Créations des onglets
 ?>
-					<div class="card border-dark">
-						<div class="card-header">
+					<nav class="nav nav-tabs">
+						<button class="nav-link active" id="nav-general-tab" data-bs-toggle="tab" data-bs-target="#nav-general">Général</button>
 <?php
-		// Bouton suppression
-		if( ( $userCan->admin or $userCan->delete ) and !$parentItem and ( !$readOnly or $userCan->admin ) ) {
-?>
-							<form class="delete" method="post" action="index.php?item=<?=$page->alias;?>">
-								<input type="hidden" name="id" value="<?=$item->{'id_'.$page->alias}; ?>" />
-								<input type="hidden" name="item" value="<?=$page->alias; ?>" />
-								<button title="Supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom" id="item-delete" type="submit" class="btn btn-danger btn-sm float-end"><i class="bi bi-trash"></i><span class="d-none d-xl-inline"> Supprimer</span></button>
-							</form>
-<?php
-		}
-		// Bouton création
-		if( ( $userCan->admin or $userCan->create ) and !$parentItem and !$new ) {
-?>
-							<a title="Ajouter" data-bs-toggle="tooltip" data-bs-placement="bottom" href="index.php?item=<?=$page->alias; ?>&action=edit" class="btn btn-secondary btn-sm float-end">
-								<i class="bi bi-plus-lg"></i><span class="d-none d-xl-inline"> Nouveau</span>
-							</a>
-<?php
-		}
-		
-		// Boutons d'action
-		if( !$new ) {
-			foreach( $objectActions as $objectAction ) {
-				if( $objectAction->editable and ( ( !$readOnly && !$objectAction->admin ) or $userCan->admin ) ) {
-?>
-							<?= $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' ); ?>
-<?php
+		// Onglets relations
+		if( !$new && count($relations) > 0 ) {
+			foreach( $relations as $relation ) {
+				
+				$toDisplay = true;
+				if( property_exists( $relation, 'displayCondition' ) && method_exists( $object, 'get_display_condition' ) ) {
+					$toDisplay = $object->get_display_condition();
 				}
+				
+				$standardRelation = true;
+				if( property_exists( $relation, 'standard' ) ) {
+					$standardRelation = $relation->standard;
+				}
+				
+				if( $toDisplay ) {
+					if( method_exists( $object, 'get_'.$relation->item ) ) {
+						$items = $object->{'get_'.$relation->item}();
+						$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge bg-secondary text-light">'.count( $items ).'</span>' : '';
+					}
+				}
+?>
+						<button class="nav-link" id="nav-<?= $relation->item;?>-tab" data-bs-toggle="tab" data-bs-target="#nav-<?= $relation->item;?>"><?= $relation->name;?><?= $nbItems; ?></button>
+<?php
+			}
+		}
+		// Onglet historique
+		if( !$new && $userCan->admin ) {
+			$historiques = $object->getHistorique();
+			$nbHistoriques = count( $historiques );
+			if( $nbHistoriques > 0 ) {
+?>
+						<button class="nav-link" id="nav-histo-tab" data-bs-toggle="tab" data-bs-target="#nav-histo">Historique <span class="badge bg-secondary text-light" ><?=$nbHistoriques; ?></span></button>
+<?php
 			}
 		}
 ?>
-							<span class="card-title">Informations principales</span>
-						</div>
-						<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
-							<input type="hidden" name="action" value="set"/>
-							<input type="hidden" name="id" value="<?=$id; ?>"/>
-							<input type="hidden" name="item" value="<?=$page->alias; ?>"/>
-							<div class="card-body row" data-masonry='{"percentPosition": true }'>
+					</nav>
+					<div class="tab-content" id="nav-tabContent">
+						<div class="tab-pane show active" id="nav-general" role="tabpanel">
+							<div class="card">
+								<div class="card-header tab-card-header">
+									<div class="d-flex">
+<?php
+		// Boutons d'action
+			if( !$new ) {
+				foreach( $objectActions as $objectAction ) {
+					if( $objectAction->editable and ( ( !$readOnly && !$objectAction->admin ) or $userCan->admin ) ) {
+?>
+									<?= $object->displayObjectAction( $page->alias, $objectAction->alias, $id, 'edit' ); ?>
+<?php
+					}
+				}
+			}
+			// Bouton suppression
+			if( ( $userCan->admin or $userCan->delete ) and !$parentItem and ( !$readOnly or $userCan->admin ) ) {
+?>
+									<div class="ms-auto"
+										<form class="delete" method="post" action="index.php?item=<?=$page->alias;?>">
+											<input type="hidden" name="id" value="<?=$item->{'id_'.$page->alias}; ?>" />
+											<input type="hidden" name="item" value="<?=$page->alias; ?>" />
+											<button title="Supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom" id="item-delete" type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i><span class="d-none d-xl-inline"> Supprimer</span></button>
+										</form>
+									</div>
+<?php
+			}
+?>
+									</div>
+								</div>
+								<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
+									<input type="hidden" name="action" value="set"/>
+									<input type="hidden" name="id" value="<?=$id; ?>"/>
+									<input type="hidden" name="item" value="<?=$page->alias; ?>"/>
+									<div class="card-body row" data-masonry='{"percentPosition": true }'>
 <?php
 		// Affichage du formulaire
 		foreach( $colonnes as $colonne ) {
@@ -66,12 +103,12 @@
 			if( $userCan->admin or !$adminInput ) {
 				if( $readOnly && !$userCan->admin ) {
 ?>
-								<?= $object->displayField( $colonne->name, $valeur, true ); ?>
+										<?= $object->displayField( $colonne->name, $valeur, true ); ?>
 
 <?php
 				} else {
 ?>
-								<?= $object->displayInput( $id, $colonne->name, $valeur ); ?>
+										<?= $object->displayInput( $id, $colonne->name, $valeur ); ?>
 
 <?php
 				}
@@ -79,83 +116,87 @@
 		}
 		// Affichage des boutons
 ?>
-							</div>
-							<div class="card-footer">
+									</div>
+									<div class="card-footer">
 <?php
 		if( ( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $item->{'id_'.$page->alias} == $user->id_utilisateur ) ) and ( !$readOnly or $userCan->admin ) ) {
 ?>
-								<button title="<?=$new ? 'Créer' : 'Sauvegarder'; ?>" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
-									<i class="bi bi-save"></i><span class="d-none d-xl-inline"> <?=$new ? 'Créer' : 'Sauvegarder'; ?></span>
-								</button>
+										<button title="<?=$new ? 'Créer' : 'Sauvegarder'; ?>" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" type="submit" class="btn btn-success btn-sm navbar-btn">
+											<i class="bi bi-save"></i><span class="d-none d-xl-inline"> <?=$new ? 'Créer' : 'Sauvegarder'; ?></span>
+										</button>
 <?php
-			if( !$new ) {
+			// Bouton création
+			if( ( $userCan->admin or $userCan->create ) and !$parentItem and !$new ) {
 ?>
-								<button title="Dupliquer" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" formaction="index.php?item=<?=$copylink; ?>" type="submit" class="btn btn-secondary btn-sm navbar-btn float-end">
-									<i class="bi bi-clipboard-plus"></i><span class="d-none d-xl-inline"> Dupliquer</span>
-								</button>
+										<button title="Dupliquer" data-bs-toggle="tooltip" data-bs-placement="top" name="form-submit" formaction="index.php?item=<?=$copylink; ?>" type="submit" class="ms-1 btn btn-secondary btn-sm navbar-btn float-end">
+											<i class="bi bi-box-arrow-up-right"></i><span class="d-none d-xl-inline"> Dupliquer</span>
+										</button>
+										<a title="Ajouter" data-bs-toggle="tooltip" data-bs-placement="bottom" href="index.php?item=<?=$page->alias; ?>&action=edit" class="ms-1 btn btn-secondary btn-sm float-end">
+											<i class="bi bi-plus-lg"></i><span class="d-none d-xl-inline"> Nouveau</span>
+										</a>
 <?php
 			}
 		}
 		if( $page->alias == 'utilisateur' && !$user->admin ) {
 ?>
-								<a title="Retour Accueil" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php" class="btn btn-secondary btn-sm">
-									<i class="bi bi-house"></i><span class="d-none d-xl-inline"> Retour accueil</span>
-								</a>
+										<a title="Retour Accueil" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php" class="btn btn-secondary btn-sm">
+											<i class="bi bi-house"></i><span class="d-none d-xl-inline"> Retour accueil</span>
+										</a>
 <?php
 		} else {
 ?>
-								<a title="Retour liste <?=$object->getPlural(); ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
-									<i class="bi bi-list-task"></i><span class="d-none d-xl-inline"> Retour liste <?=$object->getPlural(); ?></span>
-								</a>
+										<a title="Retour liste <?=$object->getPlural(); ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$backlink; ?>" class="btn btn-secondary btn-sm">
+											<i class="bi bi-list-task"></i><span class="d-none d-xl-inline"> Retour liste <?=$object->getPlural(); ?></span>
+										</a>
 <?php
 		}
 		if( $parentLink ) {
 ?>
-								<a title="Retour <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$parentLink; ?>" class="btn btn-secondary btn-sm">
-									<i class="bi bi-caret-left-fill"></i><span class="d-none d-xl-inline">  Retour <?=$parentItem; ?></span>
-								</a>
+										<a title="Retour <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$parentLink; ?>" class="btn btn-secondary btn-sm">
+											<i class="bi bi-caret-left-fill"></i><span class="d-none d-xl-inline"> Retour <?=$parentItem; ?></span>
+										</a>
 <?php
 		}
 		
 		// Boutons d'impression
 		if( !$new && count( $availablePrints ) ) {
 ?>
-								<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-									<span title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-printer"></span><span class="d-none d-xl-inline"> Imprimer</span>
-								</button>
-								<div class="dropdown-menu" aria-labelledby="menuPrint">
+										<button class="btn btn-secondary btn-sm navbar-btn dropdown-toggle" type="button" id="menuPrint" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+											<span title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="top" class="bi bi-printer"></span><span class="d-none d-xl-inline"> Imprimer</span>
+										</button>
+										<div class="dropdown-menu" aria-labelledby="menuPrint">
 <?php
 			foreach( $availablePrints as $print ) {
 				if( $print->visible ) {
 					if( $print->separator ) {
 ?>
-									<div class="dropdown-divider"></div>
+											<div class="dropdown-divider"></div>
 <?php
 					} else {
 						$printLink = 'index.php?item='.$page->alias.'&action=print&id='.$id.'&type='.$print->alias;
 ?>
-									<a class="dropdown-item btnReload" href="<?=$printLink; ?>" target="_blank"><?=$print->nicename; ?></a>
+											<a class="dropdown-item btnReload" href="<?=$printLink; ?>" target="_blank"><?=$print->nicename; ?></a>
 <?php
 					}
 				}
 			}
 ?>
-								</div>
+										</div>
 <?php
 		}
 		
 		if( $parentLink && !$new && ( $userCan->admin or $userCan->create or $userCan->update ) ) {
 ?>
-								<a title="Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias; ?>&action=edit&parent=<?=$parentId; ?>" class="btn btn-secondary btn-sm">
-									<span class="bi bi-plus-square-dotted"></span><span class="d-none d-xl-inline">  Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?></span>
-								</a>
+										<a title="Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?>" data-bs-toggle="tooltip" data-bs-placement="top" href="index.php?item=<?=$page->alias; ?>&action=edit&parent=<?=$parentId; ?>" class="ms-1 btn btn-secondary btn-sm">
+											<span class="bi bi-plus-square-dotted"></span><span class="d-none d-xl-inline">  Ajout <?=$object->getSingle(); ?> sur même <?=$parentItem; ?></span>
+										</a>
 <?php
 		}
 ?>
+									</div>
+								</form>
 							</div>
-						</form>
-					</div>
-					<div class="row">
+						</div>
 <?php
 		// Affichage des relations pour les variants en modification
 		if( !$new && count($relations) > 0 ) {
@@ -174,7 +215,6 @@
 				if( $toDisplay ) {
 					if( method_exists( $object, 'get_'.$relation->item ) ) {
 						$items = $object->{'get_'.$relation->item}();
-						$nbItems = ( count( $items ) > 0 && !$relation->static ) ? ' <span class="badge bg-light text-dark">'.count( $items ).'</span>' : '';
 						$classLink = 'btn btn-secondary btn-sm';
 						if( !property_exists( $relation, 'many' ) ) {
 							$addLink = 'href="index.php?item='.$relation->item.'&action=edit&parent='.$id.'"';
@@ -183,11 +223,8 @@
 							$classLink .= ' add-relation';
 						}
 ?>
-						<div class="col-12 col-md-<?=$relation->grid; ?>">
-							<div class="card border-dark">
-								<div class="card-header">
-									<span class="panel-title"><?=$relation->name .$nbItems; ?></span>
-								</div>
+						<div class="tab-pane" id="nav-<?=$relation->item; ?>" role="tabpanel">
+							<div class="card">
 								<div class="card-body">
 <?php
 						if( count( $items ) > 0 or !$standardRelation ) {
@@ -258,15 +295,9 @@
 			$historiques = $object->getHistorique();
 			$nbHistoriques = count( $historiques );
 ?>
-						<div class="col-sm-12">
-							<div class="card border-dark">
-								<div class="card-header">
-									<span class="panel-title">Historique</span>
-									<span title="Afficher/Masquer l'historique" data-bs-toggle="tooltip" data-bs-placement="right">
-										<a data-bs-toggle="collapse" href="#body-historique" class="badge bg-light text-dark" ><?=$nbHistoriques; ?></a>
-									</span>
-								</div>
-								<div class="card-body collapse" id="body-historique">
+						<div class="tab-pane" id="nav-histo" role="tabpanel">
+							<div class="card">
+								<div class="card-body">
 <?php
 			if( $nbHistoriques > 0 ) {
 ?>
