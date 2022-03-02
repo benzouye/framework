@@ -165,6 +165,11 @@ Here is the different types currently accepted :
 * calculation : display the result of a calculation (SUM, AVG, COUNT, etc.) used with GROUP BY SQL clause. You have to define this with 2 attributes :
   1.function (string) : the SQL syntax for the calculation
   2.join (string) : optional SQL JOIN syntax to get the data
+* applink : display a button with an internal app link. You have to define this with 4 attributes :
+  1.item (string) : the item to link
+  2.title (string) : title to display on hover
+  3.icon (string) : boostrap icon slug (without bi- prefix)
+  4.color (string) : boostrap colorscheme name (primary, success, danger, etc.)
 
 ### Relations
 
