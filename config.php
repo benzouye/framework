@@ -43,7 +43,7 @@
 	define( 'M_ITEMSETERR', 'Erreur lors de la mise à jour de l\'élément <em>%s</em>.' );
 	define( 'M_ITEMSETKEYERR', 'L\'élément <em>%s</em> ne peut être créé car il existe déjà un enregistrement pour l\'identifiant <em>%s</em>.' );
 	define( 'M_ITEMDEL', 'L\'élément <em>%s</em> a bien été supprimé.' );
-	define( 'M_ITEMDELKEYERR', 'L\'élément <em>%s</em> ID = %d ne peut être supprimé car il est lié à d\'autre éléments.' );
+	define( 'M_ITEMDELKEYERR', 'L\'élément <em>%s</em> ID = %d ne peut être supprimé car il est lié à d\'autres éléments.' );
 	define( 'M_ITEMDELERR', 'Erreur lors de la suppression de l\'élément <em>%s</em> ID = %d.' );
 	define( 'M_RELERR', 'Le fichier template de relation vers <em>%s</em> n\'existe pas.' );
 	define( 'M_RELNEWERR', 'Erreur lors de la création de la relation entre <em>%s</em> et <em>%s</em>.' );
