@@ -21,8 +21,8 @@
 	<body>
 		<div class="container-fluid">
 			<div class="row min-vh-100 flex-column flex-xl-row">
-				<aside class="col-12 col-xl-2 p-0 bg-dark flex-shrink-1 no-print">
-					<nav id="sidemenu" class="sticky-top navbar navbar-expand navbar-dark bg-dark flex-xl-column flex-row flex-wrap align-items-start py-2">
+				<aside class="col-12 col-xl-2 p-0 bg-<?= $manager->getOption('colorschema'); ?> flex-shrink-1 no-print">
+					<nav id="sidemenu" class="sticky-top navbar navbar-expand navbar-dark bg-<?= $manager->getOption('colorschema'); ?> flex-xl-column flex-row flex-wrap align-items-start py-2">
 						<span class="navbar-brand mx-3">
 							<i class="me-2 bi bi-<?= $manager->getOption('siteicon'); ?>"></i> <?= $manager->getOption('sitetitle'); ?>
 						</span>
