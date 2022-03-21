@@ -17,7 +17,7 @@
 <?php
 		}
 ?>
-			<div class="card border-dark">
+			<div class="card border-<?= $manager->getOption('colorschema'); ?>">
 				<div class="card-body">
 <?php
 		if( !$parentItem && ( $userCan->admin or $userCan->create ) ) {
