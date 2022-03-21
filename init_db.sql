@@ -321,7 +321,8 @@ INSERT INTO `prefix_option` (`id_option`, `alias`, `valeur`, `description`, `use
 (6,	'sitemail',	'contact@mydomain.com',	'Email du site',	1,	'2017-10-25 14:53:21',	1,	'2018-03-10 15:46:47'),
 (7,	'leafletOptions',	'{ \"center_lat\": 45.438705905866,\"center_lng\": 4.371288760839, \"zoom\": 14,\"min_zoom\": 2,\"max_zoom\": 18,\"lat\": 0,\"lng\": 0}',	'Configuration Leaflet par défaut JSON',	1,	'2018-11-20 10:49:13',	1,	'2018-11-20 11:01:46'),
 (8,	'allowregister',	'0',	'Autoriser ou non l\'enregistrement de nouveaux utilisateurs',	1,	'2017-10-24 07:47:06',	1,	'2017-10-25 12:00:22'),
-(9,	'siteicon',	'gear',	'Code bootstrap icon pour icone site',	1,	'2020-10-22 11:28:00',	1,	'2021-08-09 16:18:06');
+(9,	'siteicon',	'gear',	'Code bootstrap icon pour icone site',	1,	'2020-10-22 11:28:00',	1,	'2021-08-09 16:18:06'),
+(10,	'colorschema',	'primary',	'Schéma de couleur Boostrap général',	1,	'2020-10-22 11:28:00',	1,	'2021-08-09 16:18:06');
 
 DROP TABLE IF EXISTS `prefix_type_analyse`;
 CREATE TABLE `prefix_type_analyse` (
