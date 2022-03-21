@@ -1,6 +1,6 @@
 			<form class="form-horizontal" method="POST" action="index.php?item=<?=$page->alias;?>">
-				<div class="card">
-					<div class="card-header">
+				<div class="card border-<?= $manager->getOption('colorschema'); ?>">
+					<div class="card-header bg-<?= $manager->getOption('colorschema'); ?>">
 						<span class="card-title">Critères de recherche</span>
 					</div>
 					<div class="card-body row">
