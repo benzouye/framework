@@ -69,7 +69,7 @@
 	if( $user ) {
 ?>
 
-					<nav id="topmenu" class="ps-3 sticky-top navbar navbar-expand navbar-light bg-light no-print">
+					<nav id="topmenu" class="ps-3 sticky-top navbar navbar-expand navbar-light bg-<?= $manager->getOption('hcolorschema'); ?> no-print">
 						<span class="navbar-brand"><i class="me-2 bi bi-<?= $page->icon; ?>"></i> <?= $page->nom; ?> <?= $description; ?></span>
 						<div class="nav navbar-nav ms-auto pe-2 fs-5">
 <?php
