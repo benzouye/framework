@@ -5,8 +5,8 @@
 			$colonnes = $object->getColumns();
 ?>
 			<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=register">
-				<div class="card card-dark border-'.$manager->getOption('colorschema').'">
-					<div class="card-header bg-'.$manager->getOption('colorschema').'">
+				<div class="card card-dark border-<?= $manager->getOption('colorschema'); ?>">
+					<div class="card-header bg-<?= $manager->getOption('colorschema'); ?>">
 						<span class="card-title">Données à renseigner</span>
 					</div>
 					<div class="card-body row">
