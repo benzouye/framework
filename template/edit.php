@@ -61,7 +61,7 @@
 			// Bouton suppression
 			if( ( $userCan->admin or $userCan->delete ) and !$parentItem and ( !$readOnly or $userCan->admin ) ) {
 ?>
-									<div class="ms-auto"
+									<div class="ms-auto">
 										<form class="delete" method="post" action="index.php?item=<?=$page->alias;?>">
 											<input type="hidden" name="id" value="<?=$item->{'id_'.$page->alias}; ?>" />
 											<input type="hidden" name="item" value="<?=$page->alias; ?>" />
