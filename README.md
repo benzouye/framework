@@ -148,6 +148,7 @@ It has to be composed at least like this ( M = mandatory, O = Optional ) :
 Here is the different types currently accepted :
 
 * checkbox : display a checkbox control, need to be linked to a boolean column in the database table (stores 0 or 1)
+* email : display a mailto tag on list screen
 * color : display a colorPicker control, need to be linked to a string column in the database table (stores strings like #0123456)
 * date : display a datePicker control, need to be linked to a date column in the database table (stores yyyy-mm-dd values)
 * file : display a file input control, need to be linked to a string column in the database table (stores the filename) (you can combined this type with _extensions_ attribute as an array of strings to limit file extensions possibilities)
