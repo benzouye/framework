@@ -1026,6 +1026,11 @@ class Model {
 				$dateObject = date_create_from_format( 'Y-m-d H:i:s', $valeur );
 				$html .= date_format( $dateObject, 'd/m/Y à H:i' );
 				break;
+			case 'email' :
+				if( strlen( $valeur ) > 6 ) {
+					$html .= '<a href="mailto:'.$valeur.'" data-bs-toggle="tooltip" title="Ecrire un mail"><span class="bi bi-envelope-check"></span></a>';
+				}
+				break;
 			default :
 				$html .= $valeur;
 		}
