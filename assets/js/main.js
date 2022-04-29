@@ -98,6 +98,20 @@ $( document ).ready( function(){
 		});
 	});
 	
+	// Récupération des paramètres URL
+	var urlParams = [];
+	$(window.location.search.substring(1).split('&')).each( function(e) {
+		let urlParam = this.split('=');
+		urlParams[urlParam[0]] = urlParam[1];
+	});
+	
+	// Activation onglet appelé par URL
+	if( urlParams.tab ) {
+		let tabElement = document.querySelector('#nav-'+urlParams.tab+'-tab');
+		let tabToShow = new bootstrap.Tab(tabElement);
+		tabToShow.show();
+	}
+	
 	// FullCalendar
 	if( $(".homepage-calendar").length ) {
 		$(".homepage-calendar").each( function(e) {
