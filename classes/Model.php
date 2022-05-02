@@ -444,6 +444,7 @@ class Model {
 		$columns = '';
 		$values = '';
 		$update = '';
+		$retour = false;
 		foreach( $this->columns as $colonne ) {
 			
 			// Traitement upload des fichiers
@@ -533,9 +534,8 @@ class Model {
 				);
 			}
 			$requete->closeCursor();
-			
+			$retour = true;
 			$this->setHistorique();
-			
 			$this->manager->setMessage( sprintf( M_ITEMSET, $this->single ) );
 		}
 		catch( Exception $e ) {
@@ -544,6 +544,10 @@ class Model {
 			} else {
 				$this->manager->setMessage( sprintf( M_ITEMSETERR, $this->single, $id ) ,true);
 			}
+			$retour = false;
+		}
+		finally {
+			return $retour;
 		}
 	}
 	
