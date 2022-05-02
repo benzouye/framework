@@ -152,7 +152,7 @@
 					// On sauvegarde la copie
 					$setItemOk = $cible->setItem( $_POST );
 					// On affiche la copie
-					header( 'Location: index.php?item='.$cible->getItemName().'&action=edit&id='.$_POST['id_'.$cible->getItemName()] ); 
+					if( $setItemOk ) header( 'Location: index.php?item='.$cible->getItemName().'&action=edit&id='.$_POST['id_'.$cible->getItemName()] ); 
 				} else {
 					$manager->setMessage( M_ACCESSERR ,true);
 				}
