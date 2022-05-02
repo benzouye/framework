@@ -599,7 +599,7 @@ class Model {
 	}
 	
 	public function getHistorique() {
-		$historique = false;
+		$historiques = array();
 		try {
 			$requete = $this->bdd->query( '
 				SELECT
@@ -617,12 +617,13 @@ class Model {
 				ORDER BY H.date_cre DESC
 				LIMIT 3;'
 			);
-			$historique = $requete->fetchAll();
-			
-			return $historique;
+			$historiques = $requete->fetchAll();
 		}
 		catch( Exception $e ) {
 			$this->manager->setMessage( 'Erreur lors de la récupération de l\'historique' ,true);
+		}
+		finally {
+			return $historiques;
 		}
 	}
 	
