@@ -6,6 +6,7 @@
 	$template = '';
 	$emails = array();
 	$emailsOrga = array();
+	$sitItemOk = true;
 	
 	// Initialisation du manager global
 	$manager = new Manager( $bdd, $debug );
@@ -110,7 +111,7 @@
 				switch( $_POST['action'] ) {
 					case 'set':
 						if( $userCan->admin or $userCan->create or $userCan->update or ( $page->alias == 'utilisateur' && $_POST['id'] == $user->id_utilisateur ) ) {
-							$cible->setItem( $_POST );
+							$setItemOk = $cible->setItem( $_POST );
 						} else {
 							$manager->setMessage( M_ACCESSERR ,true);
 						}
@@ -149,7 +150,7 @@
 					// On récuoère un nouvel ID
 					$_POST['id_'.$cible->getItemName()] = $cible->getNextId();
 					// On sauvegarde la copie
-					$cible->setItem( $_POST );
+					$setItemOk = $cible->setItem( $_POST );
 					// On affiche la copie
 					header( 'Location: index.php?item='.$cible->getItemName().'&action=edit&id='.$_POST['id_'.$cible->getItemName()] ); 
 				} else {
@@ -238,6 +239,7 @@
 		
 		// Initialisation de l'id demandé
 		$next = $object->getNextId();
+		if( !$setItemOk ) unset( $_GET['id'] );
 		$id = isset( $_GET['id'] ) ? intval($_GET['id']) : $next;
 		$new = $id == $next;
 		
