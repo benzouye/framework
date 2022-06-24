@@ -7,6 +7,7 @@ class PivotTable {
 	protected $row;
 	protected $rows = array();
 	protected $indicator;
+	protected $comptage;
 	protected $html = '';
 	
 	/*
@@ -18,11 +19,12 @@ class PivotTable {
 	* @param string $row  String containing the datas property put in rows
 	* @param string $indicator  String containing the datas property to count and sum
 	*/
-	public function __construct( $datas, $column, $row, $indicator ) {
+	public function __construct( $datas, $column, $row, $indicator, $comptage ) {
 		
 		$this->column = $column;
 		$this->row = $row;
 		$this->indicator = $indicator;
+		$this->comptage = $comptage;
 		
 		// Initialisation des colonnes
 		foreach( $datas as $data ) {
@@ -103,13 +105,13 @@ class PivotTable {
 		$this->html .= '<tr>';
 		$this->html .= '<th>'.$this->column.'</th>';
 		foreach( $this->columns as $column ) {
-			$this->html .= '<th colspan="2">'.$column.'</th>';
+			$this->html .= '<th'.( $this->comptage ? ' colspan="2"' : '' ).'>'.$column.'</th>';
 		}
 		$this->html .= '</tr>';
 		$this->html .= '<tr>';
 		$this->html .= '<th>'.$this->row.'</th>';
 		foreach( $this->columns as $column ) {
-			$this->html .= '<th>Nb.</th><th>'.$this->indicator.'</th>';
+			$this->html .= ( $this->comptage ? '<th>Nb.</th>' : '' ).'<th>'.$this->indicator.'</th>';
 		}
 		$this->html .= '</tr>';
 		$this->html .= '</thead>';
@@ -119,7 +121,7 @@ class PivotTable {
 			$this->html .= '<tr>';
 			$this->html .= '<'.$tag.'>'.$row.'</'.$tag.'>';
 			foreach( $columns as $column => $value ) {
-				$this->html .= '<'.$tag.' class="text-center">'.$value['count'].'</'.$tag.'><'.$tag.' class="text-end">'.number_format( $value[$this->indicator], 2, ',', ' ').'</'.$tag.'>';
+				$this->html .= ( $this->comptage ? '<'.$tag.' class="text-center">'.$value['count'].'</'.$tag.'>' : '' ).'<'.$tag.' class="text-end">'.number_format( $value[$this->indicator], 2, ',', ' ').'</'.$tag.'>';
 			}
 			$this->html .= '</tr>';
 		}
