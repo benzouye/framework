@@ -86,6 +86,7 @@ CREATE TABLE `prefix_analyse` (
   `indicator` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Nombre',
   `percent` tinyint(3) unsigned NOT NULL DEFAULT 1,
   `colonne` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comptage` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `ligne` varchar(35) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `flag_accueil` tinyint(3) unsigned NOT NULL DEFAULT 1,
   `flag_affect` tinyint(3) unsigned NOT NULL,
