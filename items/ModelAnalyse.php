@@ -178,6 +178,20 @@
 				'admin' => false
 			),
 			(object) array(
+				'name' => 'comptage',
+				'nicename' => 'Afficher décompte (si croisé)',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'checkbox' ),
+				'visible' => false,
+				'editable' => true,
+				'required' => false,
+				'admin' => false
+			),
+			(object) array(
 				'name' => 'flag_accueil',
 				'nicename' => 'Visible sur page d\'accueil',
 				'align' => 'center',
