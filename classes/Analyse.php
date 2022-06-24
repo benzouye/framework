@@ -129,7 +129,7 @@ class analyse extends Model {
 					$html = $table->getHtml( $idTable, $classeTable );
 					break;
 				case 2 :
-					$table = new PivotTable( $datas, $element->colonne, $element->ligne, $element->indicator );
+					$table = new PivotTable( $datas, $element->colonne, $element->ligne, $element->indicator, $element->comptage );
 					$html = $table->getHtml( $idTable, $classeTable );
 					break;
 				case 3 :
