@@ -91,8 +91,10 @@ class SimpleTable {
 			}
 			$this->html .= '</tr>';
 		}
+		$this->html .= '</tbody>';
 		
 		// Ligne total
+		$this->html .= '<tfoot>';
 		$this->html .= '<tr>';
 		$premiere = true;
 		foreach( $this->headers as $header ) {
@@ -112,8 +114,8 @@ class SimpleTable {
 			$this->html .= '</th>';
 		}
 		$this->html .= '</tr>';
+		$this->html .= '</foot>';
 		
-		$this->html .= '</tbody>';
 		$this->html .= '</table></div>';
 		
 		return $this->html;
