@@ -10,7 +10,7 @@ To ease display and ergonomy, this framework includes some open source librairie
 * [tFPDF](http://www.fpdf.org/en/script/script92.php) PHP lib to generate PDF documents with UTF8 encoding
 * [class.upload.php](https://github.com/verot/class.upload.php) PHP lib to manage uploads
 * [Bootstrap 5](https://getbootstrap.com/) as CSS framework
-* [Boostrap Icons](https://icons.getbootstrap.com/) as icon set
+* [Bootstrap Icons](https://icons.getbootstrap.com/) as icon set
 * [jQuery](https://jquery.com/) as JavaScript framework
 * [moment.js](https://momentjs.com/) JS lib to ease JS date management
 * [Chart.js](https://www.chartjs.org/) JS lib to display various charts
