@@ -8,7 +8,7 @@
 		// Onglets relations
 		if( !$new && count($relations) > 0 ) {
 			foreach( $relations as $relation ) {
-				
+				$nbItems = '';
 				$toDisplay = true;
 				if( property_exists( $relation, 'displayCondition' ) && method_exists( $object, 'get_display_condition' ) ) {
 					$toDisplay = $object->get_display_condition();
