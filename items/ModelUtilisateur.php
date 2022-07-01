@@ -33,6 +33,7 @@
 			(object) array(
 				'name' => 'identifiant',
 				'nicename' => 'Identifiant',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
@@ -61,6 +62,7 @@
 			(object) array(
 				'name' => 'email',
 				'nicename' => 'Courriel',
+				'align' => 'center',
 				'grid' => (object) array(
 					'div' => 12,
 					'label' => 2,
