@@ -445,6 +445,15 @@ class Model {
 		$values = '';
 		$update = '';
 		$retour = false;
+		
+		$requete = $this->bdd->prepare( '
+			SELECT 1
+			FROM '.$this->table.'
+			WHERE id_'.$this->itemName.' = ?;'
+		);
+		$requete->execute( [ $this->id ] );
+		$isUpdated = $requete->fetchColumn();
+		
 		foreach( $this->columns as $colonne ) {
 			
 			// Traitement upload des fichiers
@@ -521,28 +530,30 @@ class Model {
 		$update = $update.' date_maj = NOW(), user_maj = '.$idUser;
 		
 		try {
-			if( $register ) {
+			if( !$isUpdated ) {
 				$requete = $this->bdd->query( '
 					INSERT INTO '.$this->table.' ( '.$columns.' )
 					VALUES( '.$values.' );'
 				);
 			} else {
 				$requete = $this->bdd->query( '
-					INSERT INTO '.$this->table.' ( '.$columns.' )
-					VALUES( '.$values.' )
-					ON DUPLICATE KEY UPDATE '.$update.';' 
+					UPDATE '.$this->table.'
+					SET '.$update.'
+					WHERE id_'.$this->itemName.' = '.$this->id.';'
 				);
 			}
 			$requete->closeCursor();
 			$retour = true;
+			
 			$this->setHistorique();
+			
 			$this->manager->setMessage( sprintf( M_ITEMSET, $this->single ) );
 		}
 		catch( Exception $e ) {
 			if( $e->getCode() == 23000 ) {
-				$this->manager->setMessage( sprintf( M_ITEMSETKEYERR, $this->single, 'identifiant unique' ) ,true);
+				$this->manager->setMessage( sprintf( M_ITEMSETKEYERR, $this->single, 'unique' ) ,true);
 			} else {
-				$this->manager->setMessage( sprintf( M_ITEMSETERR, $this->single, $id ) ,true);
+				$this->manager->setMessage( sprintf( M_ITEMSETERR, $this->single, $this->id ) ,true);
 			}
 			$retour = false;
 		}
