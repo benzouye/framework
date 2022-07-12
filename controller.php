@@ -6,7 +6,7 @@
 	$template = '';
 	$emails = array();
 	$emailsOrga = array();
-	$sitItemOk = true;
+	$setItemOk = true;
 	
 	// Initialisation du manager global
 	$manager = new Manager( $bdd, $debug );
