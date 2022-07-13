@@ -496,6 +496,9 @@ class Model {
 			$flag = false;
 			
 			foreach( $data as $key => $value ) {
+				if( $value === null ) {
+					$value = '';
+				}
 				if( $colonne->name == $key ) {
 					if( ( $colonne->params['type'] == 'select' or $colonne->params['type'] == 'date' ) && $colonne->required == false && !$value ) {
 						break;
