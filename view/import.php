@@ -14,6 +14,7 @@
 <?php
 				$importObject = new Model( $bdd, $manager, ${'model_'.$_GET['action']} );
 				$importColumns = $importObject->getColumns();
+				$excludedTypes = ['calculation'];
 			
 				if( isset( $_FILES['fichier'] ) ) {
 					$handle = new Verot\Upload\Upload( $_FILES['fichier'] );
@@ -45,13 +46,14 @@
 					$spreadsheet = $reader->load( ROOTDIR.UPLDIR.$nomFichier.'.'.$extension );
 					$sheet = $spreadsheet->getActiveSheet();
 					$importDatas = $sheet->toArray();
+					unlink( UPLDIR.$nomFichier.'.'.$extension );
 					
 					require_once( TEMPLDIR.'import.'.$_GET['action'].'.php' );
 				
 				} else {
 ?>
-								<div class="card-body">
-									<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=import&action=<?= $_GET['action']; ?>">
+								<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=import&action=<?= $_GET['action']; ?>">
+									<div class="card-body">
 										<div class="table-responsive">
 											<table class="table table-sm table-striped table-hover table-bordered">
 												<thead>
@@ -64,6 +66,7 @@
 												<tbody>
 <?php
 					foreach( $importColumns as $colonne ) {
+						if( !in_array( $colonne->params['type'], $excludedTypes ) ) {
 ?>
 													<tr>
 														<td><?= $colonne->nicename; ?></td>
@@ -71,23 +74,24 @@
 														<td><?= $colonne->params['type']; ?></td>
 													</tr>
 <?php
+						}
 					}
 ?>
 												</tbody>
 											</table>
 										</div>
-									</form>
-								</div>
-								<div class="card-footer">
-									<div class="row">
-										<div class="col-4">
-											<input class="form-control form-control-sm" required="required" type="file" accept=".ods,.xls,.xlsx" name="fichier" />
-										</div>
-										<div class="col-4">
-											<input class="btn btn-sm btn-success" type="submit" value="Lancer l'import">
+									</div>
+									<div class="card-footer">
+										<div class="row">
+											<div class="col-4">
+												<input class="form-control form-control-sm" required="required" type="file" accept=".ods,.xls,.xlsx" name="fichier" />
+											</div>
+											<div class="col-4">
+												<input class="btn btn-sm btn-success" type="submit" value="Lancer l'import">
+											</div>
 										</div>
 									</div>
-								</div>
+								</form>
 <?php
 				}
 ?>
