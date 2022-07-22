@@ -39,6 +39,13 @@
 					<div class="float-end">
 						<a title="Imprimer" data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank" href="index.php?item=<?=$page->alias;?>&action=print&type=list" class="btn btn-secondary btn-sm"><span class="bi bi-printer"></span></a>
 						<a title="Exporter" data-bs-toggle="tooltip" data-bs-placement="bottom" href="index.php?item=<?=$page->alias;?>&action=export&type=list" class="btn btn-secondary btn-sm"><span class="bi bi-download"></span></a>
+<?php
+		if( file_exists( TEMPLDIR.'import.'.$page->alias.'.php' ) {
+?>
+						<a title="Importer" data-bs-toggle="tooltip" data-bs-placement="bottom" href="index.php?item=import&action=<?=$page->alias;?>" class="btn btn-secondary btn-sm"><span class="bi bi-cloud-arrow-up"></span></a>
+<?php
+		}
+?>
 					</div>
 					<?=$criteres; ?>
 				</div>
