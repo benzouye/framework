@@ -294,7 +294,8 @@ INSERT INTO `prefix_item` (`id_item`, `alias`, `nom`, `description`, `static`, `
 (11,	'type_document',	'Types de document',	'Les différents type de document possibles',	0,	0,	1,	0,	5,	20,	'file-earmark-code',	1,	'2018-11-19 10:01:11',	1,	'2021-08-11 18:10:34'),
 (12,	'utilisateur',	'Utilisateurs',	'Les utilisateurs de l\'application',	0,	1,	1,	1,	10,	40,	'person',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 18:11:12'),
 (13,	'affectation',	'Affectations',	'Les affectations de l\'application',	0,	0,	1,	1,	10,	50,	'building',	1,	'2017-10-24 07:47:06',	1,	'2021-08-11 18:11:33'),
-(14,	'type_analyse',	'Type d\'analyse',	'Les types de tableau d\'analyse possibles',	0,	0,	1,	1,	10,	60,	'file-bar-graph',	1,	'2021-08-11 18:21:27',	NULL,	NULL);
+(14,	'type_analyse',	'Type d\'analyse',	'Les types de tableau d\'analyse possibles',	0,	0,	1,	1,	10,	60,	'file-bar-graph',	1,	'2021-08-11 18:21:27',	NULL,	NULL),
+(15,	'import',	'Import de données en base',	'La gestion des import de données en base',	1,	0,	1,	0,	10,	70,	'	cloud-arrow-up',	1,	'2021-08-11 18:21:27',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `prefix_option`;
 CREATE TABLE `prefix_option` (
