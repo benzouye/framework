@@ -672,7 +672,7 @@ class Model {
 								}
 								$libelle = rtrim( $libelle, ',' );
 								$criteres .= $sql
-									? ' AND '.$colonne->name
+									? ' AND T.'.$colonne->name
 									: $colonne->nicename.' = '.$libelle.$this->searchSep;
 								
 								if( $sql ) {
@@ -694,7 +694,7 @@ class Model {
 						case 'checkbox' :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' = '.$valeur.' '
+									? ' AND T.'.$colonne->name.' = '.$valeur.' '
 									: $colonne->nicename.' '.($valeur==1?'Oui':'Non').$this->searchSep;
 							}
 							break;
@@ -702,12 +702,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? ' AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.date( UIDATE, strtotime($search[$input][0]));
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? ' AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.date( UIDATE, strtotime($search[$input][1]));
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -718,12 +718,12 @@ class Model {
 							$linkWord = ( $search[$input][0] > 0 && $search[$input][1] > 0 ) ? ' et ' : $colonne->nicename;
 							if ( $search[$input][0] > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' >= "'.$search[$input][0].'" '
+									? ' AND T.'.$colonne->name.' >= "'.$search[$input][0].'" '
 									: $colonne->nicename.' >= '.$search[$input][0];
 							}
 							if ( $search[$input][1] > 0 ) {
 								$criteres .= $sql
-									? ' AND '.$colonne->name.' <= "'.$search[$input][1].'" '
+									? ' AND T.'.$colonne->name.' <= "'.$search[$input][1].'" '
 									: $linkWord.' <= '.$search[$input][1];
 							}
 							if( $search[$input][0] > 0 && $search[$input][1] > 0 && !$sql ) {
@@ -741,7 +741,7 @@ class Model {
 						default :
 							if( strlen( $valeur ) > 0 ) {
 								$criteres .= $sql
-									? 'AND '.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
+									? 'AND T.'.$colonne->name.' LIKE '.$this->bdd->quote('%'.$valeur.'%').' '
 									: $colonne->nicename.' contient '.$valeur.$this->searchSep;
 							}
 					}
