@@ -1,16 +1,33 @@
 <?php
 	if( $userCan->admin ) {
+		$cruds = [
+			'create' => 'Création',
+			'read' => 'Consultation',
+			'update' => 'Modification',
+			'delete' => 'Suppression',
+			'all' => 'Tous'
+		];
 ?>
 							<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="index.php?item=<?=$savelink; ?>">
 								<table class="table table-sm table-striped table-hover table-bordered table-responsive">
 									<thead>
 										<tr>
 											<th width="200">Item</th>
-											<th width="50">Création</th>
-											<th width="50">Consultation</th>
-											<th width="50">Modification</th>
-											<th width="50">Suppression</th>
-											<th width="50">Tous</th>
+<?php
+		foreach( $cruds as $code => $libelle ) {
+?>
+											<th width="50">
+												<?= $libelle; ?><br />
+												<span title="Sélectionner tout" data-bs-toggle="tooltip" data-action="<?= $code; ?>" data-quantity="1" class="btnSelectAccess btn btn-sm btn-success">
+													<span class="bi bi-check-square"></span>
+												</span>
+												<span title="Sélectionner aucun" data-bs-toggle="tooltip" data-action="<?= $code; ?>" data-quantity="0" class="btnSelectAccess btn btn-sm btn-danger">
+													<span class="bi bi-square"></span>
+												</span>
+											</th>
+<?php
+		}
+?>
 										</tr>
 									</thead>
 									<tbody>
