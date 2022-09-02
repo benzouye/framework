@@ -12,6 +12,15 @@ $( document ).ready( function(){
 		}
 	});
 	
+	// Sélection droits accès groupe
+	$(".btnSelectAccess").click( function(e) {
+		let action = $(this).data('action');
+		let quantity = $(this).data('quantity');
+		$('input[name*='+action+']').each( function(e) {
+			$(this).prop( 'checked', quantity );
+		});
+	});
+	
 	// Activation des tooltips
 	$( '[data-bs-toggle="tooltip"]' ).tooltip( {
 		trigger: 'hover'
