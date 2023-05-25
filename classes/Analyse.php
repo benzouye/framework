@@ -125,7 +125,7 @@ class analyse extends Model {
 		if( $nbElements ) {
 			switch( $element->id_type_analyse ) {
 				case 1 :
-					$table = new SimpleTable( $datas, $element->indicator, $element->percent );
+					$table = new SimpleTable( $datas, $element->indicator, $element->percent, $element->flag_total );
 					$html = $table->getHtml( $idTable, $classeTable );
 					break;
 				case 2 :
