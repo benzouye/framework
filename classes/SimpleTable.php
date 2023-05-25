@@ -6,6 +6,7 @@ class SimpleTable {
 	protected $indicator;
 	protected $total = 0;
 	protected $percent;
+	protected $flagTotal;
 	protected $html = '';
 	
 	/*
@@ -16,11 +17,12 @@ class SimpleTable {
 	* @param string $indicator  String containing the datas property to count and sum
 	* @param boolean $percent  Wether to add a percent column or not
 	*/
-	public function __construct( $datas, $indicator, $percent = true ) {
+	public function __construct( $datas, $indicator, $percent = true, $flagTotal = true ) {
 		
 		$this->datas = $datas;
 		$this->indicator = $indicator;
 		$this->percent = $percent;
+		$this->flagTotal = $flagTotal;
 		
 		// Somme de l'indicateur
 		foreach( $datas as $data ) {
@@ -94,27 +96,29 @@ class SimpleTable {
 		$this->html .= '</tbody>';
 		
 		// Ligne total
-		$this->html .= '<tfoot>';
-		$this->html .= '<tr>';
-		$premiere = true;
-		foreach( $this->headers as $header ) {
-			$this->html .= '<th>';
-			if( $premiere ) {
-				$this->html .= 'TOTAL';
+		if( $this->flagTotal ) {
+			$this->html .= '<tfoot>';
+			$this->html .= '<tr>';
+			$premiere = true;
+			foreach( $this->headers as $header ) {
+				$this->html .= '<th>';
+				if( $premiere ) {
+					$this->html .= 'TOTAL';
+				}
+				if( $header == $this->indicator ) {
+					$this->html .= $this->total;
+				}
+				$this->html .= '</th>';
+				$premiere = false;
 			}
-			if( $header == $this->indicator ) {
-				$this->html .= $this->total;
+			if( $this->percent ) {
+				$this->html .= '<th>';
+				$this->html .= '100';
+				$this->html .= '</th>';
 			}
-			$this->html .= '</th>';
-			$premiere = false;
+			$this->html .= '</tr>';
+			$this->html .= '</tfoot>';
 		}
-		if( $this->percent ) {
-			$this->html .= '<th>';
-			$this->html .= '100';
-			$this->html .= '</th>';
-		}
-		$this->html .= '</tr>';
-		$this->html .= '</foot>';
 		
 		$this->html .= '</table></div>';
 		
