@@ -122,6 +122,20 @@
 				'admin' => false
 			),
 			(object) array(
+				'name' => 'flag_total',
+				'nicename' => 'Afficher total (si droit)',
+				'grid' => (object) array(
+					'div' => 12,
+					'label' => 2,
+					'value' => 10,
+				),
+				'params' => array( 'type' => 'checkbox' ),
+				'visible' => false,
+				'editable' => true,
+				'required' => false,
+				'admin' => false
+			),
+			(object) array(
 				'name' => 'flag_affect',
 				'nicename' => 'Gestion affectation',
 				'grid' => (object) array(
