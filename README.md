@@ -14,8 +14,9 @@ To ease display and ergonomy, this framework includes some open source librairie
 * [jQuery](https://jquery.com/) as JavaScript framework
 * [moment.js](https://momentjs.com/) JS lib to ease JS date management
 * [Chart.js](https://www.chartjs.org/) JS lib to display various charts
-* [Full Calendar](https://fullcalendar.io/) JS lib to management planning (for non commercial use)
+* [Full Calendar](https://fullcalendar.io/) JS lib to display planning (for non commercial use)
 * [PHP QR Code](http://phpqrcode.sourceforge.net/) PHP lib to generate QR Code
+* [Leaflet](https://leafletjs.com/) JS lib to display geodata
 
 # Installation
 
