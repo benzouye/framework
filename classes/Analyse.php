@@ -147,7 +147,7 @@ class analyse extends Model {
 			}
 					
 		} else {
-			$html = '<p><em>Aucune données à afficher</em></p>';
+			$html = '<p><em>Aucune donnée à afficher</em></p>';
 		}
 		
 		$html = '
